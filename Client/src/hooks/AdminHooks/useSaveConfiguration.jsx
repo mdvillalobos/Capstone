@@ -1,0 +1,36 @@
+import axios from 'axios'
+import useToast from '../Helpers/useToast.jsx'
+import { useContext } from 'react';
+import { RankContext } from '../../../context/rankContext.jsx';
+
+const useSaveConfiguration = () => {
+    const { Toast, LoadingToast } = useToast();
+    const { setConfig } = useContext(RankContext)
+
+    const saveConfiguration = async (id, academicYear, reRankingPage) => {
+        LoadingToast.fire({ title: 'Updating Configuration....'})
+
+        try {
+            const { data } = await axios.post('/api/updateConfig', {
+                id, academicYear, reRankingPage
+            });
+
+            if(data.error) {
+                return Toast.fire({
+                    icon: "error",
+                    title: data.error
+                });
+            }
+
+            else {
+                LoadingToast.close();
+            }
+
+        } catch (error) {
+            console.error(`Create Rank Error: ${ error.message }`);
+        }
+    }
+    return { saveConfiguration }
+}
+
+export default useSaveConfiguration

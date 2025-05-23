@@ -1,0 +1,251 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+@plugin 'tailwind-scrollbar';
+@import "tailwindcss";
+
+@theme {
+    --font-Poppins: 'Poppins', sans-serif;
+    --font-Montserrat: 'Montserrat', sans-serif;
+    --color-NuBlue: #4b5a9b;
+    --color-NuLightBlue: #7784e1;
+    --color-NuLightText: #8A8A8A;
+    --color-NuYellow: #ffd41c;
+    --color-NuRed: #e66060;
+}
+
+@layer component {
+    /* TOOLS */
+    .modal { 
+        @apply fixed top-0 left-0 w-screen h-screen overflow-auto z-10 flex bg-black/40 justify-center items-center font-Poppins
+    }
+
+    /* AUTHENTICATION FORMS*/
+    .form {
+       @apply grid place-items-center min-h-screen
+       
+    }
+
+    /* NAV */
+    .navigation {
+        @apply flex duration-200 py-3 px-4 text-sm rounded-lg cursor-pointer tracking-tight font-medium
+    }
+
+    .activeNav {
+        @apply bg-NuBlue text-white shadow-md
+    }
+
+    .notActiveNav {
+        @apply hover:bg-NuLightBlue hover:text-white text-NuLightText
+    }
+
+    .formContainer {
+        @apply bg-white px-8 py-9 shadow-lg rounded-xl
+        max-[396px]:p-5 
+        max-sm:p-6
+    }
+
+    .form-title {
+        @apply font-Poppins text-center text-[2.3rem] font-semibold mb-[4px]
+        max-[396px]:text-[2rem]
+        max-sm:text-[2.2rem]
+    }
+
+    .formBtn {
+        @apply bg-NuBlue duration-200 hover:bg-NuLightBlue text-white h-11 rounded-md cursor-pointer font-medium text-sm flex justify-center relative
+        max-[396px]:py-2.5 
+    }
+
+    /* AUTHENTICATION COMPONENTS */
+    .auth-container {
+        @apply w-[360px] duration-200
+        max-[396px]:w-[300px]
+        max-sm:w-[325px]
+    }
+
+    .auth-input-container {
+        @apply flex border-2 rounded-lg px-3 duration-200 mt-[1.2rem] bg-[#fbfcfe] 
+    }
+
+    .auth-input-field {
+        @apply outline-none text-[0.8rem] ml-2 py-4  bg-transparent w-full h-full font-medium font-Poppins
+        max-[396px]:py-3.5 max-[396px]:text-[0.7rem]
+    }
+
+    .profile-registration-container {
+        @apply flex flex-col items-center space-y-4
+        max-sm:flex-col max-sm:w-full max-sm:gap-0 
+        max-md:gap-0 
+        max-lg:gap-0
+    }
+
+    /* Dashboard */
+    .fileInput {
+        @apply w-full text-left rounded-md mb-3 py-2.5 px-4 border-2 border-gray-200 outline-none focus:border-[#c1c6f2] focus:bg-[#f3f4fd] text-sm cursor-pointer
+    }
+
+    .fileSelect {
+        @apply absolute bg-white shadow-md w-full flex flex-col border-2 border-[#c1c6f2] rounded-lg overflow-hidden z-10 top-12 text-sm max-h-[144px] overflow-y-auto
+    }
+
+    .fileOption {
+        @apply py-2 text-left px-3 hover:bg-NuLightBlue hover:text-white  duration-200
+    }
+
+    .fileSubmit {
+        @apply py-2.5 px-10 text-sm bg-NuBlue text-white hover:bg-NuLightBlue duration-300 rounded-md cursor-pointer shadow-md w-full
+    }
+
+    .profileText {
+        @apply absolute -top-8 left-1/2 -translate-x-1/2 bg-NuBlue text-white px-2 py-1 rounded shadow-md text-xs 
+            whitespace-nowrap pointer-events-none inline-block opacity-0  
+            transition duration-200 group-hover:opacity-100 after:content-[""] after:absolute after:top-full after:left-1/2 
+            after:-translate-x-1/2 after:border-4 after:border-transparent after:border-t-NuBlue z-10
+    }
+
+    .profileIcon {
+        @apply p-2 border-2 border-gray-200 rounded-full hover:bg-NuLightBlue hover:border-NuLightBlue hover:text-white duration-200 cursor-pointer text-lg
+    }
+
+    /*APPLICATION FORMS*/
+    .formTitle {
+        @apply text-[1.2rem] font-medium tracking-tight font-Poppins mb-1
+    }
+
+    .inputContainer {
+        @apply flex justify-between 
+        max-md:justify-normal
+    }
+    .inputLabel {
+        @apply text-sm font-normal 
+        max-sm:w-36 max-sm:my-auto max-sm:text-sm
+        max-md:w-36
+    }
+
+    .inputFields {
+        @apply py-2 px-3.5 ml-3 w-[25vw] border-2 border-gray-200 text-sm relative top-[-9px] rounded-md text-gray-600
+        max-sm:top-0 max-sm:w-72
+        max-md:w-96
+    }
+
+    /* SETTINGS */
+    .setting-container {
+        @apply flex py-3 border-b-2 border-gray-200
+    }
+    .setting-input-container {
+        @apply relative rounded-lg w-full my-auto 
+    }
+
+    .setting-input {
+        @apply border-2 border-gray-200 rounded-lg px-3 outline-none w-full focus:bg-[#f3f4fd] focus:border-[#c1c6f2] text-sm 
+    }
+
+    .setting-input-label {
+        @apply absolute left-3.5 top-4 pointer-events-none duration-200 text-sm
+        peer-focus:text-[0.7rem] peer-focus:top-1.5 peer-focus:text-[#9ca0a4]
+        peer-valid:top-1.5 peer-valid:text-[0.7rem] peer-valid:text-[#9ca0a4]
+    }
+
+    .setting-button {
+        @apply w-32 py-1.5 hover:shadow-lg rounded-lg shadow-md duration-300 hover:scale-105 cursor-pointer
+    }
+
+    /* ADMIN VIEW APPLICATION FORM */
+    .imageButton {
+        @apply border-2 flex rounded-lg px-2 py-3 space-x-2 hover:bg-NuLightBlue hover:text-white duration-200 hover:border-NuLightBlue
+    }
+
+    .imageNameContainer {
+        @apply flex flex-col text-left
+    }
+
+    .uploadName {
+        @apply text-xs font-medium
+    }
+
+    .imagePathName {
+        @apply text-[0.7rem] translate-y-1 w-48 text-ellipsis overflow-hidden whitespace-nowrap 
+    }
+}
+
+/* toast */
+.colored-toast .swal2-title {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    letter-spacing: -0.025em;
+}
+
+.background-gradient {
+    background: linear-gradient(to bottom, #fbfbfd, #f8f8fd);
+}
+
+/* animations */
+@keyframes shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    50% { transform: translateX(5px); }
+    75% { transform: translateX(-5px); }
+    100% { transform: translateX(0); }
+}
+
+@keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+}
+  
+.shake {
+    animation: shake 0.5s ease-in-out;
+}
+
+.fade-in {
+    animation: fadeIn 0.2s ease forwards;
+}
+
+
+/* toggle */
+.checkbox {
+  display: none;
+}
+
+.slider {
+  width: 60px;
+  height: 30px;
+  background-color: lightgray;
+  border-radius: 20px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  border: 4px solid transparent;
+  transition: .3s;
+  box-shadow: 0 0 10px 0 rgb(0, 0, 0, 0.25) inset;
+  cursor: pointer;
+}
+
+.slider::before {
+  content: '';
+  display: block;
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+  transform: translateX(-30px);
+  border-radius: 20px;
+  transition: .3s;
+  box-shadow: 0 0 10px 3px rgb(0, 0, 0, 0.25);
+}
+
+.checkbox:checked ~ .slider::before {
+  transform: translateX(30px);
+  box-shadow: 0 0 10px 3px rgb(0, 0, 0, 0.25);
+}
+
+.checkbox:checked ~ .slider {
+  background-color: #2196F3;
+}
+
+.checkbox:active ~ .slider::before {
+  transform: translate(0);
+}
