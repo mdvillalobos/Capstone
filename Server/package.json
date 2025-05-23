@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "start": "nodemon index.js",
-    "build": "npm install --prefix ../client --production=false && npm run build --prefix ../client && npm install"
+    "build": "npm install --prefix ../Client --production=false && npm run build --prefix ../Client && npm install"
   },
   "author": "",
   "license": "ISC",
