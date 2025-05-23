@@ -217,12 +217,12 @@ const ConfigModal = ({ initialApprovers, handleExit }) => {
                                                     type="checkbox" 
                                                     className="checkbox" 
                                                     checked={isReRankingSet } 
-                                                    onChange={(e) => setIsReRankingOpen(e.target.checked)} 
+                                                    onChange={(e) => setReRankingPage({ ...reRankingPage, isReRankingSet: e.target.checked})} 
                                                 />
                                                 <div className="slider"></div>
                                             </label>
                                         </div>
-                                        {isReRankingSet && (
+                                        {reRankingPage.isReRankingSet && (
                                             <div className='flex space-x-4 text-sm'>
                                                 <div className='flex space-x-2'>
                                                     <p>Start Date:</p>
