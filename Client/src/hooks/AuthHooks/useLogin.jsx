@@ -31,13 +31,11 @@ const useLogin = () => {
                 });
             }
     
-           if(data.isVerified) {
-                LoadingToast.close();
+           if(data.isVerified) { 
                 return navigate('/emailverification')
             }
 
             if(Array.isArray(data.userData) && data.userData.length === 0) {
-                LoadingToast.close();
                 return navigate('/profileRegistration')
             }
 
@@ -48,6 +46,8 @@ const useLogin = () => {
 
         } catch (error) {
             console.error(`Login Error: ${ error.message }`);
+        } finally {
+            LoadingToast.close();
         }
     }
 

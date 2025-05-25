@@ -50,7 +50,7 @@ const useRegisterProfile = () => {
                     fetchApplicationConfigOnLogin(),
                 ]);
                 LoadingToast.close();
-                navigate('/home');
+                navigate('/dashboard')
             }
         } catch (error) {
             console.error(`Profile registration error ${ error.message }`);
