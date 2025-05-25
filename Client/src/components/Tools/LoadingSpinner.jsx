@@ -1,10 +1,10 @@
-import loadingAnimation from '../../assets/animations/loading2.lottie';
-import { DotLottieReact } from '@lottiefiles/dotlottie-react';
+import loadingAnimation from '../../assets/animations/loading2.json'
+import { Player } from '@lottiefiles/react-lottie-player';
 
 const LoadingSpinner = () => (
   <div className="flex flex-col justify-center items-center min-h-[90vh]">
     <span className=''>
-      <DotLottieReact
+      <Player
         src={loadingAnimation}
         loop
         autoplay

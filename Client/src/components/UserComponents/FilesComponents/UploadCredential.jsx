@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { DotLottieReact } from '@lottiefiles/dotlottie-react';
+import { Player } from '@lottiefiles/react-lottie-player';
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { AiOutlineCloudUpload } from "react-icons/ai";
 import { TbFileIsr } from "react-icons/tb";
@@ -14,7 +14,7 @@ import AddProjectModal from './AddProjectModal';
 import AddPublicationsModal from './AddPublicationsModal';
 import AddRecogLicensesModal from './AddRecogLicensesModal';
 import AddPerformanceModal from './AddPerformanceModal';
-import uploadAnimation from '../../../assets/animations/uploading2.lottie'
+import LoadingAnimation from '../../../assets/animations/uploading.json';
 
 const tagGroup = [
     'Academic & Educational Qualifications',
@@ -139,8 +139,8 @@ const ChoicesModal = ({ handleExit }) => {
                                 <div className='absolute bottom-0 w-full px-3 py-2 fade-in'>
                                     <div className='relative flex py-4 bg-white rounded-md shadow-md pl-14 fade-in'>
                                         <span className='absolute -left-12 -top-2.5'>
-                                            <DotLottieReact
-                                              src={uploadAnimation}
+                                            <Player
+                                              src={LoadingAnimation}
                                               loop
                                               autoplay
                                               style={{ width: '10vw', height: '10vh' }}
