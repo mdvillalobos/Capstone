@@ -1,4 +1,4 @@
-import loadingAnimation from '../../assets/animations/loading2.json'
+import loadingAnimation from '../../assets/animations/loading.json';
 import { Player } from '@lottiefiles/react-lottie-player';
 
 const LoadingSpinner = () => (

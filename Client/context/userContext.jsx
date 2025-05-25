@@ -7,7 +7,6 @@ export const UserContextProvider = ({ children }) => {
     const [ user, setUser ] = useState();
     const [ credentials, setCredentials ] = useState();
 
-    
     const fetchUserProfile = async () => {
         try {
             const { data: profileData} = await axios.get('/api/getProfile')
@@ -35,7 +34,6 @@ export const UserContextProvider = ({ children }) => {
     useEffect(() => {
         fetchUserProfile();
     }, []);
-
 
     return (
         <UserContext.Provider value={{ user, setUser, credentials, setCredentials, getProfileOnLogin }}>

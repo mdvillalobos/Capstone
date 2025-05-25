@@ -8,8 +8,6 @@ import ProfileBar from '../../components/UserComponents/FilesComponents/ProfileB
 
 const Dashboard = () => {
     const { user, credentials } = useContext(UserContext);
-    
-    if(user === undefined || credentials === undefined) return <LoadingSpinner/>
 
     return (
         <div className="flex flex-col min-h-screen font-Poppins">
