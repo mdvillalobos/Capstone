@@ -19,14 +19,11 @@ const useLogin = () => {
             });
         }
         
-        LoadingToast.fire({
-            title: 'Logging you in...',
-        });
+        LoadingToast.fire({ title: 'Logging you in...' });
+
         try {
-            const { data } = await axios.post('/api/login', {
-                email, password
-            });
-         
+            const { data } = await axios.post('/api/login', { email, password });
+
             if(data.error) {
                 return Toast.fire({
                     icon: "error",
@@ -34,22 +31,20 @@ const useLogin = () => {
                 });
             }
     
-            else if(!data.isVerified) {
-                navigate('/emailverification')
+           if(data.isVerified) {
                 LoadingToast.close();
+                return navigate('/emailverification')
             }
 
-            else if(!data.accountinfo?.[0].firstName) {
-                navigate('/profileRegistration')
+            if(Array.isArray(data.userData) && data.userData.length === 0) {
+                LoadingToast.close();
+                return navigate('/profileRegistration')
             }
 
-            else {
-                await Promise.all([
-                    getProfileOnLogin(),
-                    fetchApplicationConfigOnLogin(),
-                ]);
-                LoadingToast.close();
-            }
+            await Promise.all([
+                getProfileOnLogin(),
+                fetchApplicationConfigOnLogin(),
+            ]);
 
         } catch (error) {
             console.error(`Login Error: ${ error.message }`);
