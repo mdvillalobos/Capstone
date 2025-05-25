@@ -60,7 +60,6 @@ router.post('/api/createRank', authorizationMiddleware('admin'), createRank);
 router.post('/api/registerAdmin', authorizationMiddleware('admin'), registerAdmin);
 router.get('/api/getAllAccounts', authorizationMiddleware('admin'), getAllAccount)
 
-
 router.get('/api/getConfiguration', getConfigurations);
 
 //analytics

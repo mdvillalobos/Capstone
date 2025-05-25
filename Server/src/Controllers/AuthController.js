@@ -28,7 +28,7 @@ export const login = async (req, res) => {
         }
 
         const loginToken = jwt.sign({ email: email, role: user.role }, process.env.JWT_SECRET);
-        return res.cookie('token', loginToken, { httpOnly: true, secure: true, sameSite:'None' }).json({ message: 'Login Successfully', data: user.accountinfo, isVerified: user.isVerified });
+        return res.cookie('token', loginToken, { httpOnly: true, secure: true, sameSite:'None' }).json({ message: 'Login Successfully', data: { userData: user.accountinfo, isVerified: user.isVerified }});
 
     } catch (error) {
         console.error(`Login Error: ${ error.message }`);
@@ -143,19 +143,21 @@ export const verifyEmail = async (req,res) => {
 }
 
 export const registerProfile = async (req, res) => {
-    const { verificationToken } = req.cookies;
+    const { verificationToken, token } = req.cookies;
     const {  firstName, lastName, middleName, contact, sex, track, rank, college, department, status } = req.body;
+
+    const jwtToken = verificationToken || token
 
     if(!firstName || !lastName || !contact || !sex || !track || !rank || !college || !department || !status) {
         return res.json({ error: 'Required all fields!' });
     }
 
-    if(!verificationToken) {
+    if(jwtToken) {
         return res.json({ error: 'Access denied!' });
     }
 
     try {
-        const { email, role } = jwt.verify(verificationToken, process.env.JWT_SECRET);
+        const { email, role } = jwt.verify(jwtToken, process.env.JWT_SECRET);
         const profilePicture = req.file ? req.file.path  : null;
         var cloudinaryResponse = '';
 

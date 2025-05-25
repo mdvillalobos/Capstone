@@ -38,7 +38,7 @@ const useLogin = () => {
                 navigate('/emailverification')
                 LoadingToast.close();
             }
-    
+
             else {
                 await Promise.all([
                     getProfileOnLogin(),
