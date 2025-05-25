@@ -53,7 +53,11 @@ const AddPublicationsModal = ({ data, setData }) => {
 
             {data.documentType === 'Works' && (
                 <div className="relative">
-                    <button type='button' onClick={() => { setIsWorksOpen(!isWorksOpen), setIsOpen(false), setIsPublishedOpen(false) }} className={`w-full text-left fileInput ${data.tags[1] ? 'text-black' : 'text-gray-500'}`}>
+                    <button 
+                        type='button'
+                        onClick={() => { setIsWorksOpen(!isWorksOpen), setIsOpen(false), setIsPublishedOpen(false) }} 
+                        className={`w-full text-left fileInput ${data.tags[1] ? 'text-black' : 'text-gray-500'}`}
+                    >
                         {data.tags[1] || 'Select type of work'}
                     </button>
 
@@ -82,7 +86,11 @@ const AddPublicationsModal = ({ data, setData }) => {
 
             {['Creative Work', 'Scientific Work'].includes(data.tags[1]) && (
                 <div className="relative">
-                    <button type='button' onClick={() => { setIsPublishedOpen(!isPublishedOpen), setIsOpen(false), setIsWorksOpen(false) }} className={`w-full text-left fileInput ${data.tags[2] ? 'text-black' : 'text-gray-500'}`}>
+                    <button 
+                        type='button' 
+                        onClick={() => { setIsPublishedOpen(!isPublishedOpen), setIsOpen(false), setIsWorksOpen(false) }} 
+                        className={`w-full text-left fileInput ${data.tags[2] ? 'text-black' : 'text-gray-500'}`}
+                    >
                         {data.tags[2] || 'Select type of work'}
                     </button>
 

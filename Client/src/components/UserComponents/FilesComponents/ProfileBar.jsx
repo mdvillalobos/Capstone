@@ -53,7 +53,6 @@ const ProfileBar = () => {
                         </div>
                     </div>
 
-
                     <div className='relative group'>
                         <p className='profileText '>
                             {user.department}

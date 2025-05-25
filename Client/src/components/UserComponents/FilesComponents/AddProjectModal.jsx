@@ -17,7 +17,11 @@ const AddProjectModal = ({ data, setData }) => {
     return (
         <div>
             <div className="relative">
-                <button type='button' onClick={() => { setIsOpen(!isOpen), setIsStatusOpen(false)}} className={`w-full text-left fileInput ${data.documentType ? 'text-black' : 'text-gray-500'}`}>
+                <button 
+                    type='button' 
+                    onClick={() => { setIsOpen(!isOpen), setIsStatusOpen(false)}} 
+                    className={`w-full text-left fileInput ${data.documentType ? 'text-black' : 'text-gray-500'}`}
+                >
                     {data.documentType || 'Select Type of Project'}
                 </button>
 
@@ -44,7 +48,11 @@ const AddProjectModal = ({ data, setData }) => {
 
             {data.documentType === 'On-going commercialization/Start-up project' ? (
                 <div className="relative">
-                    <button type='button' onClick={() => { setIsStatusOpen(!isStatusOpen), setIsOpen(false)}} className={`w-full text-left fileInput ${!data.tags[1] ? 'text-gray-500' : null}`}>
+                    <button 
+                        type='button' 
+                        onClick={() => { setIsStatusOpen(!isStatusOpen), setIsOpen(false)}} 
+                        className={`w-full text-left fileInput ${!data.tags[1] ? 'text-gray-500' : null}`}
+                    >
                         {data.tags[1] || 'Select Status'}
                     </button>
 

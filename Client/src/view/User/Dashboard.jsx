@@ -7,13 +7,9 @@ import Header from '../../components/Tools/Header.jsx';
 import ProfileBar from '../../components/UserComponents/FilesComponents/ProfileBar.jsx';
 
 const Dashboard = () => {
-    const { user } = useContext(UserContext);
+    const { user, credentials } = useContext(UserContext);
     
-    if(user === undefined) {
-        return (
-            <LoadingSpinner/>
-        )
-    }
+    if(user === undefined || credentials === undefined) return <LoadingSpinner/>
 
     return (
         <div className="flex flex-col min-h-screen font-Poppins">

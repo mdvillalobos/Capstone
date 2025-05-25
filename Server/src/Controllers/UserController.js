@@ -15,6 +15,7 @@ export const getUserData = async (req, res) => {
         return res.status(401).json(null);
     }
 
+
     try {
         const { email } = jwt.verify(jwtToken, process.env.JWT_SECRET);
         const userCredentials = await Account.findOne({ email });
@@ -27,6 +28,7 @@ export const getUserData = async (req, res) => {
                 role: userCredentials.role,
                 employeeID: userCredentials.employeeID
             };
+            console.log(userObject)
             return res.status(200).json(userObject);
         }
         return res.status(401).json(null); 

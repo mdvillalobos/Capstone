@@ -55,7 +55,11 @@ const AddFellowDiplomateModal = ({ data, setData }) => {
 
             {data.documentType ? (
                 <div className="relative">
-                    <button type='button' onClick={() =>{ setIsChoisesOpen(!isChoicesOpen), setIsOpen(false)}} className={`w-full text-left fileInput ${data.tags[1] ? 'text-black' : 'text-gray-500'}`}>
+                    <button 
+                        type='button'
+                        onClick={() =>{ setIsChoisesOpen(!isChoicesOpen), setIsOpen(false)}} 
+                        className={`w-full text-left fileInput ${data.tags[1] ? 'text-black' : 'text-gray-500'}`}
+                    >
                         {data.tags[1] || 'Select '}
                     </button>
 

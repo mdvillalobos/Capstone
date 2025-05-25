@@ -8,39 +8,44 @@ import { HiViewGrid } from "react-icons/hi";
 import { PiListBold } from 'react-icons/pi';
 import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io';
 
-const FilesTable = ({ location = 'dashboard'}) => {
+const FilesTable = ({ location = 'dashboard' }) => {
     const { credentials } = useContext(UserContext);
     const { updateCredential } = useUpdateCredentialStatus();
+
+    const tableRef = useRef(null);
+    const filterRef = useRef(null)
+ 
     const [ layout, setLayout ] = useState('grid');
     const [ isFilterOpen, setIsFilterOpen ] = useState(false);
     const [ selectedFile, setSelectedFile ] = useState([]);
     const [ selectedFilter, setSelectedFilter ] = useState('');
     const [ tableCurrentPage, setTableCurrentPage ] = useState(1)
-    const [ isImageshow, setIsImageShow ] = useState({
-        show: false,
-        filePath: '',
-        fileName: '',
-        date: ''    
-    });
-    const tableRef = useRef(null);
-    const filterRef = useRef(null)
+    const [ isImageshow, setIsImageShow ] = useState({ show: false, filePath: '', fileName: '', date: '' });
 
     const documentType = useMemo(() => {
-        return Array.from(new Set(credentials?.files?.map(data => data.type)))
+        return Array.from(new Set(credentials?.files?.map(file => file.type)))
     }, [credentials]);
 
     const filterDocument = useMemo(() => {
-        return location === 'dashboard'
-            ? credentials?.files.filter(file => file.isActive && (!selectedFilter || file.type === selectedFilter)).reverse() || []
-            : credentials?.files.filter(doc => doc.isActive === false);
-    }, [credentials, selectedFilter])
+        if(!credentials?.files) return [];
 
-    const itemsPerPage = location === 'trash' ? (layout === 'grid' ? 15 : 10) : (layout === 'grid' ? 12 : 10);
+        const filteredFiles = credentials?.files.filter(file => {
+            if(location === 'dashboard') {
+                return file.isActive && (!selectedFilter || file.type === selectedFilter)
+            }
+            return !file.isActive
+        })
+
+        return filteredFiles.reverse();
+
+    }, [credentials, selectedFilter, location])
+
+    const itemsPerPage = layout === 'table' ? 10 : (location === 'trash' ? 15 : 12)
     const totalPages = Math.ceil(filterDocument?.length / itemsPerPage);
     const indexOfLastItem = tableCurrentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
     const items = filterDocument?.slice(indexOfFirstItem, indexOfLastItem);
-
+    
     const handleNextPage = useCallback(() => {
         setTableCurrentPage(prev => Math.min(prev + 1, totalPages))
     }, [totalPages])
@@ -50,13 +55,9 @@ const FilesTable = ({ location = 'dashboard'}) => {
     }, [totalPages])
 
     const handleClickOutside = useCallback((e) => {
-        if(tableRef.current && !tableRef.current.contains(e.target)) {
-            setSelectedFile([])
-        }
-        if(filterRef.current && !filterRef.current.contains(e.target)) {
-            setIsFilterOpen(false)
-        }
-    })
+        if(!tableRef.current.contains(e.target)) return setSelectedFile([])
+        if(!filterRef.current.contains(e.target)) return setIsFilterOpen(false)
+    }, [])
 
     useEffect(() => {
         document.addEventListener('mousedown', handleClickOutside);
@@ -64,12 +65,12 @@ const FilesTable = ({ location = 'dashboard'}) => {
     }, [])
 
     const handleClick = useCallback((e, filePath) => {
-         if(e.ctrlKey || e.metaKey) {
-            setSelectedFile(prev => prev?.includes(filePath) ? prev?.filter((file) => file !== filePath) : [...prev, filePath])
-        } else {
-            setSelectedFile([filePath])
-        }
-    })
+        setSelectedFile(prev =>
+            e.ctrlKey || e.metaKey
+                ? (prev.includes(filePath) ? prev.filter(file => file !== filePath) : [...prev, filePath])
+                : [filePath]
+        )
+    }, [])
 
     const handleDoubleClick = useCallback((filePath, fileName, date) => {
         setIsImageShow({ show: true, filePath: filePath, fileName: fileName, date: date })
@@ -77,6 +78,7 @@ const FilesTable = ({ location = 'dashboard'}) => {
 
     const handleUpdateStatus = async (action) => {
         await updateCredential(selectedFile, action)
+        setSelectedFile([])
     }
 
     return (
@@ -93,13 +95,22 @@ const FilesTable = ({ location = 'dashboard'}) => {
                     {selectedFile?.length > 0 ? (
                         <div className='flex space-x-3'>
                             {location === 'trash' && (
-                                <button type='button' className='cursor-pointer flex my-auto py-1.5 px-4 space-x-0.5 rounded-md bg-[#39a97a] text-white duration-200 hover:bg-[#4be1a2]' onClick={() => handleUpdateStatus('recover')}>
+                                <button  
+                                    type='button' 
+                                    className='cursor-pointer flex my-auto py-1.5 px-4 space-x-0.5 rounded-md bg-[#39a97a] text-white duration-200 hover:bg-[#4be1a2]' 
+                                    onClick={() => handleUpdateStatus('recover')}
+                                >
                                     <p className='my-auto text-sm'>Recover</p>
                                 </button>
                             )}
 
-                            <button type='button' className='flex cursor-pointer my-auto py-1.5 px-5 space-x-0.5 rounded-md bg-[#ef676d] text-white duration-200 hover:bg-[#de333b]' onClick={() => handleUpdateStatus('delete')}>
-                                <p className='my-auto text-sm'>{location === 'trash' ? 'Delete Forever' : 'Delete'}</p>
+                            <button 
+                                type='button' className='flex cursor-pointer my-auto py-1.5 px-5 space-x-0.5 rounded-md bg-[#ef676d] text-white duration-200 hover:bg-[#de333b]' 
+                                onClick={() => handleUpdateStatus('delete')}
+                            >
+                                <p className='my-auto text-sm'>
+                                    {location === 'trash' ? 'Delete Forever' : 'Delete'}
+                                </p>
                             </button>
                         </div>
                     ) : (
@@ -108,7 +119,10 @@ const FilesTable = ({ location = 'dashboard'}) => {
                     
                     <div className='flex space-x-4'>
                         <div className='relative w-48 my-auto' ref={filterRef}>
-                            <button  onClick={() => setIsFilterOpen(!isFilterOpen)} className={`cursor-pointer relative border-2 border-gray-200 w-full rounded-md py-1 text-sm overflow-hidden text-ellipsis whitespace-nowrap px-8 ${isFilterOpen && 'border-NuLightBlue'}`}>
+                            <button 
+                                onClick={() => setIsFilterOpen(!isFilterOpen)} 
+                                className={`cursor-pointer relative border-2 border-gray-200 w-full rounded-md py-1 text-sm overflow-hidden text-ellipsis whitespace-nowrap px-8 ${isFilterOpen && 'border-NuLightBlue'}`}
+                            >
                                 {selectedFilter ? selectedFilter : 'Category'}
                                 {isFilterOpen ? (
                                     <IoIosArrowUp className='absolute right-2 top-2 '/>
@@ -119,20 +133,37 @@ const FilesTable = ({ location = 'dashboard'}) => {
                     
                             {isFilterOpen ? (
                                 <div className='absolute z-10 w-full space-y-1 overflow-auto text-sm bg-white border-2 border-gray-200 rounded-md shadow-md top-9 h-44 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100'>
-                                    <button onClick={() => { setSelectedFilter(''), setIsFilterOpen(!isFilterOpen) }} className='hover:bg-[#ebebeb] cursor-pointer duration-300 w-full py-1.5 px-4'>All</button>
+                                    <button 
+                                        onClick={() => { setSelectedFilter(''), setIsFilterOpen(!isFilterOpen) }} 
+                                        className='hover:bg-[#ebebeb] cursor-pointer duration-300 w-full py-1.5 px-4'
+                                    >
+                                        All
+                                    </button>
                                     {documentType.map((type, i) => (
-                                        <button onClick={() => { setSelectedFilter(type), setIsFilterOpen(!isFilterOpen)}} className='hover:bg-[#ebebeb] cursor-pointer duration-300 py-1.5 w-full overflow-hidden text-ellipsis whitespace-nowrap px-4 text-sm'>{type}</button>
+                                        <button 
+                                            key={i} 
+                                            onClick={() => { setSelectedFilter(type), setIsFilterOpen(!isFilterOpen)}} 
+                                            className='hover:bg-[#ebebeb] cursor-pointer duration-300 py-1.5 w-full overflow-hidden text-ellipsis whitespace-nowrap px-4 text-sm'
+                                        >
+                                            {type}
+                                        </button>
                                     ))}
                                 </div>
                             ) : null}
                         </div>
 
                         <div className='bg-[#ebf2fb] py-1 px-1.5 rounded-md space-x-1'>
-                            <button className={`p-1 cursor-pointer rounded-md duration-200 hover:bg-gray-300 ${layout === 'grid' ? 'shadow-md bg-white text-NuBlue pointer-events-none' : 'text-NuLightText'}`} onClick={() => setLayout('grid')}>
+                            <button 
+                                onClick={() => setLayout('grid')}
+                                className={`p-1 cursor-pointer rounded-md duration-200 hover:bg-gray-300 ${layout === 'grid' ? 'shadow-md bg-white text-NuBlue pointer-events-none' : 'text-NuLightText'}`}
+                            >
                                 <HiViewGrid className='text-lg'/>
                             </button>
 
-                            <button className={`p-1 cursor-pointer rounded-md duration-200 hover:bg-gray-300 ${layout === 'table' ? 'shadow-md bg-white text-NuBlue pointer-events-none' : 'text-NuLightText'}`} onClick={() => setLayout('table')}>
+                            <button 
+                                onClick={() => setLayout('table')}
+                                className={`p-1 cursor-pointer rounded-md duration-200 hover:bg-gray-300 ${layout === 'table' ? 'shadow-md bg-white text-NuBlue pointer-events-none' : 'text-NuLightText'}`}
+                            >
                                 <PiListBold className='text-lg'/>
                             </button>
                         </div>
@@ -203,10 +234,16 @@ const FilesTable = ({ location = 'dashboard'}) => {
 
             <div className='flex justify-between '>
                 <div className='my-auto text-sm'>
-                    <p className='text-xs font-medium text-NuLightText'>Showing Items {(tableCurrentPage - 1) * itemsPerPage + 1 } - {Math.min(tableCurrentPage * itemsPerPage, filterDocument.length)} of {filterDocument.length}</p>
+                    <p className='text-xs font-medium text-NuLightText'>
+                        Showing Items {(tableCurrentPage - 1) * itemsPerPage + 1 } - {Math.min(tableCurrentPage * itemsPerPage, filterDocument?.length)} of {filterDocument?.length}
+                    </p>
                 </div>
                 <div className='flex my-auto space-x-4 text-sm text-NuLightText'>
-                    <button type='button' onClick={handlePrevPage} className='border-2 border-gray-200 p-1 cursor-pointer rounded-md flex space-x-1.5 px-2 text-lg hover:bg-gray-200 duration-200 '>
+                    <button 
+                        type='button' 
+                        onClick={handlePrevPage} 
+                        className='border-2 border-gray-200 p-1 cursor-pointer rounded-md flex space-x-1.5 px-2 text-lg hover:bg-gray-200 duration-200 '
+                    >
                         <TiArrowLeft className='my-auto'/>
                     </button>
                     <p className='flex my-auto space-x-2'>
@@ -214,7 +251,11 @@ const FilesTable = ({ location = 'dashboard'}) => {
                         <span className='my-auto'>/</span>
                         <span className='px-3 py-1 text-center text-black border-2 border-gray-200 rounded-md'>{totalPages}</span>
                     </p>
-                    <button type='button' onClick={handleNextPage} className='border-2 border-gray-200 p-1 cursor-pointer rounded-md flex space-x-1.5 px-2 text-lg hover:bg-gray-200 duration-200'>
+                    <button 
+                        type='button' 
+                        onClick={handleNextPage} 
+                        className='border-2 border-gray-200 p-1 cursor-pointer rounded-md flex space-x-1.5 px-2 text-lg hover:bg-gray-200 duration-200'
+                    >
                         <TiArrowRight className='my-auto'/>
                     </button>
                 </div>

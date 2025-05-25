@@ -83,7 +83,7 @@
     }
 
     .fileSelect {
-        @apply absolute bg-white shadow-md w-full flex flex-col border-2 border-[#c1c6f2] rounded-lg overflow-hidden z-10 top-12 text-sm max-h-[144px] overflow-y-auto
+        @apply absolute bg-white shadow-md w-full flex flex-col border-2 border-[#c1c6f2] rounded-lg overflow-hidden z-10 top-12 text-sm max-h-[144px] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100
     }
 
     .fileOption {

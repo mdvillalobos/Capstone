@@ -1,4 +1,11 @@
 import { useState } from 'react'
+import { DotLottieReact } from '@lottiefiles/dotlottie-react';
+import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
+import { AiOutlineCloudUpload } from "react-icons/ai";
+import { TbFileIsr } from "react-icons/tb";
+import { RiUploadCloud2Line } from "react-icons/ri";
+
+import useToast from '../../../hooks/Helpers/useToast';
 import useAddCredential from '../../../hooks/UserHooks/useAddCredential';
 import AddCredentialModal from './AddCredentialModal';
 import AddEducationModal from './AddEducationModal';
@@ -7,13 +14,7 @@ import AddProjectModal from './AddProjectModal';
 import AddPublicationsModal from './AddPublicationsModal';
 import AddRecogLicensesModal from './AddRecogLicensesModal';
 import AddPerformanceModal from './AddPerformanceModal';
-import useToast from '../../../hooks/Helpers/useToast';
 import uploadAnimation from '../../../assets/animations/uploading2.lottie'
-import { DotLottieReact } from '@lottiefiles/dotlottie-react';
-import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
-import { AiOutlineCloudUpload } from "react-icons/ai";
-import { TbFileIsr } from "react-icons/tb";
-import { RiUploadCloud2Line } from "react-icons/ri";
 
 const tagGroup = [
     'Academic & Educational Qualifications',
@@ -77,16 +78,15 @@ const ChoicesModal = ({ handleExit }) => {
         await AddCredential(data, setUploading, setIsOpen, setData);
     } 
     
-
-    console.log(data)
-
     return (
         <div className="modal">
             <div className={`w-[50%] h-[65vh] bg-white shadow-md rounded-xl max-sm:w-[85%] max-md:w-[70%] max-lg:w-[50%] max-xl:w-[40%] fade-in`}>
                 <form onSubmit={handleAddCredential} className='flex flex-col h-full'>
                     <div className='relative flex justify-between px-6 py-4 border-b border-gray-200'>
                         <div className='flex space-x-2'>
-                            <span className='p-2 my-auto border-2 border-gray-200 rounded-full'><AiOutlineCloudUpload className='text-lg'/></span>
+                            <span className='p-2 my-auto border-2 border-gray-200 rounded-full'>
+                                <AiOutlineCloudUpload className='text-lg'/>
+                            </span>
                             <div className='space-y-0.5'>
                                 <p className='text-sm font-medium'>Upload Files</p>
                                 <p className='text-xs text-NuLightText'>Select and upload your documents.</p>
@@ -103,16 +103,27 @@ const ChoicesModal = ({ handleExit }) => {
                             <div className='relative flex flex-col items-center justify-center bg-[#fafafa] border-dashed border-2 border-gray-300 rounded-lg py-8 h-full'>
                                 {data.file ? (
                                     <>
-                                        <button type='button' className='absolute top-0 text-3xl text-gray-400 right-2' onClick={() => { setData({ ...data, file: null }) }}>
+                                        <button 
+                                            type='button' 
+                                            className='absolute top-0 text-3xl text-gray-400 right-2'
+                                            onClick={() => { setData({ ...data, file: null }) }}
+                                        >
                                             &times;
                                         </button>
-                                        <span className='text-3xl text-[#868686] p-2 bg-[#f7f7f7] rounded-full'><TbFileIsr/></span>
+                                        <span className='text-3xl text-[#868686] p-2 bg-[#f7f7f7] rounded-full'>
+                                            <TbFileIsr/>
+                                        </span>
                                         <p className='text-sm text-[#868686] text-center'>{data.file.name}</p>
                                     </>
                                 ) : (
                                     <>
-                                        <span className='text-3xl text-[#868686] p-2 bg-[#f7f7f7] rounded-full'><AiOutlineCloudUpload/></span>
-                                        <p className='text-sm text-[#868686] text-center'>Drag or drop <br/>files here, or <span className='underline text-NuBlue'>Browse</span></p>
+                                        <span className='text-3xl text-[#868686] p-2 bg-[#f7f7f7] rounded-full'>
+                                            <AiOutlineCloudUpload/>
+                                        </span>
+                                        <p className='text-sm text-[#868686] text-center'>
+                                            Drag or drop <br/>files here, or 
+                                            <span className='underline text-NuBlue'>Browse</span>
+                                        </p>
 
                                         <input
                                             type="file"
@@ -191,7 +202,6 @@ const ChoicesModal = ({ handleExit }) => {
                             <input type="submit" className='fileSubmit' value='Upload'/>
                         </div>
                     </div>
-                
                 </form>
             </div>
         </div>

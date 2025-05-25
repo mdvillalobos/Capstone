@@ -20,7 +20,11 @@ const AddExperienceModal = ({ data, setData }) => {
     return (
         <div>
             <div className="relative">
-                <button type='button' onClick={() => { setIsOpen(!isOpen), setIsWorkOptionOpen(false)}} className={`w-full text-left fileInput ${data.documentType ? 'text-black' : 'text-gray-500'}`}>
+                <button 
+                    type='button' 
+                    onClick={() => { setIsOpen(!isOpen), setIsWorkOptionOpen(false)}} 
+                    className={`w-full text-left fileInput ${data.documentType ? 'text-black' : 'text-gray-500'}`}
+                >
                     {data.documentType || 'Select type of experience '}
                 </button>
 
@@ -47,7 +51,11 @@ const AddExperienceModal = ({ data, setData }) => {
 
             {data.documentType === 'Work Experience' ? (
                 <div className="relative">
-                    <button type='button' onClick={() => { setIsWorkOptionOpen(!isWorkOptionOpen), setIsOpen(false)} } className={`w-full text-left fileInput ${data.tags[1] ? 'text-black' : 'text-gray-500'}`}>
+                    <button 
+                        type='button' 
+                        onClick={() => { setIsWorkOptionOpen(!isWorkOptionOpen), setIsOpen(false)} } 
+                        className={`w-full text-left fileInput ${data.tags[1] ? 'text-black' : 'text-gray-500'}`}
+                    >
                         {data.tags[1] || 'Select your position'}
                     </button>
 

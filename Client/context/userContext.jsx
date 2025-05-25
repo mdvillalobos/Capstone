@@ -1,23 +1,24 @@
-import { createContext, useState, useEffect } from "react";
+import { createContext, useState, useEffect, useCallback } from "react";
 import axios from "axios";
 
 export const UserContext = createContext({});
 
 export const UserContextProvider = ({ children }) => {
     const [ user, setUser ] = useState();
-    const [ credentials, setCredentials ] = useState(null);
+    const [ credentials, setCredentials ] = useState();
+
     
-    const checkAuth = async () => {
+    const fetchUserProfile = async () => {
         try {
-            const getProfile = await axios.get('/api/getProfile')
-            setUser(getProfile.data);
+            const { data: profileData} = await axios.get('/api/getProfile')
+            setUser(profileData);
 
-            console.log(getProfile)
-
-
-            if(getProfile.data.role === 'user' && getProfile.accountInfo?.[0].length > 0) {
-                const getCredentials = await axios.get('/api/getUserCredentials');
-                setCredentials(getCredentials.data)
+            if(profileData.role === 'user' && profileData.firstName) {
+                const { data: userCredentials } = await axios.get('/api/getUserCredentials');
+                setCredentials(userCredentials)
+            }
+            else {
+                setCredentials(null);
             }
         
         } catch (error) {
@@ -27,13 +28,14 @@ export const UserContextProvider = ({ children }) => {
         }
     };
 
-    useEffect(() => {
-        checkAuth();
+    const getProfileOnLogin = useCallback(() => {
+        fetchUserProfile();
     }, []);
 
-    const getProfileOnLogin = () => {
-        checkAuth();
-    }
+    useEffect(() => {
+        fetchUserProfile();
+    }, []);
+
 
     return (
         <UserContext.Provider value={{ user, setUser, credentials, setCredentials, getProfileOnLogin }}>
