@@ -39,6 +39,10 @@ const useLogin = () => {
                 LoadingToast.close();
             }
 
+            else if(!data.accountinfo?.[0].firstName) {
+                navigate('/profileRegistration')
+            }
+
             else {
                 await Promise.all([
                     getProfileOnLogin(),
