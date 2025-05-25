@@ -35,7 +35,7 @@ app.use(helmet({
             scriptSrc: ["'self'", "'sha256-JgpphxtupW+atTkR3NtSLqsE7EdOykRMk5Dv+tMhcpY='", "https://cdnjs.cloudflare.com",],
             styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
             imgSrc: ["'self'", "https://res.cloudinary.com/duochblgz/", "blob:", "data:"],
-            connectSrc: ["'self'", "https://unpkg.com"], 
+            connectSrc: ["'self'", "https://unpkg.com", 'https://cdn.jsdelivr.net'], 
             scriptSrcAttr: ["'self'", "'unsafe-inline'"],
             frameSrc: ["'self'","https://res.cloudinary.com/duochblgz/", "data:"]
         }
