@@ -152,7 +152,7 @@ export const registerProfile = async (req, res) => {
         return res.json({ error: 'Required all fields!' });
     }
 
-    if(jwtToken) {
+    if(!jwtToken) {
         return res.json({ error: 'Access denied!' });
     }
 
