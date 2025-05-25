@@ -32,10 +32,10 @@ app.use(helmet({
     contentSecurityPolicy: {
         directives: {
             defaultSrc: ["'self'"], 
-            scriptSrc: ["'self'", "'sha256-JgpphxtupW+atTkR3NtSLqsE7EdOykRMk5Dv+tMhcpY='", "https://cdnjs.cloudflare.com",],
+            scriptSrc: ["'self'", "'sha256-JgpphxtupW+atTkR3NtSLqsE7EdOykRMk5Dv+tMhcpY='", "https://cdnjs.cloudflare.com"],
             styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
             imgSrc: ["'self'", "https://res.cloudinary.com/duochblgz/", "blob:", "data:"],
-            connectSrc: ["'self'", "https://unpkg.com", 'https://cdn.jsdelivr.net'], 
+            connectSrc: ["'self'"], 
             scriptSrcAttr: ["'self'", "'unsafe-inline'"],
             frameSrc: ["'self'","https://res.cloudinary.com/duochblgz/", "data:"]
         }

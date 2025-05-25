@@ -32,13 +32,16 @@ const useLogin = () => {
             }
     
            if(data.isVerified) { 
+                LoadingToast.close();
                 return navigate('/emailverification')
             }
 
             if(Array.isArray(data.userData) && data.userData.length === 0) {
+                LoadingToast.close();
                 return navigate('/profileRegistration')
             }
 
+            LoadingToast.close();
             await Promise.all([
                 getProfileOnLogin(),
                 fetchApplicationConfigOnLogin(),
@@ -46,9 +49,7 @@ const useLogin = () => {
 
         } catch (error) {
             console.error(`Login Error: ${ error.message }`);
-        } finally {
-            LoadingToast.close();
-        }
+        } 
     }
 
     return { Login }
