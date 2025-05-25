@@ -1,7 +1,8 @@
+import React from 'react';
 import loadingAnimation from '../../assets/animations/loading.json';
 import { Player } from '@lottiefiles/react-lottie-player';
 
-const LoadingSpinner = () => (
+const LoadingSpinner = React.memo(() => (
   <div className="flex flex-col justify-center items-center min-h-[90vh]">
     <span className=''>
       <Player
@@ -13,6 +14,6 @@ const LoadingSpinner = () => (
     </span>
   </div>
 
-);
+));
   
 export default LoadingSpinner;

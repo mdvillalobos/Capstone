@@ -8,8 +8,6 @@ import SubmittedPage from '../../components/UserComponents/ApplicationComponents
 import Header from '../../components/Tools/Header.jsx';
 import { RankContext } from '../../../context/rankContext.jsx';
 
-
-
 const ApplicationForReRanking = () => {
     const { config } = useContext(RankContext)
     const [ data, setData ] = useState();

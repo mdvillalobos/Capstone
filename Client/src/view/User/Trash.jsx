@@ -6,14 +6,6 @@ import Header from '../../components/Tools/Header.jsx';
 import FilesTable from '../../components/UserComponents/FilesComponents/FilesTable.jsx';
 
 const Trash = () => {
-    const { user } = useContext(UserContext);
-        
-    if(user === undefined) {
-        return (
-            <LoadingSpinner/>
-        )
-    }
-
     return (
         <div className="flex flex-col min-h-screen font-Poppins">
             <div className="flex flex-grow">

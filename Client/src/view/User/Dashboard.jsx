@@ -7,8 +7,6 @@ import Header from '../../components/Tools/Header.jsx';
 import ProfileBar from '../../components/UserComponents/FilesComponents/ProfileBar.jsx';
 
 const Dashboard = () => {
-    const { user, credentials } = useContext(UserContext);
-
     return (
         <div className="flex flex-col min-h-screen font-Poppins">
             <div className="flex flex-grow">

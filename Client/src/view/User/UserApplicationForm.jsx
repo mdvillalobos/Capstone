@@ -10,13 +10,6 @@ import ApplicationForm from '../../components/ReRankingFormComponents/Applicatio
 const UserApplicationForm = () => {
     const location = useLocation();
     const { myForm } = location.state || {};
-    const { user } = useContext(UserContext);
-    
-    if(user === undefined) {
-        return (
-            <LoadingSpinner/>
-        )
-    }
 
     return (
         <div className="flex flex-col min-h-screen font-Poppins">
