@@ -12,11 +12,11 @@ const reRankingStatus = new Schema({
     },
     startDate: {
         type: Date,
-        default: null
+        default: ''
     },
     endDate: {
         type: Date,
-        default: null
+        default: ''
     }
 })
 

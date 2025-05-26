@@ -10,7 +10,6 @@ import Datas from '../../components/AdminComponents/DashboardComponents/Datas.js
 import BarGraph from '../../components/AdminComponents/DashboardComponents/BarGraph.jsx';
 import LineGraph from '../../components/AdminComponents/DashboardComponents/LineGraph.jsx';
 import RankTotal from '../../components/AdminComponents/DashboardComponents/RankTotal.jsx';
-import Approvers from '../../components/AdminComponents/DashboardComponents/Approvers.jsx';
 import ToPdf from '../../components/AdminComponents/DashboardComponents/ToPdf.jsx';
 import ReRankingConfig from '../../components/AdminComponents/DashboardComponents/ReRankingConfig.jsx';
 /* import RankModal from '../../components/AdminComponents/DashboardComponents/RankModal.jsx' */

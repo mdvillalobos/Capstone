@@ -44,8 +44,8 @@ export const updateConfig = async (req, res) => {
             updatedReRankingStatus = {
                 ...reRankingStatus,
                 isReRankingOpen: false,
-                startDate: null,
-                endDate: null
+                startDate: '',
+                endDate: ''
             };
             
         } else {
@@ -59,10 +59,12 @@ export const updateConfig = async (req, res) => {
         }
 
         const updatedConfig = id 
-            ? await Configuration.updateOne({ _id: id }, { $set: { academicYear: academicYear, reRankingStatus: updatedReRankingStatus }}) 
+            ? await Configuration.findOneAndUpdate({ _id: id }, { $set: { academicYear: academicYear, reRankingStatus: updatedReRankingStatus }}, { new: true }) 
             : await Configuration.create({ academicYear: academicYear, reRankingStatus, updatedReRankingStatus });
 
-        return res.status(200).json({ meesage: 'Configuration Successfully Updated', data: updatedConfig })
+        console.log(updatedConfig)
+        
+        return res.status(200).json({ meesage: 'Configuration Successfully Updated', config: updatedConfig })
     }
     catch(error) {
         console.error(`Updating System Configuration Error ${ error.message }`);

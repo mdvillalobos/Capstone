@@ -73,8 +73,9 @@ const ReRankingConfig = ({ approverList }) => {
             </div>
 
             <button 
+                type='button'
                 onClick={() => setIsVerifyAdminOpen(true)}
-                className='w-full py-2 text-sm text-center rounded-md cursor-pointer bg-[#7C8AC4] text-white hover:bg-NuLightBlue hover:text-white duration-200'
+                className='w-full py-2 text-sm text-center text-white duration-200 rounded-md cursor-pointer bg-NuBlue hover:bg-NuLightBlue hover:text-white'
             >
                 Configure
             
@@ -124,24 +125,22 @@ const ConfigModal = ({ initialApprovers, handleExit }) => {
         setApproverList(prev => prev.filter(acc => acc.email !== email ))
     }
 
-    const handleUpdateApproverList = async (e) => {
-        e.preventDefault();
-
+    const handleUpdateApproverList = async () => {
         try {
             setIsSubmitted(true)
             await updateApprover(approverList)
-        } catch (error) {
+        } finally {
             setIsSubmitted(false)
             setIsEditOn(false)
         }
     }
     
     //control section
-    const handleUpdateControls = async (e) => {
-        e.preventDefault();
-
+    const handleUpdateControls = async () => {
         const { isReRankingSet, startDate, endDate } = reRankingStatus;
         const { isReRankingSet: configIsReRankingSet = false, startDate: configStartDate = '', endDate: configEndDate = '' } = config.reRankingStatus ?? {};
+        const formatDate = (dateStr) => dateStr ? new Date(dateStr).toISOString().split('T')[0] : '';
+
         const configAcademicYear = config?.academicYear ?? '';
 
         if(isReRankingSet && (!startDate|| !endDate)) {
@@ -150,17 +149,21 @@ const ConfigModal = ({ initialApprovers, handleExit }) => {
                 title: 'Required all fields'
             })
         }
-
+        
         const hasChanges = 
             isReRankingSet !== configIsReRankingSet ||
-            startDate !== configStartDate ||
-            endDate !== configEndDate ||
+            startDate !== formatDate(configStartDate) ||
+            endDate !== formatDate(configEndDate) ||
             academicYear !== configAcademicYear;
 
-        if(!hasChanges) {            
+        console.log('hasChanges:', hasChanges)
+
+        if(!hasChanges) {     
+            console.log('tae')       
             setIsSubmitted(false)
+            console.log(isSubmitted)
             setIsEditOn(false)
-            return
+            return;
         }
 
         try {
@@ -206,7 +209,7 @@ const ConfigModal = ({ initialApprovers, handleExit }) => {
                         </button>
                     </div>
 
-                    <div className='flex flex-col justify-between flex-1 px-4 pb-4'>
+                    <f className='flex flex-col justify-between flex-1 px-4 pb-4'>
                         {selected === 'Signatories' ? (
                             <div className={`${!isEditOn ? 'pointer-events-none' : ''}`}>
                                 <DndContext
@@ -310,7 +313,7 @@ const ConfigModal = ({ initialApprovers, handleExit }) => {
                                     </button>
                                     <button 
                                         type='button' 
-                                        onClick={selected === 'Signatories' ? handleUpdateApproverList : handleUpdateControls} 
+                                        onClick={selected === 'Signatories' ? handleUpdateApproverList : handleUpdateControls}
                                         className='w-32 px-10 py-2 text-sm text-white duration-200 rounded-lg cursor-pointer hover:shadow-md bg-NuBlue' 
                                         disabled={isSubmitted}
                                     >
@@ -327,7 +330,7 @@ const ConfigModal = ({ initialApprovers, handleExit }) => {
                                 </button>
                             )}
                         </div>
-                    </div>
+                    </f>
                 </div>
             </div>
         </div>

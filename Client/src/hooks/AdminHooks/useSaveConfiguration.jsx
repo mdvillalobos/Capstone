@@ -23,9 +23,10 @@ const useSaveConfiguration = () => {
             }
 
             else {
-                setConfig(data.data)
-                LoadingToast.close();
-
+                console.log("Setting config:", data.config);
+                setConfig(data.config);
+                console.log("Config set done");
+                return LoadingToast.close();
             }
 
         } catch (error) {
