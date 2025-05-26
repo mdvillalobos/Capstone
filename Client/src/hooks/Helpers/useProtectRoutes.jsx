@@ -4,7 +4,7 @@ import { UserContext } from '../../../context/userContext'
 import LoadingSpinner from '../../components/Tools/LoadingSpinner';
 
 const useProtectRoutes = () => {
-    const { user } = useContext(UserContext);
+    const { user, credentials } = useContext(UserContext);
 
     const isLoading = user === undefined;
     const isUnauthenticated = user === null;

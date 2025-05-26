@@ -7,9 +7,12 @@
     --font-Montserrat: 'Montserrat', sans-serif;
     --color-NuBlue: #4b5a9b;
     --color-NuLightBlue: #7784e1;
-    --color-NuLightText: #8A8A8A;
     --color-NuYellow: #ffd41c;
     --color-NuRed: #e66060;
+    --color-BorderColor: #E2E6ED;
+    --color-TextPrimary: #2E2E3A;
+    --color-TextSecondary: #6B7280;
+
 }
 
 @layer component {
@@ -34,7 +37,7 @@
     }
 
     .notActiveNav {
-        @apply hover:bg-NuLightBlue hover:text-white text-NuLightText
+        @apply hover:bg-NuLightBlue hover:text-white text-TextSecondary
     }
 
     .formContainer {

@@ -38,7 +38,7 @@ const LineGraph = ({ totalApplicationPerYear }) => {
     };
 
     return (
-        <div className="text-[0.7rem] border-2 border-gray-200 rounded-2xl pl-6 pr-2 pt-4 space-y-8">
+        <div className="text-[0.7rem] border-2 border-BorderColor rounded-xl pl-6 pr-2 pt-4 space-y-8 text-TextPrimary">
             <div className="">
                 <p className='text-lg font-medium'>Total Application</p>
                 <p className='text-xs text-gray-500'>Total for the last five years</p>
@@ -60,7 +60,7 @@ const LineGraph = ({ totalApplicationPerYear }) => {
                             tickLine={false}
                             axisLine={false}
                             padding={{ left: 10, right: 30 }}
-                            tick={{ fontSize: 10, fill: '#8A8A8A' }}
+                            tick={{ fontSize: 10, fill: '#6B7280' }}
                         />
                        <YAxis 
                             tickMargin={0} 

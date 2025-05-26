@@ -13,12 +13,10 @@ import RankTotal from '../../components/AdminComponents/DashboardComponents/Rank
 import Approvers from '../../components/AdminComponents/DashboardComponents/Approvers.jsx';
 import ToPdf from '../../components/AdminComponents/DashboardComponents/ToPdf.jsx';
 import ReRankingConfig from '../../components/AdminComponents/DashboardComponents/ReRankingConfig.jsx';
-import { LoadingContext } from '../../../context/LoadingContext.jsx';
 /* import RankModal from '../../components/AdminComponents/DashboardComponents/RankModal.jsx' */
 
 const AdminDashboard = () => {
     const { config } = useContext(RankContext);
-    const { setIsPageLoading } = useContext(LoadingContext);
     const academicYear =  config?.academicYear || null;
 
     const { getFacultyRankingData, getReRankingData, getApprovedApplications, getApproverList } = useCallDashboardAPI();
@@ -48,7 +46,7 @@ const AdminDashboard = () => {
 
     useEffect(() => {
         const fetchData = async () => {   
-            setIsPageLoading(true);
+            setIsLoading(true);
                 
             try {
                 const [ facultyRankingData, reRankingData, approvedApplications, approverList ] = await Promise.all([
@@ -72,11 +70,13 @@ const AdminDashboard = () => {
             } catch (error) {
                 console.error("Error fetching data:", error);
             } finally {
-                setIsPageLoading(false);
+                setIsLoading(false);
             }
         };
         fetchData();
     }, [academicYear]);
+
+    if(loading) return <LoadingSpinner/>
 
     if (isMobile) {
         return (

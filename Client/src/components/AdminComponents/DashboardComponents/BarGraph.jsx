@@ -32,16 +32,16 @@ const BarGraph = ({ rankPerCollege  }) => {
     const yAxisDomain = [0, maxDataValue + 4];
 
     return (
-        <div className='border-2 border-gray-200 rounded-2xl px-6 py-3 space-y-4 w-[75%]'>
+        <div className='border-2 border-BorderColor rounded-xl px-6 py-3 space-y-4 w-[75%] text-TextPrimary'>
             <div className="flex justify-between">
                 <div className="">
-                    <p className='text-lg font-medium'>Rank Summary</p>
+                    <p className='text-lg font-medium text-[#2E2E3A]'>Rank Summary</p>
                     <p className='text-xs text-gray-500'>Total rank per department</p>
                 </div>
 
                 <div className="flex space-x-2">
                     <div className="my-auto w-44">
-                        <button className="flex justify-between py-1.5 w-full rounded-xl text-sm border border-gray-200 pl-4 pr-1 py-1 bg-[#f9f9f9] text-NuLightText" onClick={() => setIsOpen(!isOpen)}>
+                        <button className="cursor-pointer flex justify-between py-1.5 w-full rounded-xl text-sm border border-BorderColor pl-5 pr-3 py-2 text-TextSecondary" onClick={() => setIsOpen(!isOpen)}>
                             <span className="overflow-hidden text-left whitespace-nowrap text-ellipsis">{selected}</span>
 
                             {!isOpen ? (
@@ -86,9 +86,9 @@ const BarGraph = ({ rankPerCollege  }) => {
                             axisLine={false}
                             tickLine={false}
                             tick={{
-                                fill: "#8A8A8A",    
+                                fill: "#6B7280",    
                                 fontSize: 12,
-                                fontWeight: 600,
+                                fontWeight: 500,
                             }}
                         />
                         <YAxis
@@ -101,8 +101,8 @@ const BarGraph = ({ rankPerCollege  }) => {
                         <Tooltip />
                         <Bar
                             dataKey="TotalNumber"
-                            fill="#4b5a9b"
-                            radius={[5, 5, 5, 5]}
+                            fill="#7C8AC4"
+                            radius={[8, 8, 8, 8]}
                             barSize={60}
                         />
                     </BarChart>

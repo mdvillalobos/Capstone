@@ -7,32 +7,30 @@ import { hashPassword, compareHashed } from '../Helpers/Auth.js';
 dotenv.config();
 
 export const updateConfig = async (req, res) => {
-    const { id, academicYear, reRankingPage } = req.body;
+    const { id, academicYear, reRankingStatus } = req.body;
 
     try {
         const formatDate = (date) => new Date(date).toISOString().split('T')[0];
         const todayDate = formatDate(new Date());
-        const startDate = formatDate(reRankingPage.startDate);
+        const startDate = formatDate(reRankingStatus.startDate);
 
-        const updatedReRankingPage = {
-            ...reRankingPage,
+        const updatedReRankingStatus = {
+            ...reRankingStatus,
             isReRankingOpen: startDate <= todayDate ? true : false,
         };
 
-        if(!reRankingPage.isReRankingSet) {
-            updatedReRankingPage = {
-                ...reRankingPage,
+        if(!reRankingStatus.isReRankingSet) {
+            updatedReRankingStatus = {
+                ...reRankingStatus,
                 isReRankingOpen: false,
                 startDate: null,
                 endDate: null
             }
         }
 
-        console.log(todayDate)
-
         const updatedConfig = id 
-            ? await Configuration.updateOne({ _id: id}, { $set: { academicYear: academicYear, reRankingPage: updatedReRankingPage }}) 
-            : await Configuration.create({ academicYear: academicYear, reRankingPage, updatedReRankingPage });
+            ? await Configuration.updateOne({ _id: id}, { $set: { academicYear: academicYear, reRankingStatus: updatedReRankingStatus }}) 
+            : await Configuration.create({ academicYear: academicYear, reRankingStatus, updatedReRankingStatus });
 
         return res.status(200).json({ meesage: 'Configuration Successfully Updated', data: updatedConfig })
     }
@@ -49,18 +47,18 @@ export const getConfigurations = async (req, res) => {
         if (config) {
             const formatDate = (date) => new Date(date).toISOString().split('T')[0];
             const todayDate = formatDate(new Date());
-            const startDate = formatDate(config.reRankingPage.startDate);
-            const endDate = formatDate(config.reRankingPage.endDate);
+            const startDate = formatDate(config.reRankingStatus.startDate);
+            const endDate = formatDate(config.reRankingStatus.endDate);
         
             let updated = false;
         
-            if (startDate === todayDate && !config.reRankingPage.isReRankingOpen) {
-                config.reRankingPage.isReRankingOpen = true;
+            if (startDate === todayDate && !config.reRankingStatus.isReRankingOpen) {
+                config.reRankingStatus.isReRankingOpen = true;
                 updated = true;
             }
         
-            if (endDate === todayDate && config.reRankingPage.isReRankingOpen) {
-                config.reRankingPage.isReRankingOpen = false;
+            if (endDate === todayDate && config.reRankingStatus.isReRankingOpen) {
+                config.reRankingStatus.isReRankingOpen = false;
                 updated = true;
             }
         

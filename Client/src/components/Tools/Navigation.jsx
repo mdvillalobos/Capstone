@@ -23,7 +23,7 @@ const header = () => {
   const home = (user.role === 'user') ? '/dashboard' : (user.role === 'admin') && '/admin/dashboard';
 
   return (
-    <div className='sticky top-0 flex flex-col justify-between w-56 h-screen pt-5 pb-4 font-Poppins'>
+    <div className='sticky top-0 flex flex-col justify-between w-56 h-screen pt-5 pb-4 text-TextPrimary'>
       <div className="flex flex-col w-full">
         <Link to={home} className="flex mx-auto">
           <img src={NuLogo} alt="Nu Logo" className='w-48' fetchPriority="high"/>
@@ -82,7 +82,7 @@ const header = () => {
       </div>
 
       <div className='mx-4'>
-        <button onClick={handleLogout} className='navigation w-full hover:bg-NuLightBlue hover:text-white text-[#8A8A8A]'>
+        <button onClick={handleLogout} className='w-full navigation hover:bg-NuLightBlue hover:text-white text-TextSecondary'>
           <LuLogOut className='text-base mr-3 ml-0.5 my-auto'/>
           Logout
         </button>

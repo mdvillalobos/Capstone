@@ -10,11 +10,11 @@ const Header = ({ pageTitle, pageDescription, destination = '' }) => {
     const { user } = useContext(UserContext);
 
     return (
-        <div className='flex justify-between'>
+        <div className='flex justify-between text-TextPrimary'>
             <div className='flex'>
                 <div className='my-auto space-y-0.5'>
                     <h1 className='text-xl font-semibold'>{pageTitle}</h1>
-                    <p className='text-xs text-gray-400'>{pageDescription}</p>
+                    <p className='text-xs text-TextSecondary'>{pageDescription}</p>
                 </div>
             </div>
 
@@ -27,9 +27,7 @@ const Header = ({ pageTitle, pageDescription, destination = '' }) => {
                 ) : null }
                 
                 
-                <div className='flex space-x-5'>
-                    {/* <LuBell className='my-auto text-xl text-NuLightText'/> */}
-                    
+                <div className='flex space-x-5'> 
                     <div className='flex my-auto space-x-2'>
                         {user.profilePicture ? (
                             <div className='flex justify-center h-[35px] w-[36px] overflow-hidden rounded-full my-auto'>
