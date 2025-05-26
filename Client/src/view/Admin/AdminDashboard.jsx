@@ -17,7 +17,7 @@ import ReRankingConfig from '../../components/AdminComponents/DashboardComponent
 const AdminDashboard = () => {
     const { config } = useContext(RankContext);
     const academicYear =  config?.academicYear || null;
-
+  
     const { getFacultyRankingData, getReRankingData, getApprovedApplications, getApproverList } = useCallDashboardAPI();
 
     const [ loading, setIsLoading ] = useState(true);

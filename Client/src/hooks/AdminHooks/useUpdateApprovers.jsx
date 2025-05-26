@@ -21,7 +21,6 @@ const useUpdateApprovers = () => {
             else {
                 LoadingToast.close();
             }
-
         }
 
         catch (error) {

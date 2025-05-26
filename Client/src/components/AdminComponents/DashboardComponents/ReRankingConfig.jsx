@@ -125,7 +125,8 @@ const ConfigModal = ({ initialApprovers, handleExit }) => {
         setApproverList(prev => prev.filter(acc => acc.email !== email ))
     }
 
-    const handleUpdateApproverList = async () => {
+    const handleUpdateApproverList = async (e) => {
+        e.preventDefault();
         try {
             setIsSubmitted(true)
             await updateApprover(approverList)
@@ -136,11 +137,13 @@ const ConfigModal = ({ initialApprovers, handleExit }) => {
     }
     
     //control section
-    const handleUpdateControls = async () => {
+    const handleUpdateControls = async (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        
         const { isReRankingSet, startDate, endDate } = reRankingStatus;
         const { isReRankingSet: configIsReRankingSet = false, startDate: configStartDate = '', endDate: configEndDate = '' } = config.reRankingStatus ?? {};
         const formatDate = (dateStr) => dateStr ? new Date(dateStr).toISOString().split('T')[0] : '';
-
         const configAcademicYear = config?.academicYear ?? '';
 
         if(isReRankingSet && (!startDate|| !endDate)) {
@@ -158,10 +161,8 @@ const ConfigModal = ({ initialApprovers, handleExit }) => {
 
         console.log('hasChanges:', hasChanges)
 
-        if(!hasChanges) {     
-            console.log('tae')       
+        if(!hasChanges) {          
             setIsSubmitted(false)
-            console.log(isSubmitted)
             setIsEditOn(false)
             return;
         }
@@ -209,7 +210,7 @@ const ConfigModal = ({ initialApprovers, handleExit }) => {
                         </button>
                     </div>
 
-                    <f className='flex flex-col justify-between flex-1 px-4 pb-4'>
+                    <form onSubmit={selected === 'Signatories' ? handleUpdateApproverList : handleUpdateControls} className='flex flex-col justify-between flex-1 px-4 pb-4'>
                         {selected === 'Signatories' ? (
                             <div className={`${!isEditOn ? 'pointer-events-none' : ''}`}>
                                 <DndContext
@@ -311,14 +312,12 @@ const ConfigModal = ({ initialApprovers, handleExit }) => {
                                     >
                                         Cancel
                                     </button>
-                                    <button 
-                                        type='button' 
-                                        onClick={selected === 'Signatories' ? handleUpdateApproverList : handleUpdateControls}
+                                    <input 
+                                        type='submit' 
+                                        value='save'
                                         className='w-32 px-10 py-2 text-sm text-white duration-200 rounded-lg cursor-pointer hover:shadow-md bg-NuBlue' 
                                         disabled={isSubmitted}
-                                    >
-                                        Save
-                                    </button>
+                                    />
                                 </div>
                             ) : (
                                 <button 
@@ -330,7 +329,7 @@ const ConfigModal = ({ initialApprovers, handleExit }) => {
                                 </button>
                             )}
                         </div>
-                    </f>
+                    </form>
                 </div>
             </div>
         </div>

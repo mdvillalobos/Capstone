@@ -39,7 +39,6 @@ const ViewApplication = () => {
         )
     }
     
-    
     return (
         <div className='flex flex-col min-h-screen font-Poppins'>
             <div className="flex flex-grow">

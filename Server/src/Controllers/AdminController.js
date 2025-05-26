@@ -61,8 +61,6 @@ export const updateConfig = async (req, res) => {
         const updatedConfig = id 
             ? await Configuration.findOneAndUpdate({ _id: id }, { $set: { academicYear: academicYear, reRankingStatus: updatedReRankingStatus }}, { new: true }) 
             : await Configuration.create({ academicYear: academicYear, reRankingStatus, updatedReRankingStatus });
-
-        console.log(updatedConfig)
         
         return res.status(200).json({ meesage: 'Configuration Successfully Updated', config: updatedConfig })
     }

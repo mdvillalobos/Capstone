@@ -10,8 +10,6 @@ const AccountManagement = () => {
     const [ loading, setIsLoading ] = useState(true);
     const [ isMobile, setIsMobile ] = useState(false);
 
-    console.log('rerender')
-
     const handleResize = useCallback(() => {
         setIsMobile(window.innerWidth < 768); 
     }, []);

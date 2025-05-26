@@ -11,11 +11,9 @@ const AdminApplication = () => {
     const [ isMobile, setIsMobile ] = useState(false);
 
     const handleResize = () => {
-      setIsMobile(window.innerWidth < 768); // Tailwind's md breakpoint
+      setIsMobile(window.innerWidth < 768); 
     };
 
-    console.log(data)
-  
     useEffect(() => {
       handleResize();
       window.addEventListener('resize', handleResize);
@@ -27,14 +25,9 @@ const AdminApplication = () => {
 
     useEffect(() => {
         axios.get('/api/getApplications')
-        .then(res => {
-            setData(res.data);
-            setIsLoading(false);
-        })
-        .catch(err => {
-            console.error(err);
-            setIsLoading(false);
-        });
+        .then(res => setData(res.data))
+        .catch(err => console.error(err))
+        .finally(() => setIsLoading(false))
     }, []);
 
     if(loading) return <LoadingSpinner/>
