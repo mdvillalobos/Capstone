@@ -7,12 +7,12 @@ const useSaveConfiguration = () => {
     const { Toast, LoadingToast } = useToast();
     const { setConfig } = useContext(RankContext)
 
-    const saveConfiguration = async (id, academicYear, reRankingPage) => {
+    const saveConfiguration = async (id, academicYear, reRankingStatus) => {
         LoadingToast.fire({ title: 'Updating Configuration....'})
 
         try {
             const { data } = await axios.post('/api/updateConfig', {
-                id, academicYear, reRankingPage
+                id, academicYear, reRankingStatus
             });
 
             if(data.error) {
@@ -23,7 +23,9 @@ const useSaveConfiguration = () => {
             }
 
             else {
+                setConfig(data.data)
                 LoadingToast.close();
+
             }
 
         } catch (error) {

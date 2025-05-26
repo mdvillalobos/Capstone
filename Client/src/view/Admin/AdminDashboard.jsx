@@ -107,7 +107,7 @@ const AdminDashboard = () => {
                     <div className='flex flex-1 space-x-8'>
                         <div className='flex flex-1 space-x-4'>
                             <div className='flex flex-col flex-1 space-y-4'>
-                                <p className='text-sm font-medium tracking-widest text-NuLightText '>ANALYTICS</p>
+                                <p className='text-sm font-medium tracking-widest text-TextSecondary'>ANALYTICS</p>
                                 
                                 <div className='flex space-x-4'>
                                     <Datas 

@@ -64,7 +64,7 @@ const ResetPasswordForm = () => {
     return (
         <div>
             <form onSubmit={handleResetPassword} className='auth-container'>
-                <div className={`auth-input-container border-gray-200 relative ${data.newPassword && !isPasswordValid ? 'border-red-400' : 'focus-within:border-[#93adc2]'} ${shake.password ? 'shake' : ''}`}>
+                <div className={`auth-input-container border-BorderColor relative ${data.newPassword && !isPasswordValid ? 'border-red-400' : 'focus-within:border-[#93adc2]'} ${shake.password ? 'shake' : ''}`}>
                     <input 
                         type={showPassword ? 'text' : 'password'}
                         placeholder='Password'
@@ -103,7 +103,7 @@ const ResetPasswordForm = () => {
                     <p className='text-[0.7rem] text-red-400 font-medium mx-1 absolute'>Invalid password format.</p>
                 )}
 
-                <div  className={`auth-input-container focus-within:border-[#93adc2] border-gray-200 ${shake.confirm ? 'shake' : ''}`}>
+                <div  className={`auth-input-container focus-within:border-[#93adc2] border-BorderColor ${shake.confirm ? 'shake' : ''}`}>
                     <input 
                         type={showConfirm ? 'text' : 'password'}
                         maxLength='20'

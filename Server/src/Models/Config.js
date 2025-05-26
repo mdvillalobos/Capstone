@@ -22,7 +22,7 @@ const reRankingStatus = new Schema({
 
 const ConfigSchema = new Schema ({
     academicYear: String,
-    reRankingPage: reRankingStatus,
+    reRankingStatus: reRankingStatus,
 })
 
 const ConfigModel = mongoose.model('configurations', ConfigSchema)

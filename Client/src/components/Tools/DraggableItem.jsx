@@ -23,9 +23,9 @@ const DraggableItem = ({ index, approver, handleRemoveApprover }) => {
     
     return (
         <div  className='relative flex rounded-md' ref={setNodeRef} style={style}>
-            <div className='flex w-full space-x-4' >
+            <div className='flex w-full space-x-2' >
                 <div {...attributes} {...listeners} className='my-auto'>
-                    <MdDragHandle className='my-auto text-NuLightText'/>
+                    <MdDragHandle className='my-auto text-lg text-NuLightText'/>
                 </div>
                 <p>{approver.accountinfo?.[0].firstName} {approver.accountinfo?.[0].lastName}</p>
             </div>

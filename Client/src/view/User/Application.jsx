@@ -14,15 +14,11 @@ const ApplicationForReRanking = () => {
     const [ loading, setIsLoading ] = useState(true)
      
     useEffect(() => {
+        setIsLoading(true)
         axios.get('/api/getEntry')
-            .then(res => {
-                setData(res.data);
-                setIsLoading(false); 
-            })
-            .catch(err => {
-                console.error(err);
-                setIsLoading(false);
-            });
+            .then(res => setData(res.data))
+            .catch(err => console.error(err))
+            .finally(() => setIsLoading(false))
     }, []);
 
     if(loading) return <LoadingSpinner/>
@@ -39,7 +35,7 @@ const ApplicationForReRanking = () => {
                         />
                     )}
                     <div className={`flex flex-1 ${data && 'justify-center items-center'}`}>
-                        {config.reRankingPage.isReRankingOpen ? (
+                        {config.reRankingStatus.isReRankingOpen ? (
                             data ? (
                                 <SubmittedPage rest={data}/>
                             ) : (

@@ -4,7 +4,7 @@ const router = Router();
 import { login, register, verifyEmail, registerProfile, forgotPassword, resetPassword, logout, resendOTP } from '../Controllers/AuthController.js';
 import { getUserData, addCredential, getUserCredentials, updateCredentialStatus } from '../Controllers/UserController.js';
 import { changePassword, updateProfile } from '../Controllers/SettingController.js'
-import { updateConfig, getConfigurations, updateApplicationApprovers, getApproverList, createRank, getRanks, registerAdmin, getAllAccount } from '../Controllers/AdminController.js';
+import { checkAdminPassowrd, updateConfig, getConfigurations, updateApplicationApprovers, getApproverList, createRank, getRanks, registerAdmin, getAllAccount } from '../Controllers/AdminController.js';
 import { checkExistingEntry, getApplicationsForReRanking, submitApplicationEntry, updateApplication, cancelSubmission, submitApplicationReview} from '../Controllers/ApplicationController.js';
 import { getFacultyRankData, getReRankingData, getApprovedApplications } from '../Controllers/AnalyticsController.js'; 
 
@@ -51,6 +51,7 @@ router.post('/api/updateApplication', authorizationMiddleware('user'), updateApp
 router.post('/api/cancelEntry', authorizationMiddleware('user'), cancelSubmission)
 
 //admin 
+router.post('/api/checkAdminPassword', authorizationMiddleware('admin'), checkAdminPassowrd)
 router.get('/api/getApplications', authorizationMiddleware('admin'), getApplicationsForReRanking);
 router.post('/api/reviewApplication', authorizationMiddleware('admin'), submitApplicationReview);
 router.post('/api/updateConfig', authorizationMiddleware('admin'), updateConfig);

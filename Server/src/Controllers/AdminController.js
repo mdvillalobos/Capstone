@@ -6,37 +6,67 @@ import Configuration from '../Models/Config.js';
 import { hashPassword, compareHashed } from '../Helpers/Auth.js';
 dotenv.config();
 
+export const checkAdminPassowrd = async (req, res) => {
+    const { token } = req.cookies;
+    const { password } = req.body;
+
+    if(!password) {
+        return res.status(200).json({ error: 'Required all fields!' })
+    }
+
+    try {
+        const { email } = jwt.verify(token, process.env.JWT_SECRET);
+        const adminData = await Account.findOne({ email: email })
+
+        const checkPassword = await compareHashed(password, adminData.password)
+        
+        if(!checkPassword) {
+            return res.status(200).json({ error: 'Incorrect Password!'})
+        }
+
+        return res.status(200).json({ message: 'Verified Successfully', data: checkPassword })
+    }
+    catch(error) {
+        console.error(`Verifying Admin Password Error: ${ error.message }`)
+        return res.status(500).json({ error: 'An internal error occurred. Please try again later!' })
+    }
+}
+
 export const updateConfig = async (req, res) => {
     const { id, academicYear, reRankingStatus } = req.body;
 
     try {
         const formatDate = (date) => new Date(date).toISOString().split('T')[0];
-        const todayDate = formatDate(new Date());
-        const startDate = formatDate(reRankingStatus.startDate);
 
-        const updatedReRankingStatus = {
-            ...reRankingStatus,
-            isReRankingOpen: startDate <= todayDate ? true : false,
-        };
+        let updatedReRankingStatus;
 
-        if(!reRankingStatus.isReRankingSet) {
+        if (!reRankingStatus.isReRankingSet) {
             updatedReRankingStatus = {
                 ...reRankingStatus,
                 isReRankingOpen: false,
                 startDate: null,
                 endDate: null
-            }
+            };
+            
+        } else {
+            const todayDate = formatDate(new Date());
+            const startDate = formatDate(reRankingStatus.startDate);
+
+            updatedReRankingStatus = {
+                ...reRankingStatus,
+                isReRankingOpen: todayDate <= startDate,
+            };
         }
 
         const updatedConfig = id 
-            ? await Configuration.updateOne({ _id: id}, { $set: { academicYear: academicYear, reRankingStatus: updatedReRankingStatus }}) 
+            ? await Configuration.updateOne({ _id: id }, { $set: { academicYear: academicYear, reRankingStatus: updatedReRankingStatus }}) 
             : await Configuration.create({ academicYear: academicYear, reRankingStatus, updatedReRankingStatus });
 
         return res.status(200).json({ meesage: 'Configuration Successfully Updated', data: updatedConfig })
     }
     catch(error) {
         console.error(`Updating System Configuration Error ${ error.message }`);
-        return res.status(500).json({ error: 'An internal error occurred. Please try again later!'});
+        return res.status(500).json({ error: 'An internal error occurred. Please try again later!' });
     }
 }
 

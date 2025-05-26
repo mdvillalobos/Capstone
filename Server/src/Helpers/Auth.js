@@ -34,3 +34,5 @@ export const OTPChecker = async (email, otp, res) => {
         console.log(error)
     }
 }
+
+

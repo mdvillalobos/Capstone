@@ -246,7 +246,7 @@
 }
 
 .checkbox:checked ~ .slider {
-  background-color: #2196F3;
+  background-color: #4ac467;
 }
 
 .checkbox:active ~ .slider::before {

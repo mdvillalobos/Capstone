@@ -59,7 +59,6 @@ export const getApplicationsForReRanking = async (req, res) => {
     try {
         const { email } = jwt.verify(token, process.env.JWT_SECRET);
         const userData = await Account.findOne({ email: email });
-        console.log(userData.approverNumber)
 
         const approverLevel = userData.approverNumber === 1 ? null : userData.approverNumber - 1;
     
@@ -123,8 +122,6 @@ export const submitApplicationReview = async (req, res) => {
             ApplicationForms.findById(formID)
         ]);
         
-        console.log(filterRemarks)
-
         if (!userApplicationForm) {
             return res.json({ error: 'Application form not found.' });
         }
