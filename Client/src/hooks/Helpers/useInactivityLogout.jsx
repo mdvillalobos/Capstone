@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../../../context/userContext';
 import axios from 'axios';
 
-const useInactivityLogout = (timeout = 900000, isActive = true) => {
+const useInactivityLogout = (timeout = 600000, isActive = true) => {
   const { setUser } = useContext(UserContext);
   const [ isPopupVisible, setIsPopupVisible ] = useState(false);
   const timerRef = useRef(null);
