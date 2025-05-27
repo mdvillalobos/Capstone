@@ -8,7 +8,7 @@ const ContentLoader = () => {
         src={Loader}
         loop
         autoplay
-        style={{ width: '30vw', height: '30vh' }}
+        style={{ width: '40vw', height: '40vh' }}
       />
     </div>
   )
