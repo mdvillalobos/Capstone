@@ -5,8 +5,10 @@ import { BiDotsVerticalRounded } from "react-icons/bi";
 import { TiArrowLeft, TiArrowRight } from "react-icons/ti";
 import useRegisterAdmin from '../../../hooks/AdminHooks/useRegisterAdmin';
 import VerifyAdminModal from '../../Tools/VerifyAdminModal.jsx';
+import useUpdateUserStatus from '../../../hooks/AdminHooks/useUpdateUserStatus.jsx';
 
-const AccountsTable = ({ rest }) => {
+const AccountsTable = ({ rest, refetchAccounts }) => {
+    const { updateAccountStatus } = useUpdateUserStatus();
     const [ isVerifyAdminOpen, setIsVerifyAdminOpen ] = useState(false)
     const [ tableCurrentPage, setTableCurrentPage ] = useState(1);
     const [ selected, setSelected ] = useState();
@@ -16,7 +18,7 @@ const AccountsTable = ({ rest }) => {
     const roles = Array.from(new Set(rest?.map(acc => acc.role)))
     const filterByRole = rest?.filter(acc => selected ? acc.role === selected : true)
 
-    const itemsPerPage = 10;
+    const itemsPerPage = 8;
     const totalPages = Math.ceil(rest?.length / itemsPerPage);
     const indexOfLastItem = tableCurrentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -33,6 +35,15 @@ const AccountsTable = ({ rest }) => {
         setTableCurrentPage(tableCurrentPage - 1);
       }
     };
+
+    const handleUpdateAccountStatus = async (id, isActive) => {
+        const action = isActive ? false : true 
+        const result = await updateAccountStatus(id, action);
+
+        console.log(result.success)
+        
+        if (result.success) refetchAccounts();
+    }
 
     return (
         <div className='flex flex-col w-full'>
@@ -94,7 +105,9 @@ const AccountsTable = ({ rest }) => {
                             </div>
 
                             <div className='flex w-[12%] my-auto'> 
-                                <p className={`text-center p-0.5 rounded-3xl px-5 border ${data.isActive ? 'bg-green-400 text-green-500' : 'border-green-600 text-green-600'}`}>Active</p>
+                                <p className={`text-center p-0.5 rounded-3xl px-5 border ${data.isActive ? 'border-green-600 text-green-600' : 'border-red-600 text-red-600'}`}>
+                                    {data.isActive ? 'Active' : 'Not Active'} 
+                                </p>
                             </div>
                             <div className=' relative w-[5%] my-auto flex justify-center'>
                                 <button 
@@ -107,7 +120,11 @@ const AccountsTable = ({ rest }) => {
 
                                 {isActionOpen === index && (
                                     <div className='absolute top-2 right-6 bg-white rounded-md shadow-md p-1.5 rounded-md border-2 border-BorderColor'>
-                                        <button type='button' className='cursor-pointer hover:hover:bg-[#ebebeb] p-2 rounded-sm'>
+                                        <button 
+                                            type='button' 
+                                            className='cursor-pointer hover:hover:bg-[#ebebeb] p-2 rounded-sm'
+                                            onClick={() => { handleUpdateAccountStatus(data._id, data.isActive), setActionIsOpen(null)}}
+                                        >
                                             Deactivate
                                         </button>
                                     </div>

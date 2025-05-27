@@ -59,6 +59,8 @@ export const checkExistingEntry = async (req, res) => {
 
 export const getApplicationsForReRanking = async (req, res) => {
     const { token } = req.cookies;
+    const { academicYear } = req.query;
+    
     try {
         const { email } = jwt.verify(token, process.env.JWT_SECRET);
         const userData = await Account.findOne({ email: email });
@@ -68,6 +70,7 @@ export const getApplicationsForReRanking = async (req, res) => {
         const applications = await ApplicationForms.find({
             prevApprover: approverLevel,
             applicationStatus: 'For verification',
+            academicYear: academicYear
         });
 
         return res.status(200).json(applications)

@@ -14,7 +14,6 @@ const AccountManagement = () => {
         setIsMobile(window.innerWidth < 768); 
     }, []);
     
-  
     useEffect(() => {
       handleResize();
       window.addEventListener('resize', handleResize);
@@ -22,11 +21,16 @@ const AccountManagement = () => {
       return () => window.removeEventListener('resize', handleResize);
     }, []);
 
-    useEffect(() => {
+    const fetchAccounts = () => {
+        setIsLoading(true);
         axios.get('/api/getAllAccounts')
-        .then(res => setData(res.data))
-        .catch(err => console.error(err))
-        .finally(() => setIsLoading(false))
+            .then(res => setData(res.data))
+            .catch(err => console.error(err))
+            .finally(() => setIsLoading(false));
+    };
+
+    useEffect(() => {
+        fetchAccounts();
     }, []);
 
     if (isMobile) {
@@ -50,7 +54,7 @@ const AccountManagement = () => {
                         pageDescription={'Control access and account settings.'}
                     />
                     <div className='flex flex-1'>
-                        {loading ? <ContentLoader/> : <AccountsTable rest={data}/>}
+                        {loading ? <ContentLoader/> : <AccountsTable rest={data} refetchAccounts={fetchAccounts}/>}
                     </div>
                 </div>
             </div>

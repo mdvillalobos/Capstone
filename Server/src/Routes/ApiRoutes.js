@@ -4,18 +4,12 @@ const router = Router();
 import { login, register, verifyEmail, registerProfile, forgotPassword, resetPassword, logout, resendOTP } from '../Controllers/AuthController.js';
 import { getUserData, addCredential, getUserCredentials, updateCredentialStatus } from '../Controllers/UserController.js';
 import { changePassword, updateProfile } from '../Controllers/SettingController.js'
-import { checkAdminPassowrd, updateConfig, getConfigurations, updateApplicationApprovers, getAdminAccount, createRank, getRanks, registerAdmin, getAllAccount } from '../Controllers/AdminController.js';
+import { checkAdminPassowrd, updateConfig, getConfigurations, updateApplicationApprovers, getAdminAccount, createRank, getRanks, registerAdmin, getAllAccount, updateAccount } from '../Controllers/AdminController.js';
 import { checkExistingEntry, getApplicationsForReRanking, submitApplicationEntry, updateApplication, cancelSubmission, submitApplicationReview} from '../Controllers/ApplicationController.js';
 import { getFacultyRankData, getReRankingData, getApprovedApplications } from '../Controllers/AnalyticsController.js'; 
 
 import authorizationMiddleware from '../Middleware/authorizationMiddleware.js';
 import { upload, multerErrorHandler } from'../Middleware/uploadMiddleware.js';
-
-/* const uploadFiles = upload.fields([{ name: 'requirement_1', maxCount: 1}, { name: 'requirement_2', maxCount: 1}, 
-    { name: 'requirement_3', maxCount: 1}, { name: 'requirement_4', maxCount: 1 }, { name: 'requirement_5', maxCount: 1}, 
-    { name: 'requirement_6', maxCount: 1}, { name: 'requirement_7', maxCount: 1 }, { name: 'requirement_8', maxCount: 1}, 
-    { name: 'requirement_9', maxCount: 1}, { name: 'requirement_10', maxCount: 1}, 
-]); */
 
 // login & logout
 router.post('/api/login', login);
@@ -60,6 +54,7 @@ router.get('/api/getAdminAccount', authorizationMiddleware('admin'), getAdminAcc
 router.post('/api/createRank', authorizationMiddleware('admin'), createRank);
 router.post('/api/registerAdmin', authorizationMiddleware('admin'), registerAdmin);
 router.get('/api/getAllAccounts', authorizationMiddleware('admin'), getAllAccount)
+router.post('/api/updateAccount', authorizationMiddleware('admin'), updateAccount)
 
 router.get('/api/getConfiguration', getConfigurations);
 

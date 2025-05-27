@@ -71,7 +71,6 @@ const RequirementFields = ({ requirementDescription, userDocuments, setRequireme
                     <div className='flex flex-col'>
                         <p className='mb-1 text-sm font-medium text-NuBlue'>Attached Documents:</p>
                         {userDocuments.files.map((file, i) => {
-                            console.log(file)
                             const fileType = file.fileName ? file.fileName.split('.').pop().toLowerCase() : null
                             const formattedDate = new Date(file.date_uploaded).toLocaleDateString('en-US', {
                                 month: 'short',

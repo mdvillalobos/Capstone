@@ -262,11 +262,24 @@ export const registerAdmin = async (req, res) => {
 
 export const getAllAccount = async (req, res) => {
     try {
-        const Accounts = await Account.find().select('employeeID email role isVerified accountinfo.lastName accountinfo.firstName')
+        const Accounts = await Account.find().select('_id employeeID email role isVerified isActive accountinfo.lastName accountinfo.firstName')
         return res.status(200).json(Accounts)
     }
     catch (error) {
         console.error(`Fetching Accounts Error: ${ error.message }`);
+        return res.status(500).json({ error: 'An internal server error occurred.' });
+    }
+}
+
+export const updateAccount = async (req, res) => {
+    const { id, action } = req.body;
+
+    try {
+        const userData = await Account.findByIdAndUpdate(id, { isActive: action })
+
+        return res.status(200).json({ message: `Account sucessfully ${action}`})
+    } catch (error) {
+        console.error(`Updating Account Error!: ${ error.message }`);
         return res.status(500).json({ error: 'An internal server error occurred.' });
     }
 }

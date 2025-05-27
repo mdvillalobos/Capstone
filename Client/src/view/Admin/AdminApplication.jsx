@@ -1,11 +1,13 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import Navigation from "../../components/Tools/Navigation.jsx";
 import ApplicationTable from '../../components/AdminComponents/ApplicationComponents/ApplicationTable.jsx';
 import Header from '../../components/Tools/Header.jsx';
 import ContentLoader from '../../components/Tools/ContentLoader.jsx';
+import { RankContext } from '../../../context/rankContext.jsx';
 
 const AdminApplication = () => {
+    const { config } = useContext(RankContext)
     const [ data, setData ] = useState([]);
     const [ loading, setIsLoading ] = useState(true);
     const [ isMobile, setIsMobile ] = useState(false);
@@ -24,7 +26,7 @@ const AdminApplication = () => {
     }, []);
 
     useEffect(() => {
-        axios.get('/api/getApplications')
+        axios.get(`/api/getApplications?academicYear=${config?.academicYear}`)
         .then(res => setData(res.data))
         .catch(err => console.error(err))
         .finally(() => setIsLoading(false))
