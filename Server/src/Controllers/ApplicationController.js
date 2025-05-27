@@ -150,7 +150,7 @@ export const submitApplicationReview = async (req, res) => {
 
         let message = '';
 
-        if (verdict === 'Declined') {
+        if (verdict === 'Decline') {
         message = `We regret to inform you that your application has been **declined**.\n\nRemarks:\n\n` + 
             filterRemarks.map(r => `**${r.requirementDes}**\n- ${r.comment}`).join('\n\n');
         } else if (verdict === 'Return') {
