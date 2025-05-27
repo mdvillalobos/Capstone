@@ -1,24 +1,42 @@
 import { useContext, useState } from 'react';
+import axios from 'axios';
 import { RankContext } from '../../../context/rankContext.jsx';
 import { Link } from 'react-router-dom';
 import PersonalInfoFields from './PersonalInfoFields.jsx';
 import RequirementFields from './RequirementFields.jsx';
 import useUpdateApplication from '../../hooks/UserHooks/useUpdateApplication.jsx';
+import { UserContext } from '../../../context/userContext.jsx';
 
-const ApplicationForm = ({ rest }) => {
-    const { ranks } = useContext(RankContext);
+const ApplicationForm = () => {
+    const { ranks, config } = useContext(RankContext);
+    const { applicationData, setApplicationData } = useContext(UserContext);
     const { updateApplication } = useUpdateApplication();
+
     
-    const selectedRank = ranks?.find(rankRequirement => rankRequirement.rankName === rest?.applyingFor);
+    const selectedRank = ranks?.find(rankRequirement => rankRequirement.rankName === applicationData?.applyingFor);
 
     const [ isEditEnable, setIsEditEnable ] = useState(false)
     const [ isSubmitted, setIsSubmitted ] = useState(false);
-    const [ requirements, setRequirements ] = useState(rest?.requirements);
+    const [ requirements, setRequirements ] = useState(applicationData?.requirements);
 
-    const handleUpdateApplication = async (e) => {
-        e.preventDefault();
-        setIsEditEnable(true)
-        await updateApplication(rest._id, requirements, setIsSubmitted)
+    const fetchApplication = () => {
+        axios.get(`/api/getEntry?academicYear=${config?.academicYear}`)
+            .then(res => setData(res.data))
+            .catch(err => console.error(err))
+    }
+
+    const handleUpdateApplication = async () => {
+        try {
+            setIsSubmitted(true)
+            const result = await updateApplication(applicationData._id, requirements)
+
+            if(result.success) {
+                setApplicationData(result.updatedData)
+            }
+        }
+        finally {
+            setIsSubmitted(false)
+        }
     }
     
     return (
@@ -26,15 +44,15 @@ const ApplicationForm = ({ rest }) => {
             <div className='px-6 py-4 border-2 border-BorderColor rounded-mx rounded-xl'>
                 <div className="flex justify-between pb-2">
                     <h1 className='formTitle'>Faculty Ranking Form</h1>
-                    <h1 className='formTitle'>{rest?.applyingFor}</h1>
+                    <h1 className='formTitle'>{applicationData?.applyingFor}</h1>
                 </div>
                 <PersonalInfoFields
-                    name={rest.name}
-                    college={rest.college}
-                    department={rest.department}
-                    currentRank={rest.currentRank}
-                    status={rest.userStatus}
-                    academicYear={rest.academicYear}
+                    name={applicationData?.name}
+                    college={applicationData?.college}
+                    department={applicationData?.department}
+                    currentRank={applicationData?.currentRank}
+                    status={applicationData?.userStatus}
+                    academicYear={applicationData?.academicYear}
                 />
 
                 <div className='py-3'>
@@ -53,10 +71,10 @@ const ApplicationForm = ({ rest }) => {
             </div>
 
             <div className='flex justify-end mt-4'>
-                {rest.applicationStatus === 'Return' || rest.applicationStatus === 'For verification' ? (
+                {applicationData?.applicationStatus === 'Return' || applicationData?.applicationStatus === 'For verification' ? (
                     isEditEnable ? ( 
                         <div className='space-x-4'>
-                            <button type='button' onClick={() => setIsEditEnable(false)} className='w-32 py-2 font-medium duration-300 bg-gray-300 rounded-lg cursor-pointer hover:shadow-lg'>Cancel</button>
+                            <button type='button' onClick={() => {setIsEditEnable(false), location.reload()}} className='w-32 py-2 font-medium duration-300 bg-gray-300 rounded-lg cursor-pointer hover:shadow-lg'>Cancel</button>
                             <button type="button" onClick={handleUpdateApplication} disabled={isSubmitted} className='w-32 py-2 text-white rounded-lg cursor-pointer bg-NuBlue hover:shadow-lg'>Update</button>
                         </div>
                     ) : (

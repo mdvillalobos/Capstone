@@ -4,6 +4,8 @@ const AddEducationModal = ({ data, setData }) => {
     const [ isOpen, setIsOpen ] = useState(false);
     const [ isDegreeOpen, setIsDegreeOpen ] = useState(false)
     const [ isAlignedOpen, setIsAlignedOpen ] = useState(false);
+
+    console.log(data.tags)
     
     const documentTypes = [ 
         'Educational Attainment',

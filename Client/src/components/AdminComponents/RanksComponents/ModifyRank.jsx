@@ -49,6 +49,17 @@ const options = [
   "Medical Specialty",
   "Dental Hygienist",
   "Dental Technologist",
+  'OTE (Overall Teaching Effectiveness)',
+  "New Faculty",
+  "On-board Faculty",
+  'At least 80',
+	'At least 85',
+	'At least 90',
+  'At least 80',
+	'At least 85',
+	'At least 90',
+  
+
 ];
 
 const ModifyRank = () => {

@@ -40,6 +40,19 @@ const RequirementFields = ({ requirementDescription, userDocuments, setRequireme
         );
     };
 
+    const handleAddFile = (requirementNumber) => {
+        setRequirements(prev =>
+            prev.map(req =>
+                req.requirementNumber === requirementNumber
+                    ? {
+                        ...req,
+                        files: [...req.files, { filePath: null, fileName: null }]
+                    }
+                    : req
+            )
+        );
+    };
+    
     return (
         <div className=''>
             {isImageshow.show && (
@@ -70,57 +83,76 @@ const RequirementFields = ({ requirementDescription, userDocuments, setRequireme
 
                     <div className='flex flex-col'>
                         <p className='mb-1 text-sm font-medium text-NuBlue'>Attached Documents:</p>
-                        {userDocuments.files.map((file, i) => {
-                            const fileType = file.fileName ? file.fileName.split('.').pop().toLowerCase() : null
-                            const formattedDate = new Date(file.date_uploaded).toLocaleDateString('en-US', {
-                                month: 'short',
-                                day: 'numeric',
-                                year: 'numeric'
-                            });
-                            return (
-                                <div key={i}>
-                                    {file.filePath ? (
-                                        <button 
-                                            type='button'
-                                            className='relative z-0 px-3 py-2 overflow-hidden text-sm duration-300 border-2 rounded-md cursor-pointer border-BorderColor w-46 hover:bg-NuLightBlue hover:border-NuLightBlue hover:text-white'
-                                            onClick={() => handleShowImage(file.filePath, file.fileName)}
-                                        >
-                                            <div type="button" className='flex space-x-2'>
-                                                {fileType === 'pdf' ? (
-                                                    <p className='rounded-md bg-[#ef676d] p-1'><TbPdf className='text-lg text-white'/></p>
-                                                ) : fileType === 'png' ?  (
-                                                    <p className='rounded-md bg-[#ef676d] p-1'><TbPng className='text-lg text-white'/></p>
-                                                ) : (
-                                                    <p className='rounded-md bg-[#ef676d] p-1'><TbJpg className='text-lg text-white'/></p>
-                                                )}
-                                                <p className='w-full my-auto overflow-hidden text-left text-ellipsis whitespace-nowrap'>{file.fileName}</p>
-                                            </div>
-                                            {user.role === 'user' ? (
-                                                isEditEnable && (
-                                                    <button type='button' onClick={() => handleChangeFile(userDocuments.requirementNumber, i, {filePath: null, fileName: null})} className='text-xl absolute right-2 top-2.5 z-10'> &times;</button>
-                                                )
-                                            ) : null}
-                                        </button>
-                                    ) : (
-                                        isEditEnable ? (
-                                            user.role === 'user' && (
+                        <div className='flex space-x-2'>
+                            {userDocuments.files.map((file, i) => {
+                                const fileType = file.fileName ? file.fileName.split('.').pop().toLowerCase() : null
+                                const formattedDate = new Date(file.date_uploaded).toLocaleDateString('en-US', {
+                                    month: 'short',
+                                    day: 'numeric',
+                                    year: 'numeric'
+                                });
+                                return (
+                                    <div key={i}>
+                                        {file.filePath ? (
+                                            <>
                                                 <button 
                                                     type='button'
-                                                    className='flex justify-center items-center border-2 border-BorderColor py-3.5 px-2 text-sm rounded-md w-[208px] overflow-hidden hover:bg-NuLightBlue duration-300 hover:text-white'
-                                                    onClick={() => setIsFileShow({ show: true, requirementNumber: userDocuments.requirementNumber, fileIndex: i })}
+                                                    className='relative z-0 w-48 px-2 overflow-hidden text-sm duration-300 border-2 rounded-md cursor-pointer h-13 border-BorderColor hover:bg-NuLightBlue hover:border-NuLightBlue hover:text-white'
+                                                    onClick={() => handleShowImage(file.filePath, file.fileName)}
                                                 >
-                                                    Select a file
+                                                    <div type="button" className='flex space-x-2'>
+                                                        {fileType === 'pdf' ? (
+                                                            <p className='rounded-md bg-[#ef676d] p-1'><TbPdf className='text-lg text-white'/></p>
+                                                        ) : fileType === 'png' ?  (
+                                                            <p className='rounded-md bg-[#ef676d] p-1'><TbPng className='text-lg text-white'/></p>
+                                                        ) : (
+                                                            <p className='rounded-md bg-[#ef676d] p-1'><TbJpg className='text-lg text-white'/></p>
+                                                        )}
+                                                        <p className='w-[70%] my-auto overflow-hidden text-left text-ellipsis whitespace-nowrap'>{file.fileName}</p>
+                                                    </div>
+                                                    {user.role === 'user' ? (
+                                                        isEditEnable && (
+                                                            <div 
+                                                                type='button' 
+                                                                onClick={(e) => { e.stopPropagation(), handleChangeFile(userDocuments.requirementNumber, i, {filePath: null, fileName: null})}} 
+                                                                className='absolute z-10 text-xl right-2 top-2.5'
+                                                            >
+                                                                &times;
+                                                            </div>
+                                                        )
+                                                    ) : null}
                                                 </button>
-                                            )
+                                            </>
                                         ) : (
-                                            <p className='cursor-pointer flex justify-center items-center border-2 border-BorderColor py-3.5 px-2 text-sm rounded-md w-52 overflow-hidden'>
-                                                No attached document
-                                            </p>
-                                        )
-                                    )}
-                                </div>
-                            )
-                        })}
+                                            isEditEnable ? (
+                                                user.role === 'user' && (
+                                                    <button 
+                                                        type='button'
+                                                        className='flex items-center justify-center w-48 px-2 overflow-hidden text-sm duration-300 border-2 rounded-md cursor-pointer h-13 border-BorderColor hover:bg-NuLightBlue hover:border-NuLightBlue hover:text-white'
+                                                        onClick={() => setIsFileShow({ show: true, requirementNumber: userDocuments.requirementNumber, fileIndex: i })}
+                                                    >
+                                                        Select a file
+                                                    </button>
+                                                )
+                                            ) : (
+                                                <p className='flex justify-center items-center border-2 border-BorderColor py-3.5 px-2 text-sm rounded-md w-52 overflow-hidden h-13'>
+                                                    No attached document
+                                                </p>
+                                            )
+                                        )}
+                                    </div>
+                                )
+                            })}
+                            {userDocuments.files.every(file => file.filePath) && isEditEnable && user.role === 'user' && (
+                                <button
+                                    type='button'
+                                    onClick={() => handleAddFile(userDocuments.requirementNumber)}
+                                    className='px-3 py-1 text-xl font-semibold text-black duration-200 border-2 rounded rounded-md border-BorderColor hover:bg-NuLightBlue hover:border-NuLightBlue'
+                                >
+                                    +
+                                </button>
+                            )}
+                        </div>
                     </div>
 
                     {user.role === 'admin' && (

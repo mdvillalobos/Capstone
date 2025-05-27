@@ -5,22 +5,27 @@ const useUpdateApplication = () => {
     const { Toast, LoadingToast } = useToast();
 
     const updateApplication = async (applicationID, requirements) => {
-
         LoadingToast.fire({ title: 'Updating application..'});
 
         try {
-            const data = await axios.post('/api/updateApplication', {
+            const { data } = await axios.post('/api/updateApplication', {
                 applicationID, requirements
             })
 
             if(data.error) {
-                return Toast.fire({
+                Toast.fire({
                     icon: 'error',
                     title: data.error
                 })
+
+                return { success: false }
             }
             else {
-                location.reload();
+                Toast.fire({
+                    icon: 'success',
+                    title: 'Application updated successfully!'
+                })
+                return { success: true, updatedData: data.data }
             }
         } catch (error) {
             console.error(`Client Error Updating Requirement: ${error.message}`)

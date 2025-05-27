@@ -46,7 +46,7 @@ import maleProfile from './assets/images/male.webp';
 import femaleProfile from './assets/images/female.webp';
 import Done from './assets/images/done.webp'
 
-/* axios.defaults.baseURL = 'http://localhost:3001'; */ 
+/* axios.defaults.baseURL = 'http://localhost:3001';  */
 axios.defaults.baseURL = 'https://nufso.onrender.com';
 axios.defaults.withCredentials = true;
 

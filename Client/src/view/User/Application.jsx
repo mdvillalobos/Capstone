@@ -7,39 +7,45 @@ import DropDown from '../../components/UserComponents/ApplicationComponents/Drop
 import SubmittedPage from '../../components/UserComponents/ApplicationComponents/SubmittedPage.jsx';
 import Header from '../../components/Tools/Header.jsx';
 import ContentLoader from '../../components/Tools/ContentLoader.jsx';
+import { UserContext } from '../../../context/userContext.jsx';
 
 const ApplicationForReRanking = () => {
+    const { applicationData, setApplicationData } = useContext(UserContext)
     const { config } = useContext(RankContext)
 
-    const [ data, setData ] = useState();
     const [ loading, setIsLoading ] = useState(true)
 
     useEffect(() => {
-        setIsLoading(true)
-        axios.get(`/api/getEntry?academicYear=${config?.academicYear}`)
-            .then(res => setData(res.data))
-            .catch(err => console.error(err))
-            .finally(() => setIsLoading(false))
-    }, []);
+        if (!config?.academicYear) return;
+        setIsLoading(true);
+
+        axios.get(`/api/getEntry?academicYear=${config.academicYear}`)
+            .then(res => {
+                if (JSON.stringify(res.data) !== JSON.stringify(applicationData)) {
+                    setApplicationData(res.data);
+                }
+            })
+            .finally(() => setIsLoading(false));
+    }, [config?.academicYear]);
 
     return (
         <div className="flex flex-col min-h-screen font-Poppins">
             <div className="flex flex-grow">
                 <Navigation />
                 <div className="flex flex-col flex-1 px-6 py-4 ">
-                    {!data && (
+                    {!applicationData && (
                         <Header
                             pageTitle={'Application'} 
                             pageDescription={'Submit documents to apply for rank update'}
                         />
                     )}
-                    <div className={`flex flex-1 ${data && 'justify-center items-center'}`}>
+                    <div className={`flex flex-1 ${applicationData && 'justify-center items-center'}`}>
                         {loading ? (
                             <ContentLoader/>
                         ) : 
                             config.reRankingStatus.isReRankingOpen ? (
-                                data ? (
-                                    <SubmittedPage rest={data}/>
+                                applicationData ? (
+                                    <SubmittedPage />
                                 ) : (
                                     <div className='flex flex-col'>
                                         <Instruction/>

@@ -79,14 +79,24 @@ export const getApplicationsForReRanking = async (req, res) => {
 }
 
 export const updateApplication = async (req, res) => {
-    const { applicationID, requirements } = req.body;
     const { token } = req.cookies;
+    const { applicationID, requirements } = req.body;
 
     if(!token) return res.json({ error: 'Access Denied' })
     
     try {
-        await ApplicationForms.findByIdAndUpdate(applicationID, { requirements: requirements, applicationStatus: 'For verification' }, { new: true })
-        return res.json({ message: 'Updated Successfully'})
+        const filteredRequirements = requirements.map(req => {
+            const nonEmptyFiles = req.files.filter(file => file.filePath !== null);
+
+            return {
+                ...req,
+                files: nonEmptyFiles.length > 0 ? nonEmptyFiles : [req.files[0]] // keep the first file even if it's empty
+            };
+        });
+
+        const updated = await ApplicationForms.findByIdAndUpdate(applicationID, { requirements: filteredRequirements, applicationStatus: 'For verification' }, { new: true })
+        console.log(updated)
+        return res.status(200).json({ message: 'Updated Successfully', data: updated })
     } catch (error) {
         console.log( error );
         return res.json({ error: 'An internal error occurred. Please try again later!' });

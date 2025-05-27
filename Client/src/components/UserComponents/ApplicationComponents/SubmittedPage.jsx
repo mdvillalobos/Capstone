@@ -1,21 +1,19 @@
-import { useState } from 'react'
+import { useContext, useState } from 'react'
+import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom'
 import Done from '../../../assets/images/done.webp';
 import useCancelApplication from '../../../hooks/ApplicationHooks/useCancelEntry';
 import { IoClose } from "react-icons/io5";
 import { BsQuestionLg } from "react-icons/bs";
+import { UserContext } from '../../../../context/userContext';
 
-const DisabledPage = ({ rest }) => {
-    const navigate = useNavigate();
+const DisabledPage = () => {
+    const { applicationData } = useContext(UserContext);
     const { cancelEntry } = useCancelApplication();
     const [ confirm, setConfirm ] = useState(false);
 
-    const viewSubmitted = (rest) => {
-        navigate('/application/myform', { state: { myForm: rest }})
-    }
-
     const cancelSubmission = async () => {
-       await cancelEntry(rest._id)
+       await cancelEntry(applicationData._id)
     }
 
     return (
@@ -62,13 +60,13 @@ const DisabledPage = ({ rest }) => {
                 <div className="space-y-4 text-center">
                     <h1 className='text-4xl font-medium'>Application Submitted Successfully!</h1>
                     <div className="space-y-4 text-gray-500">
-                        <p>Thank you for applying for the position <b>{rest.applyingFor}</b>.Your application is currently <b>For Approval</b> <br/>Our team will review your submitted application and will contact once it done.</p>
+                        <p>Thank you for applying for the position <b>{applicationData.applyingFor}</b>.Your application is currently <b>For Approval</b> <br/>Our team will review your submitted application and will contact once it done.</p>
                         <p>We appreciate your submission. Thank you!</p>
                     </div>
                 </div>
                 <div className="flex justify-center">
                     <div className="flex space-x-2">
-                        <button type='button' className='px-10 py-2 text-white duration-200 rounded-md cursor-pointer bg-NuBlue hover:bg-NuLightBlue' onClick={() => viewSubmitted(rest)}>View my application</button>
+                        <Link to='/application/myform' className='px-10 py-2 text-white duration-200 rounded-md cursor-pointer bg-NuBlue hover:bg-NuLightBlue' >View my application</Link>
                         <button type='button' className='px-10 py-2 text-white duration-200 rounded-md cursor-pointer bg-NuRed hover:bg-red-600' onClick={() => setConfirm(true)}>Cancel Submission</button>
                     </div>
                 </div>

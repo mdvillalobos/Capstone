@@ -4,124 +4,173 @@ import useToast from "../../../hooks/Helpers/useToast";
 import { FaFileAlt } from 'react-icons/fa';
 import { AiOutlineCloudUpload } from "react-icons/ai";
 
-const AddPerformanceModal = ({ credentialType }) => {
-    /* const status = [
+const AddPerformanceModal = ({ data, setData }) => {
+    const [ isTypeOpen, setIsTypeOpen ] = useState(false)
+    const [ isStatusOpen, setIsStatusOpen ] = useState(false)
+    const [ isRatingOpen, setIsRatingOpen ] = useState(false)
+    const [ isSpesOpen, setIsSpesOpen ] = useState(false)
+
+    console.log(data.tags)
+    
+    const type = [
+        'OTE (Overall Teaching Effectiveness)'
+    ]
+    
+    const status = [
         'New faculty',
         'On-board faculty',
     ]
 
+    const newFacultyRating = [
+        'At least 80',
+		'At least 85',
+		'At least 90',
+    ]
+
+    const oteRating = [
+        'At least 5',
+	    'At least 6'
+    ]
+
+    const spesRating = [
+        'At least 4',
+		'At least 5',
+		'At least 6',
+    ]
+
+    const rating = data.tags[1] === 'New faculty' ? newFacultyRating : oteRating
+
     return (
-        <form className="relative">
+        <div >
             <div className="relative">
-                <button type='button' onClick={() => { setIsStatusOpen(!iStatusOpen) }} className={`w-full text-left fileInput ${data.category ? 'text-black' : 'text-gray-500'}`}>
-                    {data.category || 'Select type of work'}
+                <button 
+                    type='button' 
+                    onClick={() => { setIsTypeOpen(!isTypeOpen), setIsStatusOpen(false) ,setIsRatingOpen(false), setIsSpesOpen(false) }} 
+                    className={`w-full text-left fileInput ${data.documentType ? 'text-black' : 'text-gray-500'}`}
+                >
+                    {data.documentType || 'Select type of perfomance'}
                 </button>
 
-                {iStatusOpen && (
+                {isTypeOpen && (
                     <div className="fileSelect">
-                        {status.map(( statusOptions ) => (
+                        {type.map(( typeOptions ) => (
                             <button 
-                                key={statusOptions}
+                                key={typeOptions}
                                 type='button'    
                                 onClick={() => { 
                                     const newTags = [...data.tags || []]
-                                    newTags[1] = statusOptions;
-                                    setData({...data, category: statusOptions, tags: newTags }),
-                                    setIsStatusOpen(!iStatusOpen)
+                                    newTags[0] = typeOptions;
+                                    setData({...data, documentType: typeOptions, tags: newTags }),
+                                    setIsTypeOpen(!isTypeOpen)
                                 }}
                                 className='fileOption'
                             >
-                                {statusOptions}
+                                {typeOptions}
                             </button>
                         ))}
                     </div>
                 )}
             </div>
 
-            {data.category === 'New faculty' ? (
-                <div className="relative">
-                    <button type='button' onClick={() => setIsAverageOpen(!isAvaerageOpen)} className={`w-full text-left fileInput ${data.deansEval ? 'text-black' : 'text-gray-500'}`}>
-                        {data.deansEval || 'Deans Evaluation'}
-                    </button>
+            {data.documentType === 'OTE (Overall Teaching Effectiveness)' && (
+                <>
+                    <div className="relative">
+                        <button 
+                            type='button' 
+                            onClick={() => { setIsStatusOpen(!isStatusOpen), setIsTypeOpen(false), setIsRatingOpen(false), setIsSpesOpen(false) }} 
+                            className={`w-full text-left fileInput ${data.tags[1] ? 'text-black' : 'text-gray-500'}`}
+                        >
+                            {data.tags[1] || 'Select status'}
+                        </button>
 
-                    {isAvaerageOpen && (
-                        <div className="fileSelect">
-                            {newFacultyaverage.map(( averageOptions ) => (
-                                <button 
-                                    key={averageOptions}
-                                    type='button'    
-                                    onClick={() => { 
-                                        const newTags = [...data.tags || []]
-                                        newTags[2] = averageOptions;
-                                        setData({...data, deansEval: averageOptions, tags: newTags }),
-                                        setIsAverageOpen(!isAvaerageOpen) 
-                                    }}
-                                    className='fileOption'
-                                >
-                                    {averageOptions}
-                                </button>
-                            ))}
+                        {isStatusOpen && (
+                            <div className="fileSelect">
+                                {status.map(( statusOptions ) => (
+                                    <button 
+                                        key={statusOptions}
+                                        type='button'    
+                                        onClick={() => { 
+                                            const newTags = [...data.tags || []]
+                                            newTags[1] = statusOptions;
+                                            setData({...data, tags: newTags }),
+                                            setIsStatusOpen(!isStatusOpen)
+                                        }}
+                                        className='fileOption'
+                                    >
+                                        {statusOptions}
+                                    </button>
+                                ))}
+                            </div>
+                        )}
+                    </div>
+
+                    {data.tags[1] && (
+                        <div className="relative">
+                            <button 
+                                type='button' 
+                                onClick={() => { setIsRatingOpen(!isRatingOpen), setIsTypeOpen(false), setIsStatusOpen(false), setIsSpesOpen(false) }} 
+                                className={`w-full text-left fileInput ${data.tags[2] ? 'text-black' : 'text-gray-500'}`}
+                            >
+                                {data.tags[2] ? data.tags[2] : data.tags[1] === 'New faculty' ? 'Select Rating' : 'Select OTE Rating'}
+                            </button>
+
+                            {isRatingOpen && (
+                                <div className="fileSelect">
+                                    {rating.map(( ratingOptions ) => (
+                                        <button 
+                                            key={ratingOptions}
+                                            type='button'    
+                                            onClick={() => { 
+                                                const newTags = [...data.tags || []]
+                                                newTags[2] = ratingOptions;
+                                                setData({...data, tags: newTags }),
+                                                setIsRatingOpen(!isRatingOpen)
+                                            }}
+                                            className='fileOption'
+                                        >
+                                            {ratingOptions}
+                                        </button>
+                                    ))}
+                                </div>
+                            )}
                         </div>
                     )}
-                </div>
-            ) : data.category === 'On-board faculty' ? (
-                <div className="">
-                    <div className="relative">
-                        <button type='button' onClick={() => setIsOteOpen(!isOteOpen)} className={`w-full text-left fileInput ${data.oteRating ? 'text-black' : 'text-gray-500'}`}>
-                            {data.oteRating || 'OTE Rating'}
-                        </button>
 
-                        {isOteOpen && (
-                            <div className="fileSelect">
-                                {ote.map(( oteOptions ) => (
-                                    <button 
-                                        key={oteOptions}
-                                        type='button'    
-                                        onClick={() => { 
-                                            const newTags = [...data.tags || []]
-                                            newTags[2] = oteOptions;
-                                            setData({...data, oteRating: oteOptions, tags: newTags }),
-                                            setIsOteOpen(!isOteOpen) 
-                                        }}
-                                        className='fileOption'
-                                    >
-                                        {oteOptions}
-                                    </button>
-                                ))}
-                            </div>
-                        )}
-                    </div>
+                    {data.tags[1] === 'On-board faculty' && (
+                        <div className="relative">
+                            <button 
+                                type='button' 
+                                onClick={() => { setIsSpesOpen(!isSpesOpen), setIsTypeOpen(false), setIsStatusOpen(false), setIsRatingOpen(false) }} 
+                                className={`w-full text-left fileInput ${data.tags[3] ? 'text-black' : 'text-gray-500'}`}
+                            >
+                                {data.tags[3] || 'Select SPES Rating' }
+                            </button>
 
-                    <div className="relative">
-                        <button type='button' onClick={() => setIsSpesOpen(!isSpesOpen)} className={`w-full text-left fileInput ${data.spesRating ? 'text-black' : 'text-gray-500'}`}>
-                            {data.spesRating || 'SPES Rating'}
-                        </button>
-                    
-                        {isSpesOpen && (
-                            <div className="fileSelect">
-                                {spes.map(( spesOptions ) => (
-                                    <button 
-                                        key={spesOptions}
-                                        type='button'    
-                                        onClick={() => { 
-                                            const newTags = [...data.tags || []]
-                                            newTags[3] = spesOptions;
-                                            setData({...data, spesRating: spesOptions, tags: newTags }),
-                                            setIsSpesOpen(!isSpesOpen) 
-                                        }}
-                                        className='fileOption'
-                                    >
-                                        {spesOptions}
-                                    </button>
-                                ))}
-                            </div>
-                        )}
-                    </div>
-                </div>
-            ) : null }
-
-        </form>
-    ) */
+                            {isSpesOpen && (
+                                <div className="fileSelect">
+                                    {spesRating.map(( spesRatingOptions ) => (
+                                        <button 
+                                            key={spesRatingOptions}
+                                            type='button'    
+                                            onClick={() => { 
+                                                const newTags = [...data.tags || []]
+                                                newTags[3] = spesRatingOptions;
+                                                setData({...data, tags: newTags }),
+                                                setIsSpesOpen(!isSpesOpen)
+                                            }}
+                                            className='fileOption'
+                                        >
+                                            {spesRatingOptions}
+                                        </button>
+                                    ))}
+                                </div>
+                            )}
+                        </div>
+                    )}
+                </>
+            )}
+        </div>
+    )
 }
 
 export default AddPerformanceModal

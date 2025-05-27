@@ -6,6 +6,7 @@ export const UserContext = createContext({});
 export const UserContextProvider = ({ children }) => {
     const [ user, setUser ] = useState();
     const [ credentials, setCredentials ] = useState();
+    const [ applicationData, setApplicationData ] = useState(null);
     const [ loading, setLoading ] = useState(true);
 
     const fetchUserProfile = async () => {
@@ -40,7 +41,7 @@ export const UserContextProvider = ({ children }) => {
     }, []);
 
     return (
-        <UserContext.Provider value={{ user, setUser, credentials, setCredentials, getProfileOnLogin, loading }}>
+        <UserContext.Provider value={{ user, setUser, credentials, setCredentials, applicationData, setApplicationData, getProfileOnLogin, loading }}>
             {children}
         </UserContext.Provider>
     )
