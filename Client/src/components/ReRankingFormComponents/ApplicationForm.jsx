@@ -4,7 +4,7 @@ import { RankContext } from '../../../context/rankContext.jsx';
 import { Link } from 'react-router-dom';
 import PersonalInfoFields from './PersonalInfoFields.jsx';
 import RequirementFields from './RequirementFields.jsx';
-import useUpdateApplication from '../../hooks/UserHooks/useUpdateApplication.jsx';
+import useUpdateApplication from '../../hooks/ApplicationHooks/useUpdateApplication.jsx';
 import { UserContext } from '../../../context/userContext.jsx';
 
 const ApplicationForm = () => {
@@ -78,7 +78,19 @@ const ApplicationForm = () => {
                             <button type="button" onClick={handleUpdateApplication} disabled={isSubmitted} className='w-32 py-2 text-white rounded-lg cursor-pointer bg-NuBlue hover:shadow-lg'>Update</button>
                         </div>
                     ) : (
-                        <button type='button' className='px-12 py-2 text-white duration-300 rounded-lg cursor-pointer ext-sm bg-NuBlue hover:bg-NuLightBlue' onClick={() => setIsEditEnable(!isEditEnable)}>Edit</button>
+                        <div className='flex space-x-2'>
+                            <button type='button' className='w-32 py-2 text-white duration-300 rounded-lg cursor-pointer bg-NuBlue hover:bg-NuLightBlue' onClick={() => setIsEditEnable(!isEditEnable)}>Edit</button>
+                            {applicationData.applicationStatus === 'Return' && (
+                                <button 
+                                    type='button' 
+                                    className='w-32 py-2 text-sm text-white duration-300 bg-[#0db540] rounded-lg cursor-pointer hover:bg-green-500' 
+                                    onClick={handleUpdateApplication} 
+                                    disabled={isSubmitted}
+                                >
+                                    Re-submit
+                                </button>
+                            )}
+                        </div>
                     )
                 ) : (
                     <Link to='/application' className='w-32 py-2 font-medium text-center duration-300 bg-gray-300 rounded-lg cursor-pointer hover:shadow-lg'>Back</Link>
