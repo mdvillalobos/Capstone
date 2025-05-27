@@ -67,10 +67,10 @@ const header = () => {
                 Applications
               </Link>
 
-              <Link to="/admin/ranks" className={`navigation ${isActive("/admin/ranks") ? "activeNav" : "notActiveNav"}`}>
+              {/* <Link to="/admin/ranks" className={`navigation ${isActive("/admin/ranks") ? "activeNav" : "notActiveNav"}`}>
                 <PiRanking className='my-auto mr-3 text-lg'/>
                 Ranks
-              </Link>
+              </Link> */}
 
               <Link to='/admin/accountmanagement' className={`navigation ${isActive('/admin/accountmanagement') ? "activeNav" : "notActiveNav"}`}>
                 <RiUserSettingsLine className='my-auto mr-3 text-lg'/>
