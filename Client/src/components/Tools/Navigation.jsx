@@ -7,7 +7,7 @@ import NuLogo from '../../assets/images/logo.png'
 import { TbLayoutDashboardFilled } from "react-icons/tb";
 import { RiUserSettingsLine } from "react-icons/ri";
 import { HiOutlineCog } from "react-icons/hi";
-import { PiStackBold, PiTrashSimpleBold } from "react-icons/pi";
+import { PiStackBold, PiTrashSimpleBold, PiRanking } from "react-icons/pi";
 import { RxDashboard } from "react-icons/rx";
 import { LuLogOut, LuFileBadge } from 'react-icons/lu';
 
@@ -65,6 +65,11 @@ const header = () => {
               <Link to="/admin/application" className={`navigation ${isActive("/admin/application") ? "activeNav" : "notActiveNav"}`}>
                 <LuFileBadge className='my-auto mr-3 text-lg'/>
                 Applications
+              </Link>
+
+              <Link to="/admin/ranks" className={`navigation ${isActive("/admin/ranks") ? "activeNav" : "notActiveNav"}`}>
+                <PiRanking className='my-auto mr-3 text-lg'/>
+                Ranks
               </Link>
 
               <Link to='/admin/accountmanagement' className={`navigation ${isActive('/admin/accountmanagement') ? "activeNav" : "notActiveNav"}`}>

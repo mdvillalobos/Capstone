@@ -43,16 +43,13 @@ export const checkExistingEntry = async (req, res) => {
     const { token } = req.cookies;
     const { academicYear } = req.query;
 
-    console.log(academicYear)
-
     try {
         const { email } = jwt.verify(token, process.env.JWT_SECRET);
-        const userEntry = await ApplicationForms.findOne({ email: email, applicationStatus: 'For verification', academicYear: academicYear });
-        console.log(userEntry.academicYear)
+        const userEntry = await ApplicationForms.findOne({ email: email, academicYear: academicYear });
         return res.status(200).json(userEntry)
     }
     catch (error) {
-        console.error(`Fetching User Entry Error: ${ error.message }`);
+        console.log(error);
         return res.json({ error: 'An internal error occurred. Please try again later!' });
     }
 }
@@ -60,7 +57,7 @@ export const checkExistingEntry = async (req, res) => {
 export const getApplicationsForReRanking = async (req, res) => {
     const { token } = req.cookies;
     const { academicYear } = req.query;
-    
+
     try {
         const { email } = jwt.verify(token, process.env.JWT_SECRET);
         const userData = await Account.findOne({ email: email });
@@ -76,7 +73,7 @@ export const getApplicationsForReRanking = async (req, res) => {
         return res.status(200).json(applications)
 
     } catch (error) {
-        console.error(`Fetching Applications Error: ${ error.message }`);
+        console.log(`Fetching Applications Error: ${ error.message }`);
         return res.json({ error: 'An internal server error occurred.' });
     }
 }

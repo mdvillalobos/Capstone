@@ -125,7 +125,7 @@ const AccountsTable = ({ rest, refetchAccounts }) => {
                                             className='cursor-pointer hover:hover:bg-[#ebebeb] p-2 rounded-sm'
                                             onClick={() => { handleUpdateAccountStatus(data._id, data.isActive), setActionIsOpen(null)}}
                                         >
-                                            Deactivate
+                                            {data.isActive ? 'Deactivate' : 'Activate'}
                                         </button>
                                     </div>
                                 )}

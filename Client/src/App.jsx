@@ -24,9 +24,9 @@ import UserApplicationForm from "./view/User/UserApplicationForm.jsx";
 import AdminDashboard from './view/Admin/AdminDashboard.jsx';
 import AdminApplication from './view/Admin/AdminApplication.jsx';
 import ViewApplication from './view/Admin/ViewApplication.jsx';
+import Ranks from './view/Admin/Ranks.jsx'
 import AdminSettings from './view/Admin/Settings.jsx';
 import AccountManagement from "./view/Admin/AccountManagement.jsx";
-import Ranks from './view/Admin/Ranks.jsx'
 
 //Error page
 import ErrorPage from './view/Error/ErrorPage.jsx';
@@ -46,7 +46,7 @@ import maleProfile from './assets/images/male.webp';
 import femaleProfile from './assets/images/female.webp';
 import Done from './assets/images/done.webp'
 
-/* axios.defaults.baseURL = 'http://localhost:3001';  */
+/* axios.defaults.baseURL = 'http://localhost:3001'; */ 
 axios.defaults.baseURL = 'https://nufso.onrender.com';
 axios.defaults.withCredentials = true;
 

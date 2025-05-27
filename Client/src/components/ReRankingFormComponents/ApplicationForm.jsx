@@ -1,5 +1,6 @@
 import { useContext, useState } from 'react';
 import { RankContext } from '../../../context/rankContext.jsx';
+import { Link } from 'react-router-dom';
 import PersonalInfoFields from './PersonalInfoFields.jsx';
 import RequirementFields from './RequirementFields.jsx';
 import useUpdateApplication from '../../hooks/UserHooks/useUpdateApplication.jsx';
@@ -52,13 +53,17 @@ const ApplicationForm = ({ rest }) => {
             </div>
 
             <div className='flex justify-end mt-4'>
-                {isEditEnable ? ( 
-                    <div className='space-x-4'>
-                        <button type='button' onClick={() => setIsEditEnable(false)} className='w-32 py-2 font-medium duration-300 bg-gray-300 rounded-lg cursor-pointer hover:shadow-lg'>Cancel</button>
-                        <button type="button" onClick={handleUpdateApplication} disabled={isSubmitted} className='w-32 py-2 text-white rounded-lg cursor-pointer bg-NuBlue hover:shadow-lg'>Update</button>
-                    </div>
+                {rest.applicationStatus === 'Return' || rest.applicationStatus === 'For verification' ? (
+                    isEditEnable ? ( 
+                        <div className='space-x-4'>
+                            <button type='button' onClick={() => setIsEditEnable(false)} className='w-32 py-2 font-medium duration-300 bg-gray-300 rounded-lg cursor-pointer hover:shadow-lg'>Cancel</button>
+                            <button type="button" onClick={handleUpdateApplication} disabled={isSubmitted} className='w-32 py-2 text-white rounded-lg cursor-pointer bg-NuBlue hover:shadow-lg'>Update</button>
+                        </div>
+                    ) : (
+                        <button type='button' className='px-12 py-2 text-white duration-300 rounded-lg cursor-pointer ext-sm bg-NuBlue hover:bg-NuLightBlue' onClick={() => setIsEditEnable(!isEditEnable)}>Edit</button>
+                    )
                 ) : (
-                    <button type='button' className='px-12 py-2 text-white duration-300 rounded-lg cursor-pointer ext-sm bg-NuBlue hover:bg-NuLightBlue' onClick={() => setIsEditEnable(!isEditEnable)}>Edit</button>
+                    <Link to='/application' className='w-32 py-2 font-medium text-center duration-300 bg-gray-300 rounded-lg cursor-pointer hover:shadow-lg'>Back</Link>
                 )}
             </div>
         </div>
