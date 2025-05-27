@@ -68,8 +68,11 @@ const ToPdf = ({ totalRank, approvedFaculty }) => {
       };
 
     return (
-        <div className='absolute right-24 top-5.5'>
-            <button onClick={generatePDF} className='flex justify-center px-4 py-2 text-sm text-white duration-300 rounded-md shadow-md cursor-pointer bg-NuBlue hover:bg-NuButtonHover hover:scale-105'>
+        <div className='flex justify-between'>
+            <p className='text-sm font-medium tracking-widest text-TextSecondary my-auto'>ANALYTICS</p>
+            <button 
+                onClick={generatePDF} 
+                className='px-4 py-2 text-xs text-white duration-200 rounded-md cursor-pointer bg-NuBlue hover:shadow-md hover:scale-105'>
                 <span className="my-auto">Export Data</span>
             </button>
 

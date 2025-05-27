@@ -1,24 +1,16 @@
-import { useContext, useMemo } from 'react'
+import { useContext } from 'react'
 import { Navigate, Outlet } from 'react-router-dom';
 import { UserContext } from '../../../context/userContext'
-import LoadingSpinner from '../../components/Tools/LoadingSpinner';
 import { RankContext } from '../../../context/rankContext';
 
 const useProtectRoutes = () => {
-    const { user, credentials, loading: userLoading } = useContext(UserContext);
-    const { loading: rankLoading } = useContext(RankContext);
+    const { user } = useContext(UserContext);
 
-    const isLoading = !(user && !userLoading && !rankLoading);
     const isUnauthenticated = user === null;
     const isUnverified = user && !user.isVerified;
     const isProfileIncomplete = user && user.firstName == null;
 
-    const renderLoading = useMemo(() => {
-        return <LoadingSpinner />;
-    }, []);
-
     const PageRouteProtection = ({ providedRole }) => {
-        if (isLoading) return renderLoading;
 
         if (isUnauthenticated) return <Navigate to="/" />;
         if (isUnverified) return <Navigate to="/emailverification" />;
@@ -29,7 +21,6 @@ const useProtectRoutes = () => {
     };
 
     const AuthPageProtection = () => {
-        if (isLoading) return renderLoading;
 
         if (isUnauthenticated) return <Outlet />;
         if (isUnverified) return <Navigate to="/emailverification" />;
@@ -46,7 +37,6 @@ const useProtectRoutes = () => {
     };
 
     const EmailPageProtection = () => {
-        if (isLoading) return renderLoading();
 
         if (!isUnverified || isUnauthenticated) return <Navigate to="/" />;
         return <Outlet />;

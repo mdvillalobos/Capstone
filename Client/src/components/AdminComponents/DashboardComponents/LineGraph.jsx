@@ -1,9 +1,6 @@
-import { useContext } from 'react';
 import { ResponsiveContainer, AreaChart, Area, XAxis, YAxis, Tooltip, CartesianGrid } from 'recharts';
-import { RankContext } from '../../../../context/rankContext';
 
 const LineGraph = ({ totalApplicationPerYear }) => {
-    const { config } = useContext(RankContext);
     const lineData = Object.entries(totalApplicationPerYear)?.map(([year, count]) => {
         const shortLabel = year
             .split('-')
@@ -38,7 +35,7 @@ const LineGraph = ({ totalApplicationPerYear }) => {
     };
 
     return (
-        <div className="text-[0.7rem] border-2 border-BorderColor rounded-xl pl-6 pr-2 pt-4 space-y-8 text-TextPrimary">
+        <div className="text-[0.7rem] border-2 border-BorderColor rounded-xl pl-6 pr-2 pt-4 space-y-7 text-TextPrimary">
             <div className="">
                 <p className='text-lg font-medium'>Total Application</p>
                 <p className='text-xs text-gray-500'>Total for the last five years</p>

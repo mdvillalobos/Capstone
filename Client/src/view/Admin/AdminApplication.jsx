@@ -3,7 +3,7 @@ import axios from 'axios';
 import Navigation from "../../components/Tools/Navigation.jsx";
 import ApplicationTable from '../../components/AdminComponents/ApplicationComponents/ApplicationTable.jsx';
 import Header from '../../components/Tools/Header.jsx';
-import LoadingSpinner from '../../components/Tools/LoadingSpinner.jsx';
+import ContentLoader from '../../components/Tools/ContentLoader.jsx';
 
 const AdminApplication = () => {
     const [ data, setData ] = useState([]);
@@ -30,8 +30,6 @@ const AdminApplication = () => {
         .finally(() => setIsLoading(false))
     }, []);
 
-    if(loading) return <LoadingSpinner/>
-
     if(isMobile) {
         return (
             <div className="flex items-center justify-center min-h-screen text-center font-Poppins">
@@ -53,9 +51,8 @@ const AdminApplication = () => {
                         pageDescription={'View and review all re-ranking applications submitted by users.'}
                     />
 
-                    <div className='flex flex-col flex-1 space-y-4'>
-                        <p className='text-sm font-medium tracking-widest text-TextSecondary'>APPLICATIONS FOR RE-RANKING</p>
-                        <ApplicationTable data={data}/>
+                    <div className='flex flex-1 space-y-4'>
+                        {loading ? <ContentLoader/> : <ApplicationTable data={data}/>}
                     </div>
                 </div>
             </div>

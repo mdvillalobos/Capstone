@@ -1,16 +1,13 @@
-import { useContext, useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { useLocation, Link } from 'react-router-dom';
-import { UserContext } from '../../../context/userContext.jsx';
 import { MdKeyboardArrowRight } from "react-icons/md";
 import ViewApplicationForm from '../../components/AdminComponents/ApplicationComponents/ViewApplicationForm.jsx';
 import Navigation from "../../components/Tools/Navigation.jsx";
-import LoadingSpinner from '../../components/Tools/LoadingSpinner.jsx';
 import Header from '../../components/Tools/Header.jsx';
 
 const ViewApplication = () => {
     const location = useLocation();
     const { data } = location.state || {};
-    const { user } = useContext(UserContext);
     const [ isMobile, setIsMobile ] = useState(false);
 
     const handleResize = () => {
@@ -25,8 +22,6 @@ const ViewApplication = () => {
         window.removeEventListener('resize', handleResize);
       };
     }, []);
-
-    if(user === undefined) return <LoadingSpinner/>
 
     if(isMobile) {
         return (

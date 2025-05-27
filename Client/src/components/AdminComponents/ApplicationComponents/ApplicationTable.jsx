@@ -42,7 +42,8 @@ const ApplicationTable = ({ data }) => {
     }
 
     return (
-        <div className='flex flex-col justify-between w-full h-full'>
+        <div className='flex flex-col justify-between w-full h-full space-y-4'>
+            <p className='text-sm font-medium tracking-widest text-TextSecondary'>APPLICATIONS FOR RE-RANKING</p>
             <div className='flex flex-col flex-1'>
                 <div className='flex py-2 pl-2 text-xs border-b border-BorderColor text-TextSecondary'>
                     <p className='w-[30%]'>Name</p>
@@ -51,7 +52,7 @@ const ApplicationTable = ({ data }) => {
                     <p className='w-[15%]'>Academic Year</p>
                     <p className='w-[15%]'>Date Submitted</p>
                 </div>
-                <div className='flex flex-col'>
+                <div className='flex flex-col flex-1'>
                     {items?.length !== 0 ? (
                         items.map((app, index) => {
                             const formattedDate = new Date(app.date_submitted).toLocaleDateString('en-US', {
@@ -71,7 +72,7 @@ const ApplicationTable = ({ data }) => {
                             )
                         })
                     ) : (
-                        <div className='flex flex-col items-center justify-center w-full space-y-2 pointer-events-none select-none'>
+                        <div className='flex flex-col items-center justify-center w-full h-full space-y-2 pointer-events-none select-none'>
                             <img src={NotFound} alt="No Data Found" className='h-80 opacity-90'/>
                             <h1 className='flex justify-center text-2xl font-medium text-gray-500'>No Available Data</h1>
                         </div>

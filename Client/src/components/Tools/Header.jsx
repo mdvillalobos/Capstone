@@ -10,7 +10,7 @@ const Header = ({ pageTitle, pageDescription, destination = '' }) => {
     const { user } = useContext(UserContext);
 
     return (
-        <div className='flex justify-between text-TextPrimary'>
+        <div className='flex justify-between text-TextPrimary shrink-0'>
             <div className='flex'>
                 <div className='my-auto space-y-0.5'>
                     <h1 className='text-xl font-semibold'>{pageTitle}</h1>

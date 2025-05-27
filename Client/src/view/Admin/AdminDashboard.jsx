@@ -1,18 +1,16 @@
 import { useCallback, useContext, useEffect, useState } from 'react';
 import { RankContext } from '../../../context/rankContext.jsx';
 import useCallDashboardAPI from '../../hooks/AdminHooks/useCallDashboardAPI.jsx';
-import LoadingSpinner from '../../components/Tools/LoadingSpinner.jsx';
 
 import Navigation from '../../components/Tools/Navigation.jsx';
 import Header from '../../components/Tools/Header.jsx';
+import ContentLoader from '../../components/Tools/ContentLoader.jsx';
 
 import Datas from '../../components/AdminComponents/DashboardComponents/Datas.jsx';
 import BarGraph from '../../components/AdminComponents/DashboardComponents/BarGraph.jsx';
 import LineGraph from '../../components/AdminComponents/DashboardComponents/LineGraph.jsx';
-import RankTotal from '../../components/AdminComponents/DashboardComponents/RankTotal.jsx';
 import ToPdf from '../../components/AdminComponents/DashboardComponents/ToPdf.jsx';
 import ReRankingConfig from '../../components/AdminComponents/DashboardComponents/ReRankingConfig.jsx';
-/* import RankModal from '../../components/AdminComponents/DashboardComponents/RankModal.jsx' */
 
 const AdminDashboard = () => {
     const { config } = useContext(RankContext);
@@ -75,8 +73,6 @@ const AdminDashboard = () => {
         fetchData();
     }, []);
 
-    if(loading) return <LoadingSpinner/>
-
     if (isMobile) {
         return (
             <div className="flex items-center justify-center min-h-screen text-center font-Poppins">
@@ -92,40 +88,45 @@ const AdminDashboard = () => {
         <div className="flex flex-col min-h-screen font-Poppins">
             <div className="flex flex-grow">
                 <Navigation />
-                
                 <div className="flex flex-col flex-1 px-6 py-4 space-y-6">
                     <Header 
                         pageTitle={'Dashboard'} 
                         pageDescription={'View analytics, manage data, and oversee platform activity'}
                     />
-                    <ToPdf 
-                        totalRank={dashboardData.totalRank} 
-                        approvedFaculty={dashboardData.approvedApplications}
-                    />
-
-                    <div className='flex flex-1 space-x-8'>
-                        <div className='flex flex-1 space-x-4'>
-                            <div className='flex flex-col flex-1 space-y-4'>
-                                <p className='text-sm font-medium tracking-widest text-TextSecondary'>ANALYTICS</p>
-                                
-                                <div className='flex space-x-4'>
-                                    <Datas 
-                                        facultyCount={dashboardData.facultyCount} 
-                                        applicationCount={dashboardData.totalApplicationPerYear?.[academicYear] || 0} 
-                                        approvedApplications={dashboardData.approvedApplications}
+                    <div className='flex flex-col flex-1 space-y-4'>
+                        <div className='flex flex-1'>
+                            {loading ? (
+                                <ContentLoader/>
+                            ) : (
+                                <div className='flex flex-col flex-1 space-y-2'>  
+                                    <ToPdf 
+                                        totalRank={dashboardData.totalRank} 
+                                        approvedFaculty={dashboardData.approvedApplications}
                                     />
+                                    <div className='flex space-x-4'>
+                                        <div className='flex flex-col flex-1 space-y-4'>        
+                                            <div className='flex space-x-4'>
+                                                <Datas 
+                                                    facultyCount={dashboardData.facultyCount} 
+                                                    applicationCount={dashboardData.totalApplicationPerYear?.[academicYear] || 0} 
+                                                    approvedApplications={dashboardData.approvedApplications}
+                                                    loading={loading}
+                                                />
 
-                                    <BarGraph rankPerCollege={dashboardData.rankPerCollege} />
+                                                <BarGraph rankPerCollege={dashboardData.rankPerCollege} loading={loading}/>
+                                            </div>
+
+                                            <LineGraph totalApplicationPerYear={dashboardData.totalApplicationPerYear} loading={loading}/>
+                                        </div>
+
+                                        <div className='h-full flex flex-col w-[25%] space-y-4'>
+                                            <ReRankingConfig adminAccounts={dashboardData.adminAccounts} loading={loading}/>
+                                            {/* <RankTotal totalPerRank={dashboardData.totalRank}/> */}
+                                        </div>
+                                    </div>
                                 </div>
-
-                                <LineGraph totalApplicationPerYear={dashboardData.totalApplicationPerYear}/>
-                            </div>
-
-                            <div className='h-full flex flex-col w-[25%] space-y-4'>
-                                <ReRankingConfig adminAccounts={dashboardData.adminAccounts}/>
-                                {/* <RankTotal totalPerRank={dashboardData.totalRank}/> */}
-                            </div>
-                        </div>
+                            )}
+                        </div>                       
                     </div>
                 </div>
             </div>

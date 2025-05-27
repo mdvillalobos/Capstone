@@ -4,13 +4,16 @@ import { UserContextProvider } from '../context/userContext.jsx'
 import { RankContextProvider } from '../context/rankContext.jsx';
 import App from './App.jsx';
 import './assets/css/index.css';
+import PageLoader from '../context/PageLoader.jsx';
 
 createRoot(document.getElementById('root')).render(
   <UserContextProvider>
     <RankContextProvider>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
+      <PageLoader>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </PageLoader>
     </RankContextProvider>
   </UserContextProvider>
 )

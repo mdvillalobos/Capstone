@@ -1,19 +1,8 @@
-import { useContext } from "react";
-import { UserContext } from "../../../context/userContext.jsx";
 import Navigation from "../../components/Tools/Navigation.jsx";
 import SettingPageHolder from '../../components/SettingComponents/SettingPageHolder.jsx';
-import LoadingSpinner from "../../components/Tools/LoadingSpinner.jsx";
 import Header from "../../components/Tools/Header.jsx";
 
 const Settings = () => {
-    const { user } = useContext(UserContext);
-
-    if(user === undefined) {
-        return (
-            <LoadingSpinner/>
-        )
-    }
-    
     return (
         <div className='flex flex-col min-h-screen font-Poppins'>
             <div className="flex flex-grow">

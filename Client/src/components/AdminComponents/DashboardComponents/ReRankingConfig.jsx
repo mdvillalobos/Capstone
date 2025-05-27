@@ -78,7 +78,7 @@ const ReRankingConfig = ({ adminAccounts }) => {
             <button 
                 type='button'
                 onClick={() => setIsVerifyAdminOpen(true)}
-                className='w-full py-2 text-sm text-center text-white duration-200 rounded-md cursor-pointer bg-NuBlue hover:bg-NuLightBlue hover:text-white'
+                className='w-full py-2 text-sm text-center text-white duration-200 rounded-md cursor-pointer bg-NuBlue hover:shadow-md hover:scale-105'
             >
                 Configure
             

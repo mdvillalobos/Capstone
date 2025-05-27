@@ -2,8 +2,8 @@ import { useEffect, useState, useCallback } from 'react';
 import axios from 'axios';
 import Navigation from '../../components/Tools/Navigation.jsx';
 import AccountsTable from '../../components/AdminComponents/AccountManageComponents/AccountsTable.jsx';
-import LoadingSpinner from '../../components/Tools/LoadingSpinner.jsx';
 import Header from '../../components/Tools/Header.jsx';
+import ContentLoader from '../../components/Tools/ContentLoader.jsx';
 
 const AccountManagement = () => {
     const [ data, setData ] = useState([]);
@@ -29,8 +29,6 @@ const AccountManagement = () => {
         .finally(() => setIsLoading(false))
     }, []);
 
-    if(loading) return <LoadingSpinner/>
-
     if (isMobile) {
         return (
             <div className="flex items-center justify-center min-h-screen text-center font-Poppins">
@@ -52,7 +50,7 @@ const AccountManagement = () => {
                         pageDescription={'Control access and account settings.'}
                     />
                     <div className='flex flex-1'>
-                        <AccountsTable rest={data}/>
+                        {loading ? <ContentLoader/> : <AccountsTable rest={data}/>}
                     </div>
                 </div>
             </div>
