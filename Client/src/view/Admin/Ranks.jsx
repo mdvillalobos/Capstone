@@ -1,5 +1,5 @@
 import Navigation from '../../components/Tools/Navigation'
-import ModifyRank from '../../components/AdminComponents/DashboardComponents/ModifyRank'
+import ModifyRank from '../../components/AdminComponents/RanksComponents/ModifyRank'
 
 const Ranks = () => {
   return (
