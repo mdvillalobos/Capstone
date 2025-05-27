@@ -64,7 +64,7 @@ const MyProfile = () => {
                 <p className='my-4 text-sm font-medium w-72'>Profile Picture</p>
             
                 <div className="flex">
-                    <div className="flex items-center justify-center w-20 h-20 mx-auto overflow-hidden border-2 border-gray-200 rounded-full">
+                    <div className="flex items-center justify-center w-20 h-20 mx-auto overflow-hidden border-2 rounded-full border-BorderColor">
                         {!data.profile ? (
                             user ? (
                             user.profilePicture ? (

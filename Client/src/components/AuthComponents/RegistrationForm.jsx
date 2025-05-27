@@ -115,7 +115,7 @@ const registrationForm = () => {
     return (
         <div className='font-Poppins'>
             <form onSubmit={handleRegistration} className='auth-container'>
-                <div className={`auth-input-container border-gray-200 ${data.employeeID && !validity.id ? 'border-red-400' : 'focus-within:border-[#93adc2]'} ${shake.id ? 'shake' : ''}`}>
+                <div className={`auth-input-container border-BorderColor ${data.employeeID && !validity.id ? 'border-red-400' : 'focus-within:border-[#93adc2]'} ${shake.id ? 'shake' : ''}`}>
                     <LiaIdCard className='my-auto ml-0.5 mr-0.5' size='1.5rem' color='#707074'/>
                     <input 
                         type="text"
@@ -130,7 +130,7 @@ const registrationForm = () => {
                     <p className="text-[0.7rem] text-red-400 font-medium mx-1 absolute">Invalid employee ID format.</p>
                 )}
 
-                <div className={`auth-input-container border-gray-200 ${data.email && !validity.email ? 'border-red-400' : 'focus-within:border-[#93adc2]'} ${shake.email ? 'shake' : ''}`}>
+                <div className={`auth-input-container border-BorderColor ${data.email && !validity.email ? 'border-red-400' : 'focus-within:border-[#93adc2]'} ${shake.email ? 'shake' : ''}`}>
                     <HiOutlineMail className='my-auto ml-1 mr-0.5' size='1.4rem' color='#707074'/>
                     <input 
                         type="text"
@@ -145,7 +145,7 @@ const registrationForm = () => {
                     <p className="text-[0.7rem] text-red-400 font-medium mx-1 absolute">Invalid email format.</p>
                 )}
 
-                <div className={`auth-input-container border-gray-200 relative ${data.password && !validity.password ? 'border-red-400' : 'focus-within:border-[#93adc2]'} ${shake.password ? 'shake' : ''}`}>
+                <div className={`auth-input-container border-BorderColor relative ${data.password && !validity.password ? 'border-red-400' : 'focus-within:border-[#93adc2]'} ${shake.password ? 'shake' : ''}`}>
                     <TbLock className='my-auto ml-1 mr-1' size='1.6rem' color='#707074'/>
                     <input 
                         type={showPassword ? 'text' : 'password'}
@@ -173,7 +173,7 @@ const registrationForm = () => {
                     <p className='text-[0.7rem] text-red-400 font-medium mx-1 absolute'>Invalid password format.</p>
                 ) : null} */}
 
-                <div className={`auth-input-container relative border-gray-200 focus-within:border-[#93adc2] ${shake.confirm ? 'shake' : ''}`}>
+                <div className={`auth-input-container relative border-BorderColor focus-within:border-[#93adc2] ${shake.confirm ? 'shake' : ''}`}>
                     <TbLock className='my-auto ml-1 mr-1' size='1.6rem' color='#707074'/>
                     <input 
                         type={showConfirm ? 'text' : 'password'}

@@ -3,7 +3,7 @@ import { CSS } from '@dnd-kit/utilities';
 import { MdDragHandle } from "react-icons/md";
 import { RxCross2 } from "react-icons/rx";
 
-const DraggableItem = ({ index, approver, handleRemoveApprover }) => {
+const DraggableItem = ({ index, approver, handleRemoveApprover, isEditOn }) => {
     const {
         setNodeRef,
         attributes,
@@ -15,23 +15,27 @@ const DraggableItem = ({ index, approver, handleRemoveApprover }) => {
         transform: CSS.Transform.toString(transform),
         padding: '8px',
         margin: '4px 0',
-        border: '1px solid #ccc',
-        borderRadius: '4px',
         backgroundColor: 'white',
         cursor: 'grab'
     };
     
     return (
-        <div  className='relative flex rounded-md' ref={setNodeRef} style={style}>
+        <div  className='relative flex border-2 rounded-md border-BorderColor' ref={setNodeRef} style={style}>
             <div className='flex w-full space-x-2' >
                 <div {...attributes} {...listeners} className='my-auto'>
                     <MdDragHandle className='my-auto text-lg text-NuLightText'/>
                 </div>
-                <p>{approver.accountinfo?.[0].firstName} {approver.accountinfo?.[0].lastName}</p>
+                <p className='text-sm'>{approver.accountinfo?.[0].firstName} {approver.accountinfo?.[0].lastName}</p>
             </div>
-            <button className='absolute p-1 text-xs text-white bg-red-400 rounded-full right-2 top-2.5 cursor-pointer z-10' onClick={() => handleRemoveApprover(approver.email)}>
-                <p className='my-auto'> <RxCross2/></p>
-            </button>
+            {isEditOn && (
+                <button 
+                    type='button'
+                    className='absolute z-10 p-1 text-xs text-white bg-red-400 rounded-full cursor-pointer right-2 top-2' 
+                    onClick={() => handleRemoveApprover(approver)}
+                >
+                    <p className='my-auto'><RxCross2/></p>
+                </button>
+            )}
         </div>
     );
 }

@@ -44,7 +44,7 @@ const ApplicationTable = ({ data }) => {
     return (
         <div className='flex flex-col justify-between w-full h-full'>
             <div className='flex flex-col flex-1'>
-                <div className='flex py-2 pl-2 text-xs border-b border-gray-200 text-NuLightText'>
+                <div className='flex py-2 pl-2 text-xs border-b border-BorderColor text-TextSecondary'>
                     <p className='w-[30%]'>Name</p>
                     <p className='w-[20%]'>Current Rank</p>
                     <p className='w-[20%]'>Applying For</p>
@@ -61,7 +61,7 @@ const ApplicationTable = ({ data }) => {
                             });
 
                             return (
-                                <div key={ index } onClick={ () => handleViewApplication(app) } className='flex py-3 pl-2 text-sm duration-200 border-b border-gray-200 cursor-pointer hover:bg-NuBlue hover:text-white'>
+                                <div key={ index } onClick={ () => handleViewApplication(app) } className='flex py-3 pl-2 text-sm duration-200 border-b cursor-pointer border-BorderColor hover:bg-NuBlue hover:text-white'>
                                     <p className='w-[30%]'>{ app.name }</p> 
                                     <p className='w-[20%]'>{ app.currentRank }</p>
                                     <p className='w-[20%]'>{ app.applyingFor }</p>
@@ -81,18 +81,18 @@ const ApplicationTable = ({ data }) => {
 
             <div className='flex justify-between'>
                 <div className='my-auto text-sm'>
-                    <p className='text-xs font-medium text-NuLightText'>Showing Items {(tableCurrentPage - 1) * itemsPerPage + 1 } - {Math.min(tableCurrentPage * itemsPerPage, data.length)} of {data.length}</p>
+                    <p className='text-xs font-medium text-TextSecondary'>Showing Items {(tableCurrentPage - 1) * itemsPerPage + 1 } - {Math.min(tableCurrentPage * itemsPerPage, data.length)} of {data.length}</p>
                 </div>
-                <div className='flex my-auto space-x-4 text-sm text-NuLightText'>
-                    <button type='button' onClick={handlePrevPage} className='border-2 border-gray-200 p-1 cursor-pointer rounded-md flex space-x-1.5 px-2 text-lg hover:bg-gray-200 duration-200 '>
+                <div className='flex my-auto space-x-4 text-sm text-TextSecondary'>
+                    <button type='button' onClick={handlePrevPage} className='border-2 border-BorderColor p-1 cursor-pointer rounded-md flex space-x-1.5 px-2 text-lg hover:bg-gray-200 duration-200 '>
                         <TiArrowLeft className='my-auto'/>
                     </button>
                     <p className='flex my-auto space-x-2'>
-                        <span className='px-3 py-1 text-center text-black border-2 border-gray-200 rounded-md'>{tableCurrentPage}</span>
+                        <span className='px-3 py-1 text-center text-black border-2 rounded-md border-BorderColor'>{tableCurrentPage}</span>
                         <span className='my-auto'>/</span>
-                        <span className='px-3 py-1 text-center text-black border-2 border-gray-200 rounded-md'>{totalPages}</span>
+                        <span className='px-3 py-1 text-center text-black border-2 rounded-md border-BorderColor'>{totalPages}</span>
                     </p>
-                    <button type='button' onClick={handleNextPage} className='border-2 border-gray-200 p-1 cursor-pointer rounded-md flex space-x-1.5 px-2 text-lg hover:bg-gray-200 duration-200'>
+                    <button type='button' onClick={handleNextPage} className='border-2 border-BorderColor p-1 cursor-pointer rounded-md flex space-x-1.5 px-2 text-lg hover:bg-gray-200 duration-200'>
                         <TiArrowRight className='my-auto'/>
                     </button>
                 </div>

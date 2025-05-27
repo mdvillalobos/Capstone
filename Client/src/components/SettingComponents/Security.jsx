@@ -65,7 +65,7 @@ const Security = () => {
   
     return (
         <div className="">
-            <div className="flex py-3 border-b-2 border-gray-200">
+            <div className="flex py-3 border-b-2 border-BorderColor">
                 <p className='my-4 font-medium w-96'>Password</p>
 
                 {!isVerifyOpen && !isUserVerified && (

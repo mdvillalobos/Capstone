@@ -50,7 +50,7 @@ const ViewApplication = () => {
                     />
 
                     <div className='flex flex-col flex-1 space-y-4'>
-                        <div className="flex text-sm font-medium text-NuLightText">
+                        <div className="flex text-sm font-medium text-TextSecondary">
                             <Link to='/admin/application' className='duration-200 text-NuButton hover:underline'>Applications</Link>
                             <MdKeyboardArrowRight className='my-auto'/>
                             <p>{data.name}</p>

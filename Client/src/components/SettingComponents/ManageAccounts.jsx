@@ -79,7 +79,7 @@ const CreateAccount = (props) => {
                                         maxLength='10'
                                         value={data.employeeID} 
                                         onChange={(e) => setData({...data, employeeID: e.target.value})}
-                                        className='border-2 border-gray-200 rounded-lg px-3 peer pt-7 pb-2 outline-none w-full focus:bg-[#f3f4fd] focus:border-[#c1c6f2]'
+                                        className='border-2 border-BorderColor rounded-lg px-3 peer pt-7 pb-2 outline-none w-full focus:bg-[#f3f4fd] focus:border-[#c1c6f2]'
                                     />
                                     <span className='setting-input-label'>Employee ID</span>
                                 </div>
@@ -90,7 +90,7 @@ const CreateAccount = (props) => {
                                         maxLength='50'
                                         value={data.email} 
                                         onChange={(e) => setData({...data, email: e.target.value})}
-                                        className='border-2 border-gray-200 rounded-lg px-3 peer pt-7 pb-2 outline-none w-full focus:bg-[#f3f4fd] focus:border-[#c1c6f2]'
+                                        className='border-2 border-BorderColor rounded-lg px-3 peer pt-7 pb-2 outline-none w-full focus:bg-[#f3f4fd] focus:border-[#c1c6f2]'
                                     />
                                     <span className='setting-input-label'>Email</span>
                                 </div>
@@ -103,7 +103,7 @@ const CreateAccount = (props) => {
                                         maxLength='50'
                                         value={data.lastName} 
                                         onChange={(e) => setData({...data, lastName: e.target.value})}
-                                        className='border-2 border-gray-200 rounded-lg px-3 peer pt-7 pb-2 outline-none w-full focus:bg-[#f3f4fd] focus:border-[#c1c6f2]'
+                                        className='border-2 border-BorderColor rounded-lg px-3 peer pt-7 pb-2 outline-none w-full focus:bg-[#f3f4fd] focus:border-[#c1c6f2]'
                                     />
                                     <span className='setting-input-label'>Last Name</span>
                                 </div>
@@ -114,7 +114,7 @@ const CreateAccount = (props) => {
                                         required
                                         value={data.firstName} 
                                         onChange={(e) => setData({...data, firstName: e.target.value})}
-                                        className='border-2 border-gray-200 rounded-lg px-3 peer pt-7 pb-2 outline-none w-full focus:bg-[#f3f4fd] focus:border-[#c1c6f2]'
+                                        className='border-2 border-BorderColor rounded-lg px-3 peer pt-7 pb-2 outline-none w-full focus:bg-[#f3f4fd] focus:border-[#c1c6f2]'
                                     />
                                     <span className='setting-input-label'>First Name</span>
                                 </div>
@@ -126,7 +126,7 @@ const CreateAccount = (props) => {
                                         maxLength='20'
                                         value={data.middleName} 
                                         onChange={(e) => setData({...data, middleName: e.target.value})}
-                                        className='border-2 border-gray-200 rounded-lg px-3 peer pt-7 pb-2 outline-none w-full focus:bg-[#f3f4fd] focus:border-[#c1c6f2]'
+                                        className='border-2 border-BorderColor rounded-lg px-3 peer pt-7 pb-2 outline-none w-full focus:bg-[#f3f4fd] focus:border-[#c1c6f2]'
                                     />
                                     <span className='setting-input-label'>Middle Name</span>
                                 </div>
@@ -136,7 +136,7 @@ const CreateAccount = (props) => {
                                         required
                                         id='sex' 
                                         name='sex'
-                                        className='border-2 border-gray-200 rounded-lg px-3 peer pt-7 pb-2 outline-none w-full focus:bg-[#f3f4fd] focus:border-[#c1c6f2]'
+                                        className='border-2 border-BorderColor rounded-lg px-3 peer pt-7 pb-2 outline-none w-full focus:bg-[#f3f4fd] focus:border-[#c1c6f2]'
                                         onChange={(e) => setData({ ...data, sex: e.target.value})}
                                     >
                                         <option value=""></option>
@@ -154,7 +154,7 @@ const CreateAccount = (props) => {
                                         maxLength='11'
                                         value={data.contact} 
                                         onChange={(e) => setData({...data, contact: e.target.value})}
-                                        className='border-2 border-gray-200 rounded-lg px-3 peer pt-7 pb-2 outline-none w-full focus:bg-[#f3f4fd] focus:border-[#c1c6f2]'
+                                        className='border-2 border-BorderColor rounded-lg px-3 peer pt-7 pb-2 outline-none w-full focus:bg-[#f3f4fd] focus:border-[#c1c6f2]'
                                     />
                                     <span className='setting-input-label'>Contact No.</span>
                                 </div>
@@ -165,7 +165,7 @@ const CreateAccount = (props) => {
                                         maxLength='16'
                                         value={data.password} 
                                         onChange={(e) => setData({...data, password: e.target.value})}
-                                        className='border-2 border-gray-200 rounded-lg px-3 peer pt-7 pb-2 outline-none w-full focus:bg-[#f3f4fd] focus:border-[#c1c6f2]'
+                                        className='border-2 border-BorderColor rounded-lg px-3 peer pt-7 pb-2 outline-none w-full focus:bg-[#f3f4fd] focus:border-[#c1c6f2]'
                                     />
                                     <span className='setting-input-label'>Password</span>
                                 </div>
@@ -196,7 +196,7 @@ const CreateAccount = (props) => {
                             maxLength='16'
                             value={data.adminPassword} 
                             onChange={(e) => setData({...data, adminPassword: e.target.value})}
-                            className='border-2 border-gray-200 rounded-lg px-3 peer pt-7 pb-2 outline-none w-full focus:bg-[#f3f4fd] focus:border-[#c1c6f2]'
+                            className='border-2 border-BorderColor rounded-lg px-3 peer pt-7 pb-2 outline-none w-full focus:bg-[#f3f4fd] focus:border-[#c1c6f2]'
                         />
                         <span className='setting-input-label'>Password</span>
                     </div>

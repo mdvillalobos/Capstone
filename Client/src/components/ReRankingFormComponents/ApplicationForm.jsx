@@ -22,7 +22,7 @@ const ApplicationForm = ({ rest }) => {
     
     return (
         <div>
-            <div className='px-6 py-4 border-2 border-gray-200 rounded-mx rounded-xl'>
+            <div className='px-6 py-4 border-2 border-BorderColor rounded-mx rounded-xl'>
                 <div className="flex justify-between pb-2">
                     <h1 className='formTitle'>Faculty Ranking Form</h1>
                     <h1 className='formTitle'>{rest?.applyingFor}</h1>

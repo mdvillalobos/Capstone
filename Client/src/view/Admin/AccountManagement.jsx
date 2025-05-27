@@ -24,14 +24,9 @@ const AccountManagement = () => {
 
     useEffect(() => {
         axios.get('/api/getAllAccounts')
-        .then(res => {
-            setData(res.data);
-            setIsLoading(false);
-        })
-        .catch(err => {
-            console.error(err);
-            setIsLoading(false);
-        });
+        .then(res => setData(res.data))
+        .catch(err => console.error(err))
+        .finally(() => setIsLoading(false))
     }, []);
 
     if(loading) return <LoadingSpinner/>

@@ -114,14 +114,14 @@ const FilesTable = ({ location = 'dashboard' }) => {
                             </button>
                         </div>
                     ) : (
-                        <p className='my-auto text-sm font-medium tracking-widest text-NuLightText'>DOCUMENTS</p>
+                        <p className='my-auto text-sm font-medium tracking-widest text-TextSecondary'>DOCUMENTS</p>
                     )}
                     
                     <div className='flex space-x-4'>
                         <div className='relative w-48 my-auto' ref={filterRef}>
                             <button 
                                 onClick={() => setIsFilterOpen(!isFilterOpen)} 
-                                className={`cursor-pointer relative border-2 border-gray-200 w-full rounded-md py-1 text-sm overflow-hidden text-ellipsis whitespace-nowrap px-8 ${isFilterOpen && 'border-NuLightBlue'}`}
+                                className={`cursor-pointer relative border-2 border-BorderColor w-full rounded-md py-1 text-sm overflow-hidden text-ellipsis whitespace-nowrap px-8 ${isFilterOpen && 'border-NuLightBlue'}`}
                             >
                                 {selectedFilter ? selectedFilter : 'Category'}
                                 {isFilterOpen ? (
@@ -132,7 +132,7 @@ const FilesTable = ({ location = 'dashboard' }) => {
                             </button>
                     
                             {isFilterOpen ? (
-                                <div className='absolute z-10 w-full space-y-1 overflow-auto text-sm bg-white border-2 border-gray-200 rounded-md shadow-md top-9 h-44 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100'>
+                                <div className='absolute z-10 w-full space-y-1 overflow-auto text-sm bg-white border-2 rounded-md shadow-md border-BorderColor top-9 h-44 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100'>
                                     <button 
                                         onClick={() => { setSelectedFilter(''), setIsFilterOpen(!isFilterOpen) }} 
                                         className='hover:bg-[#ebebeb] cursor-pointer duration-300 w-full py-1.5 px-4'
@@ -155,14 +155,14 @@ const FilesTable = ({ location = 'dashboard' }) => {
                         <div className='bg-[#ebf2fb] py-1 px-1.5 rounded-md space-x-1'>
                             <button 
                                 onClick={() => setLayout('grid')}
-                                className={`p-1 cursor-pointer rounded-md duration-200 hover:bg-gray-300 ${layout === 'grid' ? 'shadow-md bg-white text-NuBlue pointer-events-none' : 'text-NuLightText'}`}
+                                className={`p-1 cursor-pointer rounded-md duration-200 hover:bg-gray-300 ${layout === 'grid' ? 'shadow-md bg-white text-NuBlue pointer-events-none' : 'text-TextSecondary'}`}
                             >
                                 <HiViewGrid className='text-lg'/>
                             </button>
 
                             <button 
                                 onClick={() => setLayout('table')}
-                                className={`p-1 cursor-pointer rounded-md duration-200 hover:bg-gray-300 ${layout === 'table' ? 'shadow-md bg-white text-NuBlue pointer-events-none' : 'text-NuLightText'}`}
+                                className={`p-1 cursor-pointer rounded-md duration-200 hover:bg-gray-300 ${layout === 'table' ? 'shadow-md bg-white text-NuBlue pointer-events-none' : 'text-TextSecondary'}`}
                             >
                                 <PiListBold className='text-lg'/>
                             </button>
@@ -172,7 +172,7 @@ const FilesTable = ({ location = 'dashboard' }) => {
 
                 <div className=''>
                     {layout === 'table' ? (
-                        <div className='flex w-full px-3 mt-5 mb-2 text-sm font-medium text-NuLightText'>
+                        <div className='flex w-full px-3 mt-5 mb-2 text-sm font-medium text-TextSecondary'>
                             <p className='w-[45%]'>Name</p>
                             <p className='w-[35%]'>Document Type</p>
                             <p className='w-[20%]'>Date Uploaded</p>
@@ -192,7 +192,7 @@ const FilesTable = ({ location = 'dashboard' }) => {
                                 <div 
                                     key={i}
                                     type='button'  
-                                    className={`border border-gray-200 cursor-pointer ${selectedFile?.includes(doc.filePath) ? 'bg-[#d2dffb] border-[#eaf4fc]' : null} ${layout === 'grid' ? 'px-4 flex flex-col justify-between rounded-xl' : ' rounded-md flex py-2 px-3'}`}
+                                    className={`border border-BorderColor cursor-pointer ${selectedFile?.includes(doc.filePath) ? 'bg-[#d2dffb] border-[#eaf4fc]' : null} ${layout === 'grid' ? 'px-4 flex flex-col justify-between rounded-xl' : ' rounded-md flex py-2 px-3'}`}
                                     onClick={(e) => handleClick(e, doc.filePath)}
                                     onDoubleClick={() => handleDoubleClick(doc.filePath, fileName, formattedDate)}
                                 >
@@ -216,15 +216,15 @@ const FilesTable = ({ location = 'dashboard' }) => {
                                     {layout === 'grid' && (
                                         <div className='flex flex-col mt-3 space-y-1.5'>
                                             <p className='overflow-hidden text-sm font-medium whitespace-nowrap text-ellipsis w-44'>{fileName}</p>
-                                            <p className='text-xs text-NuLightText'>{formattedDate}</p>
+                                            <p className='text-xs text-TextSecondary'>{formattedDate}</p>
                                         </div>
                                     ) }
 
-                                    <div className={`text-NuLightText ${layout === 'grid' ? 'flex space-x-2 mb-4 mt-8 text-xs' : 'w-[35%] my-auto'}`}>
-                                        <p className='overflow-hidden text-xs text-NuLightText w-44 text-ellipsis whitespace-nowrap'>{doc.type}</p>
+                                    <div className={`text-TextSecondary ${layout === 'grid' ? 'flex space-x-2 mb-4 mt-8 text-xs' : 'w-[35%] my-auto'}`}>
+                                        <p className='overflow-hidden text-xs text-TextSecondary w-44 text-ellipsis whitespace-nowrap'>{doc.type}</p>
                                     </div>
 
-                                    {layout ==='table' && (<p className='text-xs text-NuLightText my-auto w-[20%]'>{formattedDate}</p>)}                                    
+                                    {layout ==='table' && (<p className='text-xs text-TextSecondary my-auto w-[20%]'>{formattedDate}</p>)}                                    
                                 </div>
                             )
                         })}
@@ -234,27 +234,27 @@ const FilesTable = ({ location = 'dashboard' }) => {
 
             <div className='flex justify-between '>
                 <div className='my-auto text-sm'>
-                    <p className='text-xs font-medium text-NuLightText'>
+                    <p className='text-xs font-medium text-TextSecondary'>
                         Showing Items {(tableCurrentPage - 1) * itemsPerPage + 1 } - {Math.min(tableCurrentPage * itemsPerPage, filterDocument?.length)} of {filterDocument?.length}
                     </p>
                 </div>
-                <div className='flex my-auto space-x-4 text-sm text-NuLightText'>
+                <div className='flex my-auto space-x-4 text-sm text-TextSecondary'>
                     <button 
                         type='button' 
                         onClick={handlePrevPage} 
-                        className='border-2 border-gray-200 p-1 cursor-pointer rounded-md flex space-x-1.5 px-2 text-lg hover:bg-gray-200 duration-200 '
+                        className='border-2 border-BorderColor p-1 cursor-pointer rounded-md flex space-x-1.5 px-2 text-lg hover:bg-gray-200 duration-200 '
                     >
                         <TiArrowLeft className='my-auto'/>
                     </button>
                     <p className='flex my-auto space-x-2'>
-                        <span className='px-3 py-1 text-center text-black border-2 border-gray-200 rounded-md'>{tableCurrentPage}</span>
+                        <span className='px-3 py-1 text-center text-black border-2 rounded-md border-BorderColor'>{tableCurrentPage}</span>
                         <span className='my-auto'>/</span>
-                        <span className='px-3 py-1 text-center text-black border-2 border-gray-200 rounded-md'>{totalPages}</span>
+                        <span className='px-3 py-1 text-center text-black border-2 rounded-md border-BorderColor'>{totalPages}</span>
                     </p>
                     <button 
                         type='button' 
                         onClick={handleNextPage} 
-                        className='border-2 border-gray-200 p-1 cursor-pointer rounded-md flex space-x-1.5 px-2 text-lg hover:bg-gray-200 duration-200'
+                        className='border-2 border-BorderColor p-1 cursor-pointer rounded-md flex space-x-1.5 px-2 text-lg hover:bg-gray-200 duration-200'
                     >
                         <TiArrowRight className='my-auto'/>
                     </button>

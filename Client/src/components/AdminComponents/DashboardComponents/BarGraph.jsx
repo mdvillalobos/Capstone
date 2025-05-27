@@ -68,13 +68,7 @@ const BarGraph = ({ rankPerCollege  }) => {
                 </div>
             </div>
 
-            {/* <div className='flex flex-col mt-2'>
-                <p className='text-4xl text-left'>{totalFaculty}</p>
-                <p className='text-xs font-medium text-NuLightText'>Overall Faculty</p>
-            </div> */}
-
-  
-            <div className="text-[0.7rem] font-semibold text-NuLightText w-[100%]">
+            <div className="text-[0.7rem] font-semibold text-TextSecondary w-[100%]">
                 <ResponsiveContainer width="100%" height={200}>
                     <BarChart
                         data={chartData.length > 0 ? chartData : [{ label: "", TotalNumber: 0 }]}

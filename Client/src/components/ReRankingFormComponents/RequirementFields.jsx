@@ -83,7 +83,7 @@ const RequirementFields = ({ requirementDescription, userDocuments, setRequireme
                                     {file.filePath ? (
                                         <button 
                                             type='button'
-                                            className='relative z-0 px-3 py-2 overflow-hidden text-sm duration-300 border-2 border-gray-200 rounded-md cursor-pointer w-46 hover:bg-NuLightBlue hover:border-NuLightBlue hover:text-white'
+                                            className='relative z-0 px-3 py-2 overflow-hidden text-sm duration-300 border-2 rounded-md cursor-pointer border-BorderColor w-46 hover:bg-NuLightBlue hover:border-NuLightBlue hover:text-white'
                                             onClick={() => handleShowImage(file.filePath, file.fileName)}
                                         >
                                             <div type="button" className='flex space-x-2'>
@@ -107,14 +107,14 @@ const RequirementFields = ({ requirementDescription, userDocuments, setRequireme
                                             user.role === 'user' && (
                                                 <button 
                                                     type='button'
-                                                    className='flex justify-center items-center border-2 border-gray-200 py-3.5 px-2 text-sm rounded-md w-[208px] overflow-hidden hover:bg-NuLightBlue duration-300 hover:text-white'
+                                                    className='flex justify-center items-center border-2 border-BorderColor py-3.5 px-2 text-sm rounded-md w-[208px] overflow-hidden hover:bg-NuLightBlue duration-300 hover:text-white'
                                                     onClick={() => setIsFileShow({ show: true, requirementNumber: userDocuments.requirementNumber, fileIndex: i })}
                                                 >
                                                     Select a file
                                                 </button>
                                             )
                                         ) : (
-                                            <p className='cursor-pointer flex justify-center items-center border-2 border-gray-200 py-3.5 px-2 text-sm rounded-md w-52 overflow-hidden'>
+                                            <p className='cursor-pointer flex justify-center items-center border-2 border-BorderColor py-3.5 px-2 text-sm rounded-md w-52 overflow-hidden'>
                                                 No attached document
                                             </p>
                                         )
@@ -128,7 +128,7 @@ const RequirementFields = ({ requirementDescription, userDocuments, setRequireme
                         <div className='flex flex-col'>
                             <p className='mb-1 text-sm font-medium text-NuBlue'>Remarks:</p>
                             <textarea
-                                className='border-2 border-gray-200 py-2 px-3 text-sm focus-within:border-[#93adc2] outline-none rounded-md h-16' 
+                                className='border-2 border-BorderColor py-2 px-3 text-sm focus-within:border-[#93adc2] outline-none rounded-md h-16' 
                                 placeholder='Enter your remarks here..'
                                 onChange={(e) => handleChangeRemarks(e.target.value)}
                             />

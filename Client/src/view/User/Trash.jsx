@@ -1,7 +1,4 @@
-import { useContext } from 'react'
-import { UserContext } from '../../../context/userContext.jsx';
 import Navigation from "../../components/Tools/Navigation.jsx";
-import LoadingSpinner from '../../components/Tools/LoadingSpinner.jsx'
 import Header from '../../components/Tools/Header.jsx';
 import FilesTable from '../../components/UserComponents/FilesComponents/FilesTable.jsx';
 

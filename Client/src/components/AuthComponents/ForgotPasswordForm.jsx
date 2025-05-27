@@ -56,7 +56,7 @@ const ForgotPasswordForm = () => {
     return (
         <div>
             <form onSubmit={ handleFindEmail } className='auth-container'>
-                <div className={`auth-input-container border-gray-200 ${data.email && !isEmailValid ? 'border-red-400' : 'focus-within:border-[#93adc2]'} ${shake ? 'shake' : ''}`}>
+                <div className={`auth-input-container border-BorderColor ${data.email && !isEmailValid ? 'border-red-400' : 'focus-within:border-[#93adc2]'} ${shake ? 'shake' : ''}`}>
                     <HiOutlineMail  className='my-auto ml-1 mr-0.5' size='1.4rem' color='#707074'/>
                     <input 
                         type="text"

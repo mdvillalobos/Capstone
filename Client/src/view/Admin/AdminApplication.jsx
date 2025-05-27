@@ -54,7 +54,7 @@ const AdminApplication = () => {
                     />
 
                     <div className='flex flex-col flex-1 space-y-4'>
-                        <p className='text-sm font-medium tracking-widest text-NuLightText'>APPLICATIONS FOR RE-RANKING</p>
+                        <p className='text-sm font-medium tracking-widest text-TextSecondary'>APPLICATIONS FOR RE-RANKING</p>
                         <ApplicationTable data={data}/>
                     </div>
                 </div>

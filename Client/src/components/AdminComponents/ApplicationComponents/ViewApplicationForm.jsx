@@ -66,7 +66,7 @@ const ViewApplicationForm = ({ rest }) => {
                     setRemarks={setRemarks}
                 />
             )} */}
-            <div className='px-6 py-4 border-2 border-gray-200 rounded-mx rounded-xl'>
+            <div className='px-6 py-4 border-2 border-BorderColor rounded-mx rounded-xl'>
                 <div className="flex justify-between pb-2">
                     <h1 className='formTitle'>Faculty Ranking Form</h1>
                     <h1 className='formTitle'>{rest?.applyingFor}</h1>
@@ -113,7 +113,7 @@ const ViewApplicationForm = ({ rest }) => {
                     </button>
 
                     {isVerdictOpen ? (
-                        <div className='absolute right-0 flex flex-col mb-1 font-medium bg-white border border-gray-200 rounded-md shadow bottom-full w-34'>
+                        <div className='absolute right-0 flex flex-col mb-1 font-medium bg-white border rounded-md shadow border-BorderColor bottom-full w-34'>
                             <button onClick={() => { setSelectedVerdict('Approve'), setIsVerdictOpen(false) }} className='cursor-pointer px-4 py-2 hover:bg-[#ebebeb] duration-300'>Approve</button>
                             <button onClick={() => { setSelectedVerdict('Decline'), setIsVerdictOpen(false) }} className='cursor-pointer px-4 py-2 hover:bg-[#ebebeb] duration-300'>Decline</button>
                             <button onClick={() => { setSelectedVerdict('Return'), setIsVerdictOpen(false) }} className='cursor-pointer px-4 py-2 hover:bg-[#ebebeb] duration-300'>Return</button>

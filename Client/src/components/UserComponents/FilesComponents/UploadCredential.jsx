@@ -82,18 +82,18 @@ const ChoicesModal = ({ handleExit }) => {
         <div className="modal">
             <div className={`w-[50%] h-[65vh] bg-white shadow-md rounded-xl max-sm:w-[85%] max-md:w-[70%] max-lg:w-[50%] max-xl:w-[40%] fade-in`}>
                 <form onSubmit={handleAddCredential} className='flex flex-col h-full'>
-                    <div className='relative flex justify-between px-6 py-4 border-b border-gray-200'>
+                    <div className='relative flex justify-between px-6 py-4 border-b border-BorderColor'>
                         <div className='flex space-x-2'>
-                            <span className='p-2 my-auto border-2 border-gray-200 rounded-full'>
+                            <span className='p-2 my-auto border-2 rounded-full border-BorderColor'>
                                 <AiOutlineCloudUpload className='text-lg'/>
                             </span>
                             <div className='space-y-0.5'>
                                 <p className='text-sm font-medium'>Upload Files</p>
-                                <p className='text-xs text-NuLightText'>Select and upload your documents.</p>
+                                <p className='text-xs text-TextSecondary'>Select and upload your documents.</p>
                             </div>
                         </div>
 
-                        <button type="button" className="absolute right-4 px-2 top-5 rounded-full hover:bg-[#eae7e7] text-lg duration-200 border-2 border-gray-200 " onClick={handleExit}>
+                        <button type="button" className="absolute right-4 px-2 top-5 rounded-full hover:bg-[#eae7e7] text-lg duration-200 border-2 border-BorderColor " onClick={handleExit}>
                             &times;
                         </button> 
                     </div>
@@ -146,7 +146,7 @@ const ChoicesModal = ({ handleExit }) => {
                                               style={{ width: '10vw', height: '10vh' }}
                                             />
                                         </span>
-                                        <p className='text-sm text-NuLightText'>Uploading files ({uploading.length} remaining)</p>
+                                        <p className='text-sm text-TextSecondary'>Uploading files ({uploading.length} remaining)</p>
                                     </div>
                                 </div>
                             )}

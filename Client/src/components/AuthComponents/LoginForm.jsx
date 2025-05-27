@@ -47,7 +47,7 @@ const LoginForm = () => {
     return (
         <div>
             <form onSubmit={handleLogin} className='auth-container' >
-                <div className={`auth-input-container border-gray-200 focus-within:border-[#93adc2] ${shake.email ? 'shake' : ''}`}>
+                <div className={`auth-input-container border-BorderColor focus-within:border-[#93adc2] ${shake.email ? 'shake' : ''}`}>
                     <HiOutlineMail className='my-auto ml-1 mr-0.5' size='1.4rem' color='#707074'/>
                     <input 
                         type="text"
@@ -59,7 +59,7 @@ const LoginForm = () => {
                     />
                 </div>
    
-                <div className={`auth-input-container border-gray-200 focus-within:border-[#93adc2] ${shake.password ? 'shake' : ''}`}>
+                <div className={`auth-input-container border-BorderColor focus-within:border-[#93adc2] ${shake.password ? 'shake' : ''}`}>
                     <TbLock className='my-auto ml-1 mr-1' size='1.6rem' color='#707074'/>
                     <input 
                         type={showPassword ? 'text' : 'password'}

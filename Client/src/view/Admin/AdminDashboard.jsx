@@ -18,7 +18,7 @@ const AdminDashboard = () => {
     const { config } = useContext(RankContext);
     const academicYear =  config?.academicYear || null;
   
-    const { getFacultyRankingData, getReRankingData, getApprovedApplications, getApproverList } = useCallDashboardAPI();
+    const { getFacultyRankingData, getReRankingData, getApprovedApplications, getAdminAccounts } = useCallDashboardAPI();
 
     const [ loading, setIsLoading ] = useState(true);
     const [ isMobile, setIsMobile ] = useState(false);
@@ -28,7 +28,7 @@ const AdminDashboard = () => {
         rankPerCollege: [],
         approvedApplications: [],
         totalApplicationPerYear: [],
-        approverList: []
+        adminAccounts: []
     })
 
     const handleResize = useCallback(() => {
@@ -48,11 +48,11 @@ const AdminDashboard = () => {
             setIsLoading(true);
                 
             try {
-                const [ facultyRankingData, reRankingData, approvedApplications, approverList ] = await Promise.all([
+                const [ facultyRankingData, reRankingData, approvedApplications, adminAccounts ] = await Promise.all([
                     getFacultyRankingData(),
                     getReRankingData(academicYear),
                     getApprovedApplications(),
-                    getApproverList()
+                    getAdminAccounts()
                 ]);
 
                 const { totalFaculty, totalRank, totalRankPerCollege } = facultyRankingData.data
@@ -63,7 +63,7 @@ const AdminDashboard = () => {
                     rankPerCollege: totalRankPerCollege,
                     approvedApplications: approvedApplications.data,
                     totalApplicationPerYear: reRankingData.data,
-                    approverList: approverList.data
+                    adminAccounts: adminAccounts.data
                 })
                       
             } catch (error) {
@@ -73,7 +73,7 @@ const AdminDashboard = () => {
             }
         };
         fetchData();
-    }, [academicYear]);
+    }, []);
 
     if(loading) return <LoadingSpinner/>
 
@@ -122,7 +122,7 @@ const AdminDashboard = () => {
                             </div>
 
                             <div className='h-full flex flex-col w-[25%] space-y-4'>
-                                <ReRankingConfig approverList={dashboardData.approverList}/>
+                                <ReRankingConfig adminAccounts={dashboardData.adminAccounts}/>
                                 {/* <RankTotal totalPerRank={dashboardData.totalRank}/> */}
                             </div>
                         </div>

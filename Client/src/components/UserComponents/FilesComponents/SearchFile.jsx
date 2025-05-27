@@ -38,7 +38,7 @@ const SearchFile = () => {
                     data = { isImageshow }
                 />
             )}
-            <div className='relative flex w-full overflow-hidden border-2 border-gray-200 rounded-xl'>
+            <div className='relative flex w-full overflow-hidden border-2 border-BorderColor rounded-xl'>
                 <input type="text" 
                     className='w-full px-5 py-3 text-xs outline-none'
                     placeholder='Search file here...'
@@ -50,7 +50,7 @@ const SearchFile = () => {
                 </span>
             </div>
             {isSearchOpen && (
-                <div className='absolute z-10 w-full space-y-1 overflow-hidden text-sm bg-white border-2 border-gray-200 shadow-xl top-12 rounded-xl'>
+                <div className='absolute z-10 w-full space-y-1 overflow-hidden text-sm bg-white border-2 shadow-xl border-BorderColor top-12 rounded-xl'>
                     <div className='scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100 max-h-[50vh] overflow-y-auto'>
                         {searchDocument.length > 0 ? (
                             searchDocument.map((doc, i) => {

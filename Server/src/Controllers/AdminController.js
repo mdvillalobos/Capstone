@@ -106,25 +106,38 @@ export const updateApplicationApprovers = async (req, res) => {
     const { approverList } = req.body;
 
     try {
-        const approverEmails = approverList.map(a => a.email);
-
-        const approversAccounts = await Account.find({ email: { $in: approverEmails } });
+        console.log(approverList)
+        const adminAccounts = await Account.find({ role: 'admin' });
 
         const emailToAccountMap = new Map();
 
-        approversAccounts.forEach(acc => {
-            emailToAccountMap.set(acc.email, acc);
+        approverList.forEach((acc, index) => {
+            emailToAccountMap.set(acc.email, {...acc, index });
         });
 
-        const bulkOps = approverList.map((approver, index) => {
+        console.log('emailToAccountMap', emailToAccountMap)
+
+        const bulkOps = adminAccounts.map(approver => {
             const account = emailToAccountMap.get(approver.email);
+
+            console.log('account',account)
+
+            if(approver.approverNumber && !account) {
+                console.log('utot')
+                return {
+                    updateOne: {
+                        filter: { _id: approver._id },
+                        update: { $set: { approverNumber: null } }
+                    }
+                }; 
+            }
 
             if (!account) return null;
 
             return {
                 updateOne: {
                     filter: { _id: account._id },
-                    update: { $set: { approverNumber: index + 1 } }
+                    update: { $set: { approverNumber: account.index + 1 } }
                 }
             };
         }).filter(Boolean);
@@ -141,11 +154,10 @@ export const updateApplicationApprovers = async (req, res) => {
     }
 }
 
-export const getApproverList = async (req, res) => {
+export const getAdminAccount = async (req, res) => {
     try {
-        const approverList = await Account.find({ approverNumber : { $ne: null }})
+        const approverList = await Account.find({ role : 'admin' })
             .select('email approverNumber accountinfo.firstName accountinfo.lastName accountinfo.sex accountinfo.profilePicture')
-            .sort({ approverNumber: 1 });
 
         return res.status(200).json(approverList)
     }

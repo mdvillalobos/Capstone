@@ -4,7 +4,7 @@ const router = Router();
 import { login, register, verifyEmail, registerProfile, forgotPassword, resetPassword, logout, resendOTP } from '../Controllers/AuthController.js';
 import { getUserData, addCredential, getUserCredentials, updateCredentialStatus } from '../Controllers/UserController.js';
 import { changePassword, updateProfile } from '../Controllers/SettingController.js'
-import { checkAdminPassowrd, updateConfig, getConfigurations, updateApplicationApprovers, getApproverList, createRank, getRanks, registerAdmin, getAllAccount } from '../Controllers/AdminController.js';
+import { checkAdminPassowrd, updateConfig, getConfigurations, updateApplicationApprovers, getAdminAccount, createRank, getRanks, registerAdmin, getAllAccount } from '../Controllers/AdminController.js';
 import { checkExistingEntry, getApplicationsForReRanking, submitApplicationEntry, updateApplication, cancelSubmission, submitApplicationReview} from '../Controllers/ApplicationController.js';
 import { getFacultyRankData, getReRankingData, getApprovedApplications } from '../Controllers/AnalyticsController.js'; 
 
@@ -56,7 +56,7 @@ router.get('/api/getApplications', authorizationMiddleware('admin'), getApplicat
 router.post('/api/reviewApplication', authorizationMiddleware('admin'), submitApplicationReview);
 router.post('/api/updateConfig', authorizationMiddleware('admin'), updateConfig);
 router.post('/api/updateApproverList', authorizationMiddleware('admin'), updateApplicationApprovers);
-router.get('/api/getApproverList', authorizationMiddleware('admin'), getApproverList);
+router.get('/api/getAdminAccount', authorizationMiddleware('admin'), getAdminAccount);
 router.post('/api/createRank', authorizationMiddleware('admin'), createRank);
 router.post('/api/registerAdmin', authorizationMiddleware('admin'), registerAdmin);
 router.get('/api/getAllAccounts', authorizationMiddleware('admin'), getAllAccount)

@@ -19,7 +19,10 @@ const useUpdateApprovers = () => {
             }
 
             else {
-                LoadingToast.close();
+                return Toast.fire({
+                    icon: 'success',
+                    title: 'Update Successfully!'
+                })
             }
         }
 

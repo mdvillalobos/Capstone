@@ -1,4 +1,5 @@
 import { useContext, useEffect, useState } from 'react'
+import { RankContext } from '../../../context/rankContext.jsx';
 import axios from 'axios';
 import Navigation from "../../components/Tools/Navigation.jsx";
 import LoadingSpinner from '../../components/Tools/LoadingSpinner.jsx'
@@ -6,20 +7,20 @@ import Instruction from '../../components/UserComponents/ApplicationComponents/I
 import DropDown from '../../components/UserComponents/ApplicationComponents/DropDown.jsx';
 import SubmittedPage from '../../components/UserComponents/ApplicationComponents/SubmittedPage.jsx';
 import Header from '../../components/Tools/Header.jsx';
-import { RankContext } from '../../../context/rankContext.jsx';
 
 const ApplicationForReRanking = () => {
     const { config } = useContext(RankContext)
+    const academicYear = config?.academicYear || null
     const [ data, setData ] = useState();
     const [ loading, setIsLoading ] = useState(true)
      
     useEffect(() => {
         setIsLoading(true)
-        axios.get('/api/getEntry')
+        axios.get(`/api/getEntry=${academicYear}`)
             .then(res => setData(res.data))
             .catch(err => console.error(err))
             .finally(() => setIsLoading(false))
-    }, []);
+    }, [academicYear]);
 
     if(loading) return <LoadingSpinner/>
 

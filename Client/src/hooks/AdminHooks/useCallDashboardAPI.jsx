@@ -7,9 +7,9 @@ const useCallDashboardAPI = () => {
 
     const getApprovedApplications = () => axios.get('/api/getApprovedApplication');
 
-    const getApproverList = () => axios.get('/api/getApproverList');
+    const getAdminAccounts = () => axios.get('/api/getAdminAccount');
 
-    return { getFacultyRankingData, getReRankingData, getApprovedApplications, getApproverList }
+    return { getFacultyRankingData, getReRankingData, getApprovedApplications, getAdminAccounts }
 }
 
 export default useCallDashboardAPI;

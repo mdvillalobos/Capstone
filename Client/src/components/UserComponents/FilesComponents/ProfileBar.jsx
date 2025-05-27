@@ -19,7 +19,7 @@ const ProfileBar = () => {
   
     return (
         <div className='flex flex-col h-full space-y-4 z w-72'>
-            <div className='px-5 py-6 space-y-8 border border-gray-200 rounded-xl'>
+            <div className='px-5 py-6 space-y-8 border border-BorderColor rounded-xl'>
                 <div className='flex flex-col items-center space-y-4'>
                     <div className='p-1 border-2 rounded-full border-NuLightBlue'>
                         {user.profilePicture ? (
@@ -91,7 +91,7 @@ const ProfileBar = () => {
                 </div>
             </div>
 
-            <div className='flex flex-col flex-1 px-5 py-4 space-y-5 overflow-hidden border border-gray-200 rounded-xl'>
+            <div className='flex flex-col flex-1 px-5 py-4 space-y-5 overflow-hidden border border-BorderColor rounded-xl'>
                 <p className='text-lg font-medium'>Recently Uploaded</p>
 
                 {recentFiles ? 
@@ -116,7 +116,7 @@ const ProfileBar = () => {
                                 </div>
                                 <div className='space-y-0.5'>
                                     <p className='overflow-hidden text-sm text-ellipsis whitespace-nowrap w-52'>{fileName}</p>
-                                    <p className='text-xs text-NuLightText'>{formattedDate}</p>
+                                    <p className='text-xs text-TextSecondary'>{formattedDate}</p>
                                 </div>
                             </div>
                         )

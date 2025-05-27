@@ -115,7 +115,7 @@ const ProfileRegistrationForm = () => {
                 id='firstName' 
                 name='firstName' 
                 maxLength='50'
-                className={ `border-2 px-3 py-3 rounded-md text-sm ${isSubmitted && !data.firstName.trim() ? 'border-red-400' : 'border-gray-200'}` }
+                className={ `border-2 px-3 py-3 rounded-md text-sm ${isSubmitted && !data.firstName.trim() ? 'border-red-400' : 'border-BorderColor'}` }
                 onChange={ (e) => setData({ ...data, firstName: e.target.value}) }
               />
               {isSubmitted && !data.firstName.trim() && (
@@ -130,7 +130,7 @@ const ProfileRegistrationForm = () => {
                 id='lastName' 
                 name='lastName'
                 maxLength='50' 
-                className={`border-2 px-3 py-3 rounded-md text-sm ${isSubmitted && !data.lastName.trim() ? 'border-red-400' : 'border-gray-200'}`}
+                className={`border-2 px-3 py-3 rounded-md text-sm ${isSubmitted && !data.lastName.trim() ? 'border-red-400' : 'border-BorderColor'}`}
                 onChange={(e) => setData({ ...data, lastName: e.target.value})}
               />
               {isSubmitted && !data.lastName.trim() && (
@@ -148,7 +148,7 @@ const ProfileRegistrationForm = () => {
                 name='middleInitial' 
                 maxLength='50'
                 placeholder='Optional'
-                className='w-full px-3 py-3 text-sm border-2 border-gray-200 rounded-md'
+                className='w-full px-3 py-3 text-sm border-2 rounded-md border-BorderColor'
                 onChange={(e) => setData({ ...data, middleName: e.target.value})}
               />
             </div>
@@ -160,7 +160,7 @@ const ProfileRegistrationForm = () => {
                 id='contact' 
                 name='contact'  
                 maxLength="11"
-                className={`border-2 px-3 py-3 rounded-md w-full text-sm ${isSubmitted && !data.contact.trim() ? 'border-red-400' : 'border-gray-200'}`}
+                className={`border-2 px-3 py-3 rounded-md w-full text-sm ${isSubmitted && !data.contact.trim() ? 'border-red-400' : 'border-BorderColor'}`}
                 onChange={(e) => setData({ ...data, contact: e.target.value})}
               />
               {isSubmitted && !data.contact.trim() && (
@@ -175,7 +175,7 @@ const ProfileRegistrationForm = () => {
               <select 
                 id='sex' 
                 name='sex'
-                className={`border-2 px-3 py-3 rounded-md w-full text-sm ${isSubmitted && !data.sex.trim() ? 'border-red-400' : 'border-gray-200'}`} 
+                className={`border-2 px-3 py-3 rounded-md w-full text-sm ${isSubmitted && !data.sex.trim() ? 'border-red-400' : 'border-BorderColor'}`} 
                 onChange={(e) => setData({ ...data, sex: e.target.value})}
               >
                 <option value=""></option>
@@ -192,7 +192,7 @@ const ProfileRegistrationForm = () => {
               <select 
                 id='position' 
                 name='position'
-                className={`border-2 px-3 py-3 rounded-md w-full text-sm ${isSubmitted && !data.status.trim() ? 'border-red-400' : 'border-gray-200'}`}
+                className={`border-2 px-3 py-3 rounded-md w-full text-sm ${isSubmitted && !data.status.trim() ? 'border-red-400' : 'border-BorderColor'}`}
                 onChange={(e) => setData({...data, status: e.target.value})}
               >
                 <option value=""></option>
@@ -212,7 +212,7 @@ const ProfileRegistrationForm = () => {
               <select 
                 id='track'
                 name='track'
-                className={`border-2 px-3 py-3 rounded-md w-full text-sm ${isSubmitted && !data.track.trim() ? 'border-red-400' : 'border-gray-200'}`} 
+                className={`border-2 px-3 py-3 rounded-md w-full text-sm ${isSubmitted && !data.track.trim() ? 'border-red-400' : 'border-BorderColor'}`} 
                 onChange={(e) => setData({ ...data, track: e.target.value})}
               >
                 <option value="">Select a track</option>
@@ -230,7 +230,7 @@ const ProfileRegistrationForm = () => {
               <select 
                 id='currentRank'
                 name='currentRank'
-                className={`border-2 px-3 py-3 rounded-md w-full text-sm ${isSubmitted && !data.rank.trim() ? 'border-red-400' : 'border-gray-200'}`}
+                className={`border-2 px-3 py-3 rounded-md w-full text-sm ${isSubmitted && !data.rank.trim() ? 'border-red-400' : 'border-BorderColor'}`}
                 onChange={(e) => setData({ ...data, rank: e.target.value})}
               >
                 <option value='None'>None</option>
@@ -250,7 +250,7 @@ const ProfileRegistrationForm = () => {
               <select 
                 id='college' 
                 name='college'
-                className={`border-2 px-3 py-3 rounded-md w-full text-sm ${isSubmitted && !data.college.trim() ? 'border-red-400' : 'border-gray-200'}`}
+                className={`border-2 px-3 py-3 rounded-md w-full text-sm ${isSubmitted && !data.college.trim() ? 'border-red-400' : 'border-BorderColor'}`}
                 onChange={(e) => setData({...data, college: e.target.value})}
               >
                 <option value=''></option>
@@ -268,7 +268,7 @@ const ProfileRegistrationForm = () => {
               <select 
                 id='department' 
                 name='department'
-                className={`border-2 px-3 py-3 rounded-md w-full text-sm ${isSubmitted && !data.department.trim() ? 'border-red-400' : 'border-gray-200'}`}
+                className={`border-2 px-3 py-3 rounded-md w-full text-sm ${isSubmitted && !data.department.trim() ? 'border-red-400' : 'border-BorderColor'}`}
                 onChange={(e) => setData({...data, department: e.target.value})}
               >
                 {filterDepartment.map(department => (

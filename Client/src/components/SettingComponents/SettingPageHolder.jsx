@@ -10,7 +10,7 @@ const SettingPageHolder = () => {
 
   return (
     <div className='w-full'>
-      <div className="flex space-x-4 border-b-2 border-gray-200">
+      <div className="flex space-x-4 border-b-2 border-BorderColor">
         <button className={`py-2 font-medium px-2 text-sm cursor-pointer ${selected === 'Profile' ? 'border-b-2 border-b-NuBlue text-NuBlue text-NuButton' : 'text-gray-600'}`} onClick={() => setSelected('Profile')}>My Profile</button>
         <button className={`py-2 font-medium px-2 text-sm cursor-pointer ${selected === 'Security' ? 'border-b-2 border-b-NuBlue text-NuBlue text-NuButton' : 'text-gray-600'}`} onClick={() => setSelected('Security')}>Security</button>
       </div>

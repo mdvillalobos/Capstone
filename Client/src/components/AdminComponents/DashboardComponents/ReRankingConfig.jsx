@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react'
+import { useContext, useState, useEffect } from 'react'
 import { RankContext } from '../../../../context/rankContext'
 import { DndContext, closestCenter, PointerSensor, useSensor, useSensors } from '@dnd-kit/core';
 import { arrayMove, SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
@@ -9,12 +9,15 @@ import FemaleProfile from '../../../assets/images/female.png';
 import DraggableItem from '../../Tools/DraggableItem';
 import useUpdateApprovers from '../../../hooks/AdminHooks/useUpdateApprovers';
 import VerifyAdminModal from '../../Tools/VerifyAdminModal';
+import { useRef } from 'react';
 
-const ReRankingConfig = ({ approverList }) => {
+const ReRankingConfig = ({ adminAccounts }) => {
     const { config } = useContext(RankContext);
     const [ isVerifyAdminOpen, setIsVerifyAdminOpen ] = useState(false);
     const [ isConfigModalOpen, setIsConfigModalOpen ] = useState(false)
-    
+
+    const approverList = adminAccounts?.filter(prev => prev.approverNumber !== null).sort((a, b) => a.approverNumber - b.approverNumber);
+
     return (
         <div className='px-5 py-3 space-y-6 border-2 border-BorderColor rounded-xl text-TextPrimary'>
             {isVerifyAdminOpen && (
@@ -25,7 +28,7 @@ const ReRankingConfig = ({ approverList }) => {
             )}
             {isConfigModalOpen && (
                 <ConfigModal
-                    initialApprovers = {approverList}
+                    adminAccounts={adminAccounts}
                     handleExit = {() => { setIsConfigModalOpen(false), setIsVerifyAdminOpen(false)}}
                 />
             )}
@@ -86,20 +89,26 @@ const ReRankingConfig = ({ approverList }) => {
 
 export default ReRankingConfig
 
-const ConfigModal = ({ initialApprovers, handleExit }) => {
+const ConfigModal = ({ adminAccounts, handleExit }) => {
     const { config } = useContext(RankContext);
     const { saveConfiguration } = useSaveConfiguration();
     const { updateApprover } = useUpdateApprovers();
     const { Toast } = useToast();
+    const searchRef = useRef(null)
+
+    const initialApprovers = adminAccounts?.filter(prev => prev.approverNumber !== null).sort((a, b) => a.approverNumber - b.approverNumber);
 
     const id = config ? config._id : null
     const sensors = useSensors(useSensor(PointerSensor));
 
-    const [ isSubmitted, setIsSubmitted ] = useState(false)
     const [ selected, setSelected ] = useState('Signatories');
     const [ isEditOn, setIsEditOn ] = useState(false);
+    const [ isSubmitted, setIsSubmitted ] = useState(false)
 
-    const [ approverList, setApproverList ] = useState(initialApprovers); //signatory section
+    //signatory section
+    const [ search, setSearch ] = useState('')
+    const [ isSearchOpen, setIsSearchOpen ] = useState(false);
+    const [ approverList, setApproverList ] = useState(initialApprovers);
 
     //control section
     const [ academicYear, setAcademicYear ] = useState(config ? config.academicYear : '')
@@ -110,6 +119,30 @@ const ConfigModal = ({ initialApprovers, handleExit }) => {
     })
 
     //signatory section
+    const filteredAccount = adminAccounts?.filter(acc => { 
+        const name = `${acc.accountinfo?.[0]?.firstName || ''} ${acc.accountinfo?.[0]?.lastName || ''}`;
+        return name.toLowerCase().includes(search.toLowerCase());
+    })
+
+    useEffect(() => {
+        const handleClickOutside = (e) => {
+            if(searchRef.current && !searchRef.current.contains(e.target)) {
+                setIsSearchOpen(false)
+            }
+        }
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => document.removeEventListener('mousedown', handleClickOutside);
+    }, []);
+
+    const handleAdminSelect = (admin) => {
+        setApproverList(prev => {
+            const isSelected = prev.find(acc => acc._id === admin._id)
+            return isSelected 
+                ? prev.filter(acc => acc._id !== admin._id)
+                : [...prev, admin]
+        });
+    };
+
     const handleDragEnd = (event) => {
         const { active, over } = event;
 
@@ -120,10 +153,6 @@ const ConfigModal = ({ initialApprovers, handleExit }) => {
 
         setApproverList((items) => arrayMove(items, oldIndex, newIndex));
     };
-
-    const handleRemoveApprover = (email) => {
-        setApproverList(prev => prev.filter(acc => acc.email !== email ))
-    }
 
     const handleUpdateApproverList = async (e) => {
         e.preventDefault();
@@ -139,7 +168,6 @@ const ConfigModal = ({ initialApprovers, handleExit }) => {
     //control section
     const handleUpdateControls = async (e) => {
         e.preventDefault();
-        e.stopPropagation();
         
         const { isReRankingSet, startDate, endDate } = reRankingStatus;
         const { isReRankingSet: configIsReRankingSet = false, startDate: configStartDate = '', endDate: configEndDate = '' } = config.reRankingStatus ?? {};
@@ -152,14 +180,11 @@ const ConfigModal = ({ initialApprovers, handleExit }) => {
                 title: 'Required all fields'
             })
         }
-        
         const hasChanges = 
             isReRankingSet !== configIsReRankingSet ||
             startDate !== formatDate(configStartDate) ||
             endDate !== formatDate(configEndDate) ||
             academicYear !== configAcademicYear;
-
-        console.log('hasChanges:', hasChanges)
 
         if(!hasChanges) {          
             setIsSubmitted(false)
@@ -187,7 +212,11 @@ const ConfigModal = ({ initialApprovers, handleExit }) => {
                             <p className='text-xs text-TextSecondary'>Adjust the setting for re-ranking applications.</p>
                         </div>
                     </div>
-                    <button type="button" className="absolute right-4 px-2 top-5 rounded-full hover:bg-[#eae7e7] text-lg duration-200 border-2 border-gray-200 cursor-pointer" onClick={handleExit}>
+                    <button 
+                        type="button"
+                        className="absolute right-4 px-2 top-5 rounded-full hover:bg-[#eae7e7] text-lg duration-200 border-2 border-BorderColor cursor-pointer" 
+                        onClick={handleExit}
+                    >
                         &times;
                     </button> 
                 </div>
@@ -210,34 +239,75 @@ const ConfigModal = ({ initialApprovers, handleExit }) => {
                         </button>
                     </div>
 
-                    <form onSubmit={selected === 'Signatories' ? handleUpdateApproverList : handleUpdateControls} className='flex flex-col justify-between flex-1 px-4 pb-4'>
+                    <form 
+                        onSubmit={selected === 'Signatories' ? handleUpdateApproverList : handleUpdateControls} 
+                        className='flex flex-col justify-between flex-1 px-4 pb-4'
+                    >
                         {selected === 'Signatories' ? (
-                            <div className={`${!isEditOn ? 'pointer-events-none' : ''}`}>
-                                <DndContext
-                                    sensors={sensors}
-                                    collisionDetection={closestCenter}
-                                    onDragEnd={handleDragEnd}
-                                >
-                                    <SortableContext
-                                        items={approverList.map((_, index) => index)}
-                                        strategy={verticalListSortingStrategy}
+                            <div className={`pt-2 ${isEditOn && 'flex flex-col'}`}>
+                                {isEditOn && (
+                                    <div className='relative mb-4' ref={searchRef}>
+                                        <input 
+                                            type="text" 
+                                            className='text-xs border-2 border-BorderColor rounded-l-md w-full outline-none px-2 py-2.5 focus:border-[#93adc2]' 
+                                            placeholder='Search account here you want to add..'
+                                            value={search}
+                                            onChange={(e) => setSearch(e.target.value)}
+                                            onFocus={() => setIsSearchOpen(true)}
+                                        />
+
+                                        {isSearchOpen && (
+                                            <div className='absolute left-0 z-20 w-full mt-1 overflow-y-auto bg-white border border-gray-300 rounded-md shadow-lg max-h-60 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100'>
+                                                {filteredAccount?.map((acc, i) => {
+                                                    const isChecked = approverList?.find(a => a._id === acc._id)
+                                                    return (
+                                                        <label 
+                                                            key={i}
+                                                            className='flex items-center gap-2 px-4 py-2 text-sm cursor-pointer hover:bg-gray-100'
+                                                        >
+                                                            <input
+                                                                type="checkbox"
+                                                                className="rounded form-checkbox"
+                                                                defaultChecked={isChecked}
+                                                                onChange={() => handleAdminSelect(acc)}
+                                                            />
+                                                            {acc.accountinfo?.[0].firstName} {acc.accountinfo?.[0].lastName}
+                                                        </label>
+                                                    )
+                                                })}
+                                            </div>
+                                        )}
+                                    </div>
+                                )}
+                                <div className={`flex flex-col ${!isEditOn ? 'pointer-events-none' : 'w-full'}`}>
+                                    <p className='mb-2 font-medium text-TextSecondary'>Application reviewers</p>
+                                    <DndContext
+                                        sensors={sensors}
+                                        collisionDetection={closestCenter}
+                                        onDragEnd={handleDragEnd}
                                     >
-                                        <div>
-                                            {approverList.length > 0 ? (
-                                                approverList.map((approver, index) => (
-                                                <DraggableItem
-                                                    key={index} 
-                                                    index={index} 
-                                                    approver={approver} 
-                                                    handleRemoveApprover={handleRemoveApprover} 
-                                                />
-                                                ))
-                                            ) : (
-                                                <p>No Current Approvers</p>
-                                            )}
-                                        </div>
-                                    </SortableContext>
-                                </DndContext>
+                                        <SortableContext
+                                            items={approverList.map((_, index) => index)}
+                                            strategy={verticalListSortingStrategy}
+                                        >
+                                            <div>
+                                                {approverList.length > 0 ? (
+                                                    approverList.map((approver, index) => (
+                                                    <DraggableItem
+                                                        key={index} 
+                                                        index={index} 
+                                                        approver={approver} 
+                                                        handleRemoveApprover={handleAdminSelect} 
+                                                        isEditOn={isEditOn}
+                                                    />
+                                                    ))
+                                                ) : (
+                                                    <p>No Current Approvers</p>
+                                                )}
+                                            </div>
+                                        </SortableContext>
+                                    </DndContext>
+                                </div>
                             </div>
                         ) : (
                             <div>
@@ -314,7 +384,7 @@ const ConfigModal = ({ initialApprovers, handleExit }) => {
                                     </button>
                                     <input 
                                         type='submit' 
-                                        value='save'
+                                        value='Save'
                                         className='w-32 px-10 py-2 text-sm text-white duration-200 rounded-lg cursor-pointer hover:shadow-md bg-NuBlue' 
                                         disabled={isSubmitted}
                                     />

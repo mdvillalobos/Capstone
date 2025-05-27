@@ -85,7 +85,7 @@ const verifyOtpForm = () => {
               ref = { (el) => (inputRefs.current[index] = el) }
               onChange = { (e) => handleChange(e, index) }
               onKeyDown = { (e) => handleKeyDown(e, index) }
-              className='border-2 border-gray-200 w-[50px] h-16 text-center font-Poppins font-semibold rounded-md text-xl'
+              className='border-2 border-BorderColor w-[50px] h-16 text-center font-Poppins font-semibold rounded-md text-xl'
             />
           ))}
         </div>

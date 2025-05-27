@@ -4,11 +4,13 @@ import FemaleProfile from '../../../assets/images/female.png';
 import { BiDotsVerticalRounded } from "react-icons/bi";
 import { TiArrowLeft, TiArrowRight } from "react-icons/ti";
 import useRegisterAdmin from '../../../hooks/AdminHooks/useRegisterAdmin';
+import VerifyAdminModal from '../../Tools/VerifyAdminModal.jsx';
 
 const AccountsTable = ({ rest }) => {
+    const [ isVerifyAdminOpen, setIsVerifyAdminOpen ] = useState(false)
     const [ tableCurrentPage, setTableCurrentPage ] = useState(1);
     const [ selected, setSelected ] = useState();
-    const [ isOpen, setIsOpen ] = useState(false)
+    const [ isModalOpen, setIsModalOpen ] = useState(false)
     const [ isActionOpen, setActionIsOpen ] = useState(null)
 
     const roles = Array.from(new Set(rest?.map(acc => acc.role)))
@@ -34,16 +36,28 @@ const AccountsTable = ({ rest }) => {
 
     return (
         <div className='flex flex-col w-full'>
-            {isOpen && (
-                <AddAccountModal handleExit={() => setIsOpen(false)}/>
+            {isVerifyAdminOpen && (
+                <VerifyAdminModal
+                    setOpenModal = {setIsModalOpen}
+                    handleExit = {() => setIsVerifyAdminOpen(false)}
+                />
+            )}
+            {isModalOpen && (
+                <AddAccountModal handleExit={() => setIsModalOpen(false)}/>
             )}
             <div className='flex justify-between mb-4'>
-                <p className='my-auto text-sm font-medium tracking-widest text-NuLightText'>ACCOUNTS</p>
-                <button type='button' onClick={() => setIsOpen(true)} className='px-4 py-2 text-xs text-white duration-200 rounded-md cursor-pointer bg-NuBlue hover:shadow-md hover:scale-105'>Add admin</button>
+                <p className='my-auto text-sm font-medium tracking-widest text-TextSecondary'>ACCOUNTS</p>
+                <button 
+                    type='button' 
+                    onClick={() => setIsVerifyAdminOpen(true)} 
+                    className='px-4 py-2 text-xs text-white duration-200 rounded-md cursor-pointer bg-NuBlue hover:shadow-md hover:scale-105'
+                >
+                    Add admin
+                </button>
             </div>
             <div className='flex flex-col justify-between h-full'>
                 <div className='flex flex-col w-full'>
-                    <div className='flex py-2 text-xs font-medium border-b border-gray-200'>
+                    <div className='flex py-2 text-xs font-medium border-b border-BorderColor'>
                         <p className='w-[25%]'>Account</p>
                         <p className='w-[15%]'>Employee ID</p>
                         <p className='w-[15%]'>Date created</p>
@@ -54,7 +68,7 @@ const AccountsTable = ({ rest }) => {
                     </div>
 
                     {items.map((data, index) => (
-                        <div key={index} className='flex text-[0.8rem] py-3 border-b border-gray-200'>
+                        <div key={index} className='flex text-[0.8rem] py-3 border-b border-BorderColor'>
                             <div className='flex space-x-2 w-[25%]'>
                                 {data.accountinfo[0]?.sex === 'Male' ? (
                                     <img src={MaleProfile} alt="" className='w-10 h-10 my-auto rounded-md'/>
@@ -63,7 +77,7 @@ const AccountsTable = ({ rest }) => {
                                 )}
                                 <div className='my-auto -space-y-1'>
                                     <p>{data.accountinfo[0]?.firstName} {data.accountinfo[0]?.lastName}</p>
-                                    <p className='text-NuLightText'>{data.email}</p>
+                                    <p className='text-TextSecondary'>{data.email}</p>
                                 </div>
                             </div>
 
@@ -92,7 +106,7 @@ const AccountsTable = ({ rest }) => {
                                 </button>
 
                                 {isActionOpen === index && (
-                                    <div className='absolute top-2 right-6 bg-white rounded-md shadow-md p-1.5 rounded-md border-2 border-gray-200'>
+                                    <div className='absolute top-2 right-6 bg-white rounded-md shadow-md p-1.5 rounded-md border-2 border-BorderColor'>
                                         <button type='button' className='cursor-pointer hover:hover:bg-[#ebebeb] p-2 rounded-sm'>
                                             Deactivate
                                         </button>
@@ -105,18 +119,18 @@ const AccountsTable = ({ rest }) => {
 
                 <div className='flex justify-between'>
                     <div className='my-auto text-sm'>
-                        <p className='text-xs font-medium text-NuLightText'>Showing Items {(tableCurrentPage - 1) * itemsPerPage + 1 } - {Math.min(tableCurrentPage * itemsPerPage, filterByRole.length)} of {filterByRole.length}</p>
+                        <p className='text-xs font-medium text-TextSecondary'>Showing Items {(tableCurrentPage - 1) * itemsPerPage + 1 } - {Math.min(tableCurrentPage * itemsPerPage, filterByRole.length)} of {filterByRole.length}</p>
                     </div>
-                    <div className='flex my-auto space-x-4 text-sm text-NuLightText'>
-                        <button type='button' onClick={handlePrevPage} className='border-2 border-gray-200 p-1 cursor-pointer rounded-md flex space-x-1.5 px-2 text-lg hover:bg-gray-200 duration-200 '>
+                    <div className='flex my-auto space-x-4 text-sm text-TextSecondary'>
+                        <button type='button' onClick={handlePrevPage} className='border-2 border-BorderColor p-1 cursor-pointer rounded-md flex space-x-1.5 px-2 text-lg hover:bg-gray-200 duration-200 '>
                             <TiArrowLeft className='my-auto'/>
                         </button>
                         <p className='flex my-auto space-x-2'>
-                            <span className='px-3 py-1 text-center text-black border-2 border-gray-200 rounded-md'>{tableCurrentPage}</span>
+                            <span className='px-3 py-1 text-center text-black border-2 rounded-md border-BorderColor'>{tableCurrentPage}</span>
                             <span className='my-auto'>/</span>
-                            <span className='px-3 py-1 text-center text-black border-2 border-gray-200 rounded-md'>{totalPages}</span>
+                            <span className='px-3 py-1 text-center text-black border-2 rounded-md border-BorderColor'>{totalPages}</span>
                         </p>
-                        <button type='button' onClick={handleNextPage} className='border-2 border-gray-200 p-1 cursor-pointer rounded-md flex space-x-1.5 px-2 text-lg hover:bg-gray-200 duration-200'>
+                        <button type='button' onClick={handleNextPage} className='border-2 border-BorderColor p-1 cursor-pointer rounded-md flex space-x-1.5 px-2 text-lg hover:bg-gray-200 duration-200'>
                             <TiArrowRight className='my-auto'/>
                         </button>
                     </div>
@@ -152,22 +166,22 @@ const AddAccountModal = ({ handleExit}) => {
             await registerAdmin(data.employeeID, data.email, data.lastName, data.firstName, data.middleName, data.sex, data.contact, data.password)
         } finally {
             setIsSubmitted(false)
-            setData({ employeeID: '', email: '', lastName: '', firstName: '', middleName: '', sex: '', contact: '', password: '',})
+            setData({ employeeID: '', email: '', lastName: '', firstName: '', middleName: '', sex: '', contact: '', password: ''})
         }
     }
     return (
         <div className='modal'>
             <div className='w-[50%] h-[65vh] bg-white shadow-md rounded-xl max-sm:w-[85%] max-md:w-[70%] max-lg:w-[50%] max-xl:w-[40%] fade- text-sm'>
                 <form onSubmit={handleCreateAdmin} className='flex flex-col h-full'>
-                    <div className='relative flex justify-between px-6 py-4 border-b border-gray-200'>
+                    <div className='relative flex justify-between px-6 py-4 border-b border-BorderColor'>
                         <div className='flex space-x-2'>
                             <div className='space-y-0.5'>
                                 <p className='text-sm font-medium'>Create Administrator</p>
-                                <p className='text-xs text-NuLightText'>Enter admin details to create a new administrator account.</p>
+                                <p className='text-xs text-TextSecondary'>Enter admin details to create a new administrator account.</p>
                             </div>
                         </div>
 
-                        <button type="button" className="absolute right-4 px-2 top-5 rounded-full hover:bg-[#eae7e7] text-lg duration-200 border-2 border-gray-200 cursor-pointer" onClick={handleExit}>
+                        <button type="button" className="absolute right-4 px-2 top-5 rounded-full hover:bg-[#eae7e7] text-lg duration-200 border-2 border-BorderColor cursor-pointer" onClick={handleExit}>
                             &times;
                         </button> 
                     </div>
@@ -182,7 +196,7 @@ const AddAccountModal = ({ handleExit}) => {
                                         type="text" 
                                         maxLength='8' 
                                         onChange={(e) => setData({ ...data, employeeID: e.target.value })}
-                                        className='w-full px-3 py-3 text-sm border-2 border-gray-200 rounded-md'
+                                        className='w-full px-3 py-3 text-sm border-2 rounded-md border-BorderColor'
                                     />
                                 </div>
 
@@ -192,7 +206,7 @@ const AddAccountModal = ({ handleExit}) => {
                                         type="text" 
                                         maxLength='50' 
                                         onChange={(e) => setData({ ...data, email: e.target.value })}
-                                        className='w-full px-3 py-3 text-sm border-2 border-gray-200 rounded-md'
+                                        className='w-full px-3 py-3 text-sm border-2 rounded-md border-BorderColor'
                                     />
                                 </div>
 
@@ -202,7 +216,7 @@ const AddAccountModal = ({ handleExit}) => {
                                         type="text" 
                                         maxLength='11' 
                                         onChange={(e) => setData({ ...data, contact: e.target.value })}
-                                        className='w-full px-3 py-3 text-sm border-2 border-gray-200 rounded-md'
+                                        className='w-full px-3 py-3 text-sm border-2 rounded-md border-BorderColor'
                                     />
                                 </div>
                             </div>
@@ -214,7 +228,7 @@ const AddAccountModal = ({ handleExit}) => {
                                         type="text" 
                                         maxLength='50' 
                                         onChange={(e) => setData({ ...data, lastName: e.target.value })}
-                                        className='w-full px-3 py-3 text-sm border-2 border-gray-200 rounded-md'
+                                        className='w-full px-3 py-3 text-sm border-2 rounded-md border-BorderColor'
                                     />
                                 </div>
 
@@ -224,7 +238,7 @@ const AddAccountModal = ({ handleExit}) => {
                                         type="text"
                                         maxLength='50' 
                                         onChange={(e) => setData({ ...data, firstName: e.target.value })} 
-                                        className='w-full px-3 py-3 text-sm border-2 border-gray-200 rounded-md'
+                                        className='w-full px-3 py-3 text-sm border-2 rounded-md border-BorderColor'
                                     />
                                 </div>
 
@@ -233,7 +247,7 @@ const AddAccountModal = ({ handleExit}) => {
                                     <input 
                                         type="text" 
                                         onChange={(e) => setData({ ...data, middName: e.target.value })}
-                                        className='w-full px-3 py-3 text-sm border-2 border-gray-200 rounded-md'
+                                        className='w-full px-3 py-3 text-sm border-2 rounded-md border-BorderColor'
                                     />
                                 </div>
                             </div>
@@ -242,7 +256,7 @@ const AddAccountModal = ({ handleExit}) => {
                                 <div className='flex flex-col w-full'>
                                     <label htmlFor="">Sex:</label>
                                     <select 
-                                        className='w-full px-3 py-3 text-sm border-2 border-gray-200 rounded-md'
+                                        className='w-full px-3 py-3 text-sm border-2 rounded-md border-BorderColor'
                                         onChange={(e) => setData({ ...data, sex: e.target.value })}
                                     >
                                         <option value=""></option>
@@ -257,7 +271,8 @@ const AddAccountModal = ({ handleExit}) => {
                                         type="password" 
                                         maxLength='20' 
                                         onChange={(e) => setData({ ...data, password: e.target.value })}
-                                        className='w-full px-3 py-3 text-sm border-2 border-gray-200 rounded-md'
+                                        className='w-full px-3 py-3 text-sm border-2 rounded-md border-BorderColor'
+                                        disabled={isSubmitted}
                                     />
                                 </div>
                             </div> 

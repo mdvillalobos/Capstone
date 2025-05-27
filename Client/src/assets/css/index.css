@@ -82,7 +82,7 @@
 
     /* Dashboard */
     .fileInput {
-        @apply w-full text-left rounded-md mb-3 py-2.5 px-4 border-2 border-gray-200 outline-none focus:border-[#c1c6f2] focus:bg-[#f3f4fd] text-sm cursor-pointer
+        @apply w-full text-left rounded-md mb-3 py-2.5 px-4 border-2 border-BorderColor outline-none focus:border-[#c1c6f2] focus:bg-[#f3f4fd] text-sm cursor-pointer
     }
 
     .fileSelect {
@@ -105,7 +105,7 @@
     }
 
     .profileIcon {
-        @apply p-2 border-2 border-gray-200 rounded-full hover:bg-NuLightBlue hover:border-NuLightBlue hover:text-white duration-200 cursor-pointer text-lg
+        @apply p-2 border-2 border-BorderColor rounded-full hover:bg-NuLightBlue hover:border-NuLightBlue hover:text-white duration-200 cursor-pointer text-lg
     }
 
     /*APPLICATION FORMS*/
@@ -124,21 +124,21 @@
     }
 
     .inputFields {
-        @apply py-2 px-3.5 ml-3 w-[25vw] border-2 border-gray-200 text-sm relative top-[-9px] rounded-md text-gray-600
+        @apply py-2 px-3.5 ml-3 w-[25vw] border-2 border-BorderColor text-sm relative top-[-9px] rounded-md text-gray-600
         max-sm:top-0 max-sm:w-72
         max-md:w-96
     }
 
     /* SETTINGS */
     .setting-container {
-        @apply flex py-3 border-b-2 border-gray-200
+        @apply flex py-3 border-b-2 border-BorderColor
     }
     .setting-input-container {
         @apply relative rounded-lg w-full my-auto 
     }
 
     .setting-input {
-        @apply border-2 border-gray-200 rounded-lg px-3 outline-none w-full focus:bg-[#f3f4fd] focus:border-[#c1c6f2] text-sm 
+        @apply border-2 border-BorderColor rounded-lg px-3 outline-none w-full focus:bg-[#f3f4fd] focus:border-[#c1c6f2] text-sm 
     }
 
     .setting-input-label {

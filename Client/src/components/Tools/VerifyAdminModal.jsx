@@ -30,7 +30,7 @@ const VerifyAdminModal = ({ setOpenModal, handleExit }) => {
 
     return (
         <div className="modal">
-            <div className="flex flex-col w-[30%] bg-white shadow-md rounded-xl fade-in'">
+            <div className="flex flex-col w-[30%] bg-white shadow-md rounded-xl fade-in">
                 <div className='relative flex justify-between w-full px-6 py-4 border-b border-BorderColor'>
                     <div className='flex space-x-2'>
                         <div className='space-y-0.5'>
@@ -41,7 +41,7 @@ const VerifyAdminModal = ({ setOpenModal, handleExit }) => {
                     <button 
                         type="button" 
                         onClick={handleExit}
-                        className="absolute right-4 px-2 top-5 rounded-full hover:bg-[#eae7e7] text-lg duration-200 border-2 border-gray-200 cursor-pointer" 
+                        className="absolute right-4 px-2 top-5 rounded-full hover:bg-[#eae7e7] text-lg duration-200 border-2 border-BorderColor cursor-pointer" 
                     >
                         &times;
                     </button> 
