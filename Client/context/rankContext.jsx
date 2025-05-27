@@ -6,6 +6,7 @@ export const RankContext = createContext({});
 export const RankContextProvider = ({ children }) => {
     const [ ranks, setRanks ] = useState(null);
     const [ config, setConfig ] = useState(null)
+    const [ loading, setLoading ] = useState(true)
     
     const getApplicationConfig = async () => {
         try {
@@ -22,6 +23,9 @@ export const RankContextProvider = ({ children }) => {
             setRanks(null);
             setConfig(null);
         }
+        finally {
+            setLoading(false)
+        }
     };
 
     useEffect(() => {
@@ -33,7 +37,7 @@ export const RankContextProvider = ({ children }) => {
     };
 
     return (
-        <RankContext.Provider value={{ ranks, setRanks, config, setConfig, fetchApplicationConfigOnLogin}}>
+        <RankContext.Provider value={{ ranks, setRanks, config, setConfig, fetchApplicationConfigOnLogin, loading}}>
             {children}
         </RankContext.Provider>
     )

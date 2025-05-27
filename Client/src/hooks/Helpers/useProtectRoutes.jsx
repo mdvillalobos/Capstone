@@ -2,11 +2,13 @@ import { useContext } from 'react'
 import { Navigate, Outlet } from 'react-router-dom';
 import { UserContext } from '../../../context/userContext'
 import LoadingSpinner from '../../components/Tools/LoadingSpinner';
+import { RankContext } from '../../../context/rankContext';
 
 const useProtectRoutes = () => {
-    const { user, credentials } = useContext(UserContext);
+    const { user, credentials, loading: userLoading } = useContext(UserContext);
+    const { loading: rankLoading } = useContext(RankContext);
 
-    const isLoading = user === undefined;
+    const isLoading = user === undefined || userLoading || rankLoading;
     const isUnauthenticated = user === null;
     const isUnverified = user && !user.isVerified;
     const isProfileIncomplete = user && user.firstName == null;

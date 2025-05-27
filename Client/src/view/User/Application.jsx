@@ -10,17 +10,17 @@ import Header from '../../components/Tools/Header.jsx';
 
 const ApplicationForReRanking = () => {
     const { config } = useContext(RankContext)
-    const academicYear = config?.academicYear || null
+
     const [ data, setData ] = useState();
     const [ loading, setIsLoading ] = useState(true)
-     
+
     useEffect(() => {
         setIsLoading(true)
-        axios.get(`/api/getEntry=${academicYear}`)
+        axios.get(`/api/getEntry?academicYear=${config?.academicYear}`)
             .then(res => setData(res.data))
             .catch(err => console.error(err))
             .finally(() => setIsLoading(false))
-    }, [academicYear]);
+    }, []);
 
     if(loading) return <LoadingSpinner/>
 

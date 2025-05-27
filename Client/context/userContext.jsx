@@ -6,6 +6,7 @@ export const UserContext = createContext({});
 export const UserContextProvider = ({ children }) => {
     const [ user, setUser ] = useState();
     const [ credentials, setCredentials ] = useState();
+    const [ loading, setLoading ] = useState(true);
 
     const fetchUserProfile = async () => {
         try {
@@ -25,6 +26,9 @@ export const UserContextProvider = ({ children }) => {
             setUser(null);
             setCredentials(null);
         }
+        finally {
+            setLoading(false)
+        }
     };
 
     const getProfileOnLogin = useCallback(() => {
@@ -36,7 +40,7 @@ export const UserContextProvider = ({ children }) => {
     }, []);
 
     return (
-        <UserContext.Provider value={{ user, setUser, credentials, setCredentials, getProfileOnLogin }}>
+        <UserContext.Provider value={{ user, setUser, credentials, setCredentials, getProfileOnLogin, loading }}>
             {children}
         </UserContext.Provider>
     )

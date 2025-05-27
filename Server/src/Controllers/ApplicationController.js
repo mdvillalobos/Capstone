@@ -43,9 +43,12 @@ export const checkExistingEntry = async (req, res) => {
     const { token } = req.cookies;
     const { academicYear } = req.query;
 
+    console.log(academicYear)
+
     try {
         const { email } = jwt.verify(token, process.env.JWT_SECRET);
         const userEntry = await ApplicationForms.findOne({ email: email, applicationStatus: 'For verification', academicYear: academicYear });
+        console.log(userEntry.academicYear)
         return res.status(200).json(userEntry)
     }
     catch (error) {

@@ -20,7 +20,7 @@ const UserApplicationForm = () => {
 
                     <div className='flex flex-col flex-1 space-y-4'>
                         <div className="flex text-sm font-medium text-TextSecondary">
-                            <Link to='/admin/application' className='duration-200 hover:underline'>Application</Link>
+                            <Link to='/application' className='duration-200 hover:underline'>Application</Link>
                             <MdKeyboardArrowRight className='my-auto'/>
                             <p>{myForm.name}</p>
                         </div>
