@@ -8,7 +8,7 @@ const useProtectRoutes = () => {
     const { user, credentials, loading: userLoading } = useContext(UserContext);
     const { loading: rankLoading } = useContext(RankContext);
 
-    const isLoading = user === undefined || userLoading || rankLoading;
+    const isLoading = !(user && !userLoading && !rankLoading);
     const isUnauthenticated = user === null;
     const isUnverified = user && !user.isVerified;
     const isProfileIncomplete = user && user.firstName == null;
