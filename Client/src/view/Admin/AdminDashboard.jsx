@@ -72,6 +72,8 @@ const AdminDashboard = () => {
         fetchData();
     }, []);
 
+    console.log(dashboardData)
+
     if (isMobile) {
         return (
             <div className="flex items-center justify-center min-h-screen text-center font-Poppins">

@@ -35,8 +35,6 @@ export const getFacultyRankData = async (req, res) => {
 export const getReRankingData = async (req, res) => {
     const { academicYear } = req.query;
 
-    console.log(academicYear)
-
     try {
         if(academicYear) {
             const years = { [academicYear]: 0 };

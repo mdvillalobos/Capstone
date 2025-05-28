@@ -15,7 +15,6 @@ export const getUserData = async (req, res) => {
         return res.json(null);
     }
 
-
     try {
         const { email } = jwt.verify(jwtToken, process.env.JWT_SECRET);
         const userCredentials = await Account.findOne({ email });
@@ -77,10 +76,8 @@ export const addCredential = async (req, res) => {
         
         return res.json({ message: 'Credential uploaded successfully!'})
     }
-
-
     catch (error) {
-        console.log(error);
+        console.error(`Adding Credential Error: ${ error.message }`);
         return res.json({ error: 'An internal error occurred. Please try again later!' });
     }
 }
@@ -108,7 +105,6 @@ export const updateCredentialStatus = async (req, res) => {
         return res.json({ error: 'Required all fields! '});
     }
 
-    console.log(action)
     try {
         const { email } = jwt.verify(token, process.env.JWT_SECRET);
         const userCredentials = await Credentials.findOne({ email });
@@ -126,7 +122,7 @@ export const updateCredentialStatus = async (req, res) => {
             if(action === 'delete') {
                 if (!file.isActive) {
                     filesToDeleteFromCloud.push(file.filePath);
-                    return null; // Filter this out if it's truly deleted
+                    return null;
                 } else {
                     file.isActive = false;
                 }
@@ -142,7 +138,6 @@ export const updateCredentialStatus = async (req, res) => {
         }).filter(Boolean);
 
         if(action === 'delete' && filesToDeleteFromCloud.length > 0) {
-            console.log('tae')
             await Promise.all(
                 filesToDeleteFromCloud.map(
                     filePath => DestroyImageInCloudinary(filePath, 'Credentials')
@@ -155,7 +150,7 @@ export const updateCredentialStatus = async (req, res) => {
         return res.json({ message: message });
     }
     catch(error) {
-        console.log(error);
+        console.error(`Updating Credentials Error: ${ error.message }`);
         return res.json({ error: 'An internal error occurred. Please try again later!' });
     }
 }

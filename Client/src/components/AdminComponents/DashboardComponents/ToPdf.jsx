@@ -77,16 +77,18 @@ const ToPdf = ({ totalRank, approvedFaculty }) => {
             </button>
 
             <div  className='hidden'>
-                {ranks.map(rank => {
-                    const count = totalRank[rank.rankName] || 0
+                {totalRank && 
+                    ranks.map(rank => {
+                        const count = totalRank[rank.rankName] || 0
 
-                    return ( 
-                        <div key={rank._id}>
-                            <p>{rank.rankName}</p>
-                            <p>{count}</p>
-                        </div>
-                    )
-                })}
+                        return ( 
+                            <div key={rank._id}>
+                                <p>{rank.rankName}</p>
+                                <p>{count}</p>
+                            </div>
+                        )
+                    })
+                }
             </div>
        </div>
     )

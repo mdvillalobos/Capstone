@@ -79,7 +79,7 @@ export const getConfigurations = async (req, res) => {
             const todayDate = formatDate(new Date());
             const startDate = formatDate(config.reRankingStatus.startDate);
             const endDate = formatDate(config.reRankingStatus.endDate);
-        
+
             let updated = false;
         
             if (startDate === todayDate && !config.reRankingStatus.isReRankingOpen) {
@@ -88,12 +88,18 @@ export const getConfigurations = async (req, res) => {
             }
         
             if (endDate === todayDate && config.reRankingStatus.isReRankingOpen) {
+                console.log('tae')
+                config.reRankingStatus.isReRankingSet = false;
                 config.reRankingStatus.isReRankingOpen = false;
+                config.reRankingStatus.startDate = null;
+                config.reRankingStatus.endDate = null;
                 updated = true;
             }
         
             if (updated) await config.save();
         }
+
+        console.log(config)
 
         return res.json(config);
     } catch (error) {

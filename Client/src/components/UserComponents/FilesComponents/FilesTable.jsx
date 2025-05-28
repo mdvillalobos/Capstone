@@ -12,6 +12,8 @@ const FilesTable = ({ location = 'dashboard' }) => {
     const { credentials } = useContext(UserContext);
     const { updateCredential } = useUpdateCredentialStatus();
 
+    console.log(credentials)
+
     const tableRef = useRef(null);
     const filterRef = useRef(null)
  

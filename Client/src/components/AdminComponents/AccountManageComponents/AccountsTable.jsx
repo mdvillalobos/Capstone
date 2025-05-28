@@ -11,18 +11,14 @@ const AccountsTable = ({ rest, refetchAccounts }) => {
     const { updateAccountStatus } = useUpdateUserStatus();
     const [ isVerifyAdminOpen, setIsVerifyAdminOpen ] = useState(false)
     const [ tableCurrentPage, setTableCurrentPage ] = useState(1);
-    const [ selected, setSelected ] = useState();
     const [ isModalOpen, setIsModalOpen ] = useState(false)
     const [ isActionOpen, setActionIsOpen ] = useState(null)
-
-    const roles = Array.from(new Set(rest?.map(acc => acc.role)))
-    const filterByRole = rest?.filter(acc => selected ? acc.role === selected : true)
 
     const itemsPerPage = 8;
     const totalPages = Math.ceil(rest?.length / itemsPerPage);
     const indexOfLastItem = tableCurrentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-    const items = filterByRole?.slice(indexOfFirstItem, indexOfLastItem);
+    const items = rest?.slice(indexOfFirstItem, indexOfLastItem);
   
     const handleNextPage = () => {
       if (tableCurrentPage < totalPages) {
@@ -39,9 +35,6 @@ const AccountsTable = ({ rest, refetchAccounts }) => {
     const handleUpdateAccountStatus = async (id, isActive) => {
         const action = isActive ? false : true 
         const result = await updateAccountStatus(id, action);
-
-        console.log(result.success)
-        
         if (result.success) refetchAccounts();
     }
 
@@ -136,7 +129,7 @@ const AccountsTable = ({ rest, refetchAccounts }) => {
 
                 <div className='flex justify-between'>
                     <div className='my-auto text-sm'>
-                        <p className='text-xs font-medium text-TextSecondary'>Showing Items {(tableCurrentPage - 1) * itemsPerPage + 1 } - {Math.min(tableCurrentPage * itemsPerPage, filterByRole.length)} of {filterByRole.length}</p>
+                        <p className='text-xs font-medium text-TextSecondary'>Showing Items {(tableCurrentPage - 1) * itemsPerPage + 1 } - {Math.min(tableCurrentPage * itemsPerPage, items.length)} of {items.length}</p>
                     </div>
                     <div className='flex my-auto space-x-4 text-sm text-TextSecondary'>
                         <button type='button' onClick={handlePrevPage} className='border-2 border-BorderColor p-1 cursor-pointer rounded-md flex space-x-1.5 px-2 text-lg hover:bg-gray-200 duration-200 '>
