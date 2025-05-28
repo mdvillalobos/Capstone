@@ -23,12 +23,12 @@ export const getFacultyRankData = async (req, res) => {
             }
         });
 
-        return res.status(200).json({ totalFaculty: totalFaculty, totalRank: countRankTotal, totalRankPerCollege: Object.values(countRankPerCollege) })
+        return res.json({ totalFaculty: totalFaculty, totalRank: countRankTotal, totalRankPerCollege: Object.values(countRankPerCollege) })
     }
 
     catch(error) {
         console.error(error);
-        return res.status(500).json({ error: 'An internal error occurred. Please try again later!' })
+        return res.json({ error: 'An internal error occurred. Please try again later!' })
     }
 }
 
@@ -54,13 +54,13 @@ export const getReRankingData = async (req, res) => {
                     years[applicationData.academicYear]++;
                 }
             })
-            return res.status(200).json(years);
+            return res.json(years);
         }
 
-        return res.status(200).json(null)
+        return res.json(null)
     } catch (error) {
         console.error(`Get total applications error: ${error}`);
-        return res.status(500).json({ error: 'An internal error occurred. Please try again later!' })
+        return res.json({ error: 'An internal error occurred. Please try again later!' })
     }
 }
 
@@ -69,11 +69,11 @@ export const getApprovedApplications = async (req, res) => {
 
     try {
         const approvedApplication = await ApplicationForms.find({ purpose: 'application', applicationStatus: 'Approved', academicYear: academicYear });
-        return res.status(200).json(approvedApplication);
+        return res.json(approvedApplication);
 
     } catch (error) {
         console.error(`Getting approved applications error: ${error}`);
-        return res.status(500).json({ error: 'An internal error occurred. Please try again later!' })
+        return res.json({ error: 'An internal error occurred. Please try again later!' })
     }
 }
 

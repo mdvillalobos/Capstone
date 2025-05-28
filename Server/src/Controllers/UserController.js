@@ -12,7 +12,7 @@ export const getUserData = async (req, res) => {
     const jwtToken = token || verificationToken
     
     if(!jwtToken) {
-        return res.status(401).json(null);
+        return res.json(null);
     }
 
 
@@ -28,13 +28,13 @@ export const getUserData = async (req, res) => {
                 role: userCredentials.role,
                 employeeID: userCredentials.employeeID
             };
-            return res.status(200).json(userObject);
+            return res.json(userObject);
         }
-        return res.status(401).json(null); 
+        return res.json(null); 
 
     } catch (error) {
         console.error(`Fetching User Data Error: ${ error.message }`);
-        return res.status(500).json({ error: 'An internal error occurred. Please try again later!' });
+        return res.json({ error: 'An internal error occurred. Please try again later!' });
     }
 }
 
@@ -43,7 +43,7 @@ export const addCredential = async (req, res) => {
     const { documentCategory, documentType, metricsValue, documentTags } = req.body;
 
     if(!documentCategory || !documentType || !req.file || !documentTags) {
-        return res.status(400).json({ error: 'Required all fields!'})
+        return res.json({ error: 'Required all fields!'})
     }
 
     try {
@@ -75,13 +75,13 @@ export const addCredential = async (req, res) => {
             });
         }
         
-        return res.status(200).json({ message: 'Credential uploaded successfully!'})
+        return res.json({ message: 'Credential uploaded successfully!'})
     }
 
 
     catch (error) {
         console.log(error);
-        return res.status(500).json({ error: 'An internal error occurred. Please try again later!' });
+        return res.json({ error: 'An internal error occurred. Please try again later!' });
     }
 }
 
@@ -91,12 +91,12 @@ export const getUserCredentials = async (req, res) => {
     try {
         const { email } = jwt.verify(token, process.env.JWT_SECRET);
         const userCredentials = await Credentials.findOne({ email });
-        return res.status(200).json(userCredentials);
+        return res.json(userCredentials);
     }
 
     catch (error) {
         console.error(`Fetching User Credentials Error: ${ error.message }`);
-        return res.status(500).json({ error: 'An internal error occurred. Please try again later!' });
+        return res.json({ error: 'An internal error occurred. Please try again later!' });
     }
 }
 
@@ -105,7 +105,7 @@ export const updateCredentialStatus = async (req, res) => {
     const { selectedFiles, action } = req.body;
 
     if(selectedFiles.length < 0 || !action) {
-        return res.status(400).json({ error: 'Required all fields! '});
+        return res.json({ error: 'Required all fields! '});
     }
 
     console.log(action)
@@ -114,7 +114,7 @@ export const updateCredentialStatus = async (req, res) => {
         const userCredentials = await Credentials.findOne({ email });
 
         if (!userCredentials) {
-            return res.status(404).json({ message: 'User not found' });
+            return res.json({ message: 'User not found' });
         }
 
         const filesToDeleteFromCloud = [];
@@ -152,10 +152,10 @@ export const updateCredentialStatus = async (req, res) => {
 
         await userCredentials.save();
         const message = action === 'delete' ? 'Files successfully deleted' : 'Files successfully recovered';
-        return res.status(200).json({ message: message });
+        return res.json({ message: message });
     }
     catch(error) {
         console.log(error);
-        return res.status(500).json({ error: 'An internal error occurred. Please try again later!' });
+        return res.json({ error: 'An internal error occurred. Please try again later!' });
     }
 }

@@ -46,7 +46,7 @@ export const checkExistingEntry = async (req, res) => {
     try {
         const { email } = jwt.verify(token, process.env.JWT_SECRET);
         const userEntry = await ApplicationForms.findOne({ email: email, academicYear: academicYear });
-        return res.status(200).json(userEntry)
+        return res.json(userEntry)
     }
     catch (error) {
         console.log(error);
@@ -70,7 +70,7 @@ export const getApplicationsForReRanking = async (req, res) => {
             academicYear: academicYear
         });
 
-        return res.status(200).json(applications)
+        return res.json(applications)
 
     } catch (error) {
         console.log(`Fetching Applications Error: ${ error.message }`);
@@ -95,8 +95,7 @@ export const updateApplication = async (req, res) => {
         });
 
         const updated = await ApplicationForms.findByIdAndUpdate(applicationID, { requirements: filteredRequirements, applicationStatus: 'For verification' }, { new: true })
-        console.log(updated)
-        return res.status(200).json({ message: 'Updated Successfully', data: updated })
+        return res.json({ message: 'Updated Successfully', data: updated })
     } catch (error) {
         console.log( error );
         return res.json({ error: 'An internal error occurred. Please try again later!' });

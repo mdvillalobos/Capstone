@@ -11,7 +11,7 @@ export const checkAdminPassowrd = async (req, res) => {
     const { password } = req.body;
 
     if(!password) {
-        return res.status(200).json({ error: 'Required all fields!' })
+        return res.json({ error: 'Required all fields!' })
     }
 
     try {
@@ -21,14 +21,14 @@ export const checkAdminPassowrd = async (req, res) => {
         const checkPassword = await compareHashed(password, adminData.password)
         
         if(!checkPassword) {
-            return res.status(200).json({ error: 'Incorrect Password!'})
+            return res.json({ error: 'Incorrect Password!'})
         }
 
-        return res.status(200).json({ message: 'Verified Successfully', data: checkPassword })
+        return res.json({ message: 'Verified Successfully', data: checkPassword })
     }
     catch(error) {
         console.error(`Verifying Admin Password Error: ${ error.message }`)
-        return res.status(500).json({ error: 'An internal error occurred. Please try again later!' })
+        return res.json({ error: 'An internal error occurred. Please try again later!' })
     }
 }
 
@@ -62,11 +62,11 @@ export const updateConfig = async (req, res) => {
             ? await Configuration.findOneAndUpdate({ _id: id }, { $set: { academicYear: academicYear, reRankingStatus: updatedReRankingStatus }}, { new: true }) 
             : await Configuration.create({ academicYear: academicYear, reRankingStatus, updatedReRankingStatus });
         
-        return res.status(200).json({ meesage: 'Configuration Successfully Updated', config: updatedConfig })
+        return res.json({ meesage: 'Configuration Successfully Updated', config: updatedConfig })
     }
     catch(error) {
         console.error(`Updating System Configuration Error ${ error.message }`);
-        return res.status(500).json({ error: 'An internal error occurred. Please try again later!' });
+        return res.json({ error: 'An internal error occurred. Please try again later!' });
     }
 }
 
@@ -95,10 +95,10 @@ export const getConfigurations = async (req, res) => {
             if (updated) await config.save();
         }
 
-        return res.status(200).json(config);
+        return res.json(config);
     } catch (error) {
         console.error(`Fetching Configuration Error ${ error.message }`);
-        return res.status(500).json({ error: 'An internal error occurred. Please try again later!'});
+        return res.json({ error: 'An internal error occurred. Please try again later!'});
     }
 }
 
@@ -106,7 +106,6 @@ export const updateApplicationApprovers = async (req, res) => {
     const { approverList } = req.body;
 
     try {
-        console.log(approverList)
         const adminAccounts = await Account.find({ role: 'admin' });
 
         const emailToAccountMap = new Map();
@@ -115,12 +114,8 @@ export const updateApplicationApprovers = async (req, res) => {
             emailToAccountMap.set(acc.email, {...acc, index });
         });
 
-        console.log('emailToAccountMap', emailToAccountMap)
-
         const bulkOps = adminAccounts.map(approver => {
             const account = emailToAccountMap.get(approver.email);
-
-            console.log('account',account)
 
             if(approver.approverNumber && !account) {
                 console.log('utot')
@@ -146,11 +141,11 @@ export const updateApplicationApprovers = async (req, res) => {
             await Account.bulkWrite(bulkOps);
         }
 
-        return res.status(200).json({ message: 'Approver list successfully updated' })
+        return res.json({ message: 'Approver list successfully updated' })
     }
     catch (error) {
         console.error(`Updating approver list error ${ error.message }`)
-        return res.status(500).json({ error: 'An internal error occured. Please try again later!'})
+        return res.json({ error: 'An internal error occured. Please try again later!'})
     }
 }
 
@@ -159,11 +154,11 @@ export const getAdminAccount = async (req, res) => {
         const approverList = await Account.find({ role : 'admin' })
             .select('email approverNumber accountinfo.firstName accountinfo.lastName accountinfo.sex accountinfo.profilePicture')
 
-        return res.status(200).json(approverList)
+        return res.json(approverList)
     }
     catch (error) {
         console.error(`Getting Approver List ${ error.message }`)
-        return res.status(500).json({ error: 'An internal error occured. Please try again later!'})
+        return res.json({ error: 'An internal error occured. Please try again later!'})
     }
 }
 
@@ -171,14 +166,14 @@ export const createRank = async (req, res) => {
     const { rankName, track, requirements } = req.body;
 
     if(!rankName || !track) {
-        return res.status(200).json({ error: 'Required all fields!' });
+        return res.json({ error: 'Required all fields!' });
     }
 
     try {
         const isRankExisting = await Ranks.findOne({ rankName: rankName, track: track });
 
         if(isRankExisting) { 
-            return res.status(200).json({ error: `Rank is already existed from ${track}` }) 
+            return res.json({ error: `Rank is already existed from ${track}` }) 
         } 
 
         await Ranks.create({ 
@@ -187,12 +182,12 @@ export const createRank = async (req, res) => {
             requirements: requirements 
         }) 
 
-        return res.status(200).json({ message: 'Rank successfully created.', });
+        return res.json({ message: 'Rank successfully created.', });
 
 
     } catch (error) {
         console.error(`Creation Of Rank Error: ${ error.message }`);  
-        return res.status(500).json({ error: 'An internal error occurred. Please try again later!' });
+        return res.json({ error: 'An internal error occurred. Please try again later!' });
     }
 } 
 
@@ -200,14 +195,14 @@ export const getRanks = async (req, res) => {
     try {
         const rankData = await Ranks.find();
         if(!rankData) {
-            return res.status(200).json({ error: 'Ranks are currently empty.' });
+            return res.json({ error: 'Ranks are currently empty.' });
         }  
         
-        return res.status(200).json(rankData)
+        return res.json(rankData)
 
     } catch (error) {
         console.error(`Fetching Rank Requirement Error: ${ error.message }`);
-        return res.status(500).json({ error: 'An internal error occurred. Please try again later!' });
+        return res.json({ error: 'An internal error occurred. Please try again later!' });
     }
 }
 
@@ -224,11 +219,11 @@ export const registerAdmin = async (req, res) => {
         ]);
 
         if(existingID) {
-            return res.status(200).json({ error: 'Employee ID already exist!'});
+            return res.json({ error: 'Employee ID already exist!'});
         }
 
         if(existingEmail) {
-            return res.status(200).json({ error: 'Email already exist!'})
+            return res.json({ error: 'Email already exist!'})
         }
 
         await Account.create({ 
@@ -251,23 +246,23 @@ export const registerAdmin = async (req, res) => {
             }
         })
 
-        return res.status(200).json({ message: 'Admin succesfully created.'})
+        return res.json({ message: 'Admin succesfully created.'})
     }
 
     catch(error) {
         console.error(`Registering Admin Error: ${ error.message }`);
-        return res.status(500).json({ error: 'An internal server error occurred.' });
+        return res.json({ error: 'An internal server error occurred.' });
     }
 }
 
 export const getAllAccount = async (req, res) => {
     try {
         const Accounts = await Account.find().select('_id employeeID email role isVerified isActive accountinfo.lastName accountinfo.firstName')
-        return res.status(200).json(Accounts)
+        return res.json(Accounts)
     }
     catch (error) {
         console.error(`Fetching Accounts Error: ${ error.message }`);
-        return res.status(500).json({ error: 'An internal server error occurred.' });
+        return res.json({ error: 'An internal server error occurred.' });
     }
 }
 
@@ -277,9 +272,9 @@ export const updateAccount = async (req, res) => {
     try {
         const userData = await Account.findByIdAndUpdate(id, { isActive: action })
 
-        return res.status(200).json({ message: `Account sucessfully ${action}`})
+        return res.json({ message: `Account sucessfully ${action}`})
     } catch (error) {
         console.error(`Updating Account Error!: ${ error.message }`);
-        return res.status(500).json({ error: 'An internal server error occurred.' });
+        return res.json({ error: 'An internal server error occurred.' });
     }
 }
