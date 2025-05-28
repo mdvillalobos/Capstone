@@ -2,16 +2,46 @@ import mongoose from 'mongoose';
 const { Schema } = mongoose;
 
 const AccountInfoSchema = new Schema({
-    firstName: String,
-    lastName: String,
-    middleName: String,
-    contact: String,
-    sex: String,
-    status: String,
-    track: String,
-    rank: String,
-    college: String,
-    department: String,
+    firstName: {
+        type: String,
+        default: null
+    },
+    lastName: {
+        type: String,
+        default: null
+    },
+    middleName: {
+        type: String,
+        default: null
+    },
+    contact: {
+        type: String,
+        default: null
+    },
+    sex: {
+        type: String,
+        default: null
+    },
+    status: {
+        type: String,
+        default: null
+    },
+    track: {
+        type: String,
+        default: null
+    },
+    rank: {
+        type: String,
+        default: null
+    },
+    college: {
+        type: String,
+        default: null
+    },
+    department: {
+        type: String,
+        default: null
+    },
     profilePicture: {
         type: String,
         default: null

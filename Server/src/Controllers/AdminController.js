@@ -233,16 +233,11 @@ export const registerAdmin = async (req, res) => {
             password: hashUserPassword,
             isVerified: true,
             accountinfo: {
-                firstName,
-                lastName,
-                middleName,
-                contact,
-                sex,
-                status: null,
-                track: null,
-                rank: null,
-                college: null,
-                department: null,
+                firstName: firstName,
+                lastName: lastName,
+                middleName: middleName,
+                contact: contact,
+                sex: sex,
             }
         })
 
