@@ -40,7 +40,6 @@ const AdminDashboard = () => {
         return () => window.removeEventListener('resize', handleResize);
     }, [handleResize]);
 
-
     useEffect(() => {
         const fetchData = async () => {   
             setIsLoading(true);
