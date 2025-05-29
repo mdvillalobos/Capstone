@@ -38,7 +38,7 @@ const AddPerformanceModal = ({ data, setData }) => {
     ]
 
 
-    const rating = data.tags[1] === 'New faculty' ? newFacultyRating : oteRating
+    const rating = statusData === 'New faculty' ? newFacultyRating : oteRating
 
     return (
         <div >
