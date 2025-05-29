@@ -53,7 +53,7 @@ const ApplicationForReRanking = () => {
                                     </div>
                                 )
                             ) : (
-                                <p>SARADO APPLICATION FOR RE-RANKING</p>
+                                <p className='flex bg-red-400 text-white py-3 px-5 text-xl font-medium shadow-lg rounded-lg'>Application for re-ranking is currently close.</p>
                             )
                         }
                     </div>
