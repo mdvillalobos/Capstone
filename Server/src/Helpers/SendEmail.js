@@ -89,7 +89,56 @@ export const sendApplicationResponse = async (email, name, applyingFor, message)
             from: process.env.SMTP_USERNAME,
             to: email,
             subject: `Application for Re-ranking: ${name} - ${applyingFor}`,
-            text: message
+            html: `
+                <style>
+                    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+                    * {
+                        font-family: 'Poppins', sans-serif;
+                        box-sizing: border-box;
+                    }
+                    .container {
+                        max-width: 600px;
+                        margin: auto;
+                        padding: 2rem;
+                        border: 1px solid #ddd;
+                        border-radius: 0.5rem;
+                        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+                        background-color: #fff;
+                    }
+                    h2 {
+                        color: #41518d;
+                        text-align: center;
+                        margin-bottom: 1rem;
+                    }
+                    p {
+                        color: #444;
+                        font-size: 0.95rem;
+                        line-height: 1.6;
+                    }
+                    ul {
+                        padding-left: 1rem;
+                        color: #444;
+                    }
+                    li {
+                        margin-bottom: 0.75rem;
+                    }
+                    footer {
+                        margin-top: 2rem;
+                        text-align: center;
+                        font-size: 0.85rem;
+                        color: #999;
+                    }
+                </style>
+                <div class="container">
+                    <h2>Application for Re-ranking</h2>
+                    <p>Dear ${name},</p>
+                    <p>This is in reference to your application for <strong>${applyingFor}</strong>.</p>
+                    ${message}
+                    <footer>
+                        <p>Thank you for your interest and application.</p>
+                    </footer>
+                </div>
+            `
         });
 
     } catch (error) {

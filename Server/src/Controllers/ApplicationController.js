@@ -150,13 +150,20 @@ export const submitApplicationReview = async (req, res) => {
         let message = '';
 
         if (verdict === 'Decline') {
-        message = `We regret to inform you that your application has been **declined**.\n\nRemarks:\n\n` + 
-            filterRemarks.map(r => `**${r.requirementDes}**\n- ${r.comment}`).join('\n\n');
+            message = `
+                <p>We regret to inform you that your application has been <strong>declined</strong>.</p>
+                <p><strong>Remarks:</strong></p>
+                <ul>
+                    ${filterRemarks.map(r => `<li><strong>${r.requirementDes}</strong><br />- ${r.comment}</li>`).join('')}
+                </ul>`;
         } else if (verdict === 'Return') {
-        message = `Your application has been **returned** due to the following remarks:\n\n` + 
-            filterRemarks.map(r => `**${r.requirementDes}**\n- ${r.comment}`).join('\n\n');
+            message = `
+                <p>Your application has been <strong>returned</strong> due to the following remarks:</p>
+                <ul>
+                    ${filterRemarks.map(r => `<li><strong>${r.requirementDes}</strong><br />- ${r.comment}</li>`).join('')}
+                </ul>`;
         } else if (verdict === 'Approve') {
-        message = `Congratulations! Your application has been **approved**.`;
+            message = `<p>Congratulations! Your application has been <strong>approved</strong>.</p>`;
         }
 
         sendApplicationResponse(userApplicationForm.email, userApplicationForm.name, userApplicationForm.applyingFor, message)
