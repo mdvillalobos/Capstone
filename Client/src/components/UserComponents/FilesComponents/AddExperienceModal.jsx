@@ -83,7 +83,7 @@ const AddExperienceModal = ({ data, setData }) => {
 
             <input 
                 type="number" 
-                onChange={(e) => setData({ ...data, value: e.target.value }) } 
+                onChange={(e) => setData({ ...data, metrics: e.target.value }) } 
                 placeholder='Years of experience' 
                 className='fileInput'
             />

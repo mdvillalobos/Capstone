@@ -22,7 +22,7 @@ const useAddCredential = () => {
             });
             
         
-            if(itemToUpload.metricsValue) formData.append('metricsValue', itemToUpload.metricsValue);
+            if(itemToUpload.metrics) formData.append('metricsValue', itemToUpload.metrics)
 
             const { data } = await axios.post('/api/addCredential', formData);
 

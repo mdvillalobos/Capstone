@@ -10,18 +10,6 @@ const RequirementSchema = new Schema({
         type: String,
         required: true
     },
-    /* minRequirement: { 
-        type: Number,
-        default: 1
-    },
-    value: { 
-        type: Number,
-        default: null
-    },
-    tags: { 
-        type: [String], 
-        required: true
-    }, */
     requiredDocument: {
         type: [mongoose.Schema.Types.Mixed],
         default: []

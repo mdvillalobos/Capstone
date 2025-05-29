@@ -17,6 +17,8 @@ const ReRankingConfig = ({ adminAccounts }) => {
     const [ isConfigModalOpen, setIsConfigModalOpen ] = useState(false)
 
     const approverList = adminAccounts?.filter(prev => prev.approverNumber !== null).sort((a, b) => a.approverNumber - b.approverNumber);
+    const startDate = config?.reRankingStatus?.startDate ? new Date(config.reRankingStatus.startDate).toISOString().split('T')[0] : 'Not set'
+    const endDate = config?.reRankingStatus?.endDate ? new Date(config.reRankingStatus.startDate).toISOString().split('T')[0] : 'Not Set'
 
     return (
         <div className='px-5 py-3 space-y-6 border-2 border-BorderColor rounded-xl text-TextPrimary'>
@@ -32,7 +34,7 @@ const ReRankingConfig = ({ adminAccounts }) => {
                     handleExit = {() => { setIsConfigModalOpen(false), setIsVerifyAdminOpen(false)}}
                 />
             )}
-             <div className='min-h-60'>
+            {/* <div className='min-h-60'>
                 <p className="mb-3 text-lg font-medium">Signatories</p>
                 <div className='space-y-3'>      
                     {approverList ? (
@@ -58,19 +60,32 @@ const ReRankingConfig = ({ adminAccounts }) => {
                         ))
                     ) : null}
                 </div>
-            </div>
+            </div> */}
             
             <div>
-                <p className="mb-4 text-lg font-medium">Controls</p>
+                <p className="text-lg font-medium">Controls</p>
 
-                <div className='space-y-3'>
-                    <div className='flex justify-between text-sm'>
+                <div className=''>
+                    <div className='flex justify-between text-sm border-b border-BorderColor py-4'>
                         <p>Academic year</p>
                         <p>{config ? config?.academicYear : 'none'}</p>
                     </div>
 
-                    <div className='flex justify-between text-sm'>
-                        <p>Re-ranking status</p>
+                    <div className='text-sm py-4'>
+                        <div className='flex justify-between'>
+                            <p>Re-ranking status</p>
+                            <p>{config && config?.reRankingStatus.isReRankingSet ? 'On' : "Off"}</p>
+                        </div>
+                        <div className='font-medium mt-2 space-y-1.5'>
+                            <div className='flex justify-between'>
+                                <p>Start Date:</p>
+                                <p>{startDate}</p>
+                            </div>
+                            <div className='flex justify-between'>
+                                <p>End Date:</p>
+                                <p>{endDate}</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -101,7 +116,7 @@ const ConfigModal = ({ adminAccounts, handleExit }) => {
     const id = config ? config._id : null
     const sensors = useSensors(useSensor(PointerSensor));
 
-    const [ selected, setSelected ] = useState('Signatories');
+    const [ selected, setSelected ] = useState('Controls');
     const [ isEditOn, setIsEditOn ] = useState(false);
     const [ isSubmitted, setIsSubmitted ] = useState(false)
 
@@ -223,13 +238,13 @@ const ConfigModal = ({ adminAccounts, handleExit }) => {
 
                 <div className='flex h-full'>
                     <div className='flex flex-col w-48 px-3 py-2 space-y-1 text-sm border-r border-BorderColor'>
-                        <button 
+                        {/* <button 
                             type='button' 
                             onClick={() => { setSelected('Signatories'), setIsEditOn(false) }}
                             className={`text-TextSecondary hover:bg-NuLightBlue cursor-pointer hover:text-white px-4 rounded-md py-2 text-left duration-200 ${selected === 'Signatories' && 'bg-NuBlue text-white pointer-events-none'}`}
                         >
                             Signatories
-                        </button>
+                        </button> */}
                         <button 
                             type='button' 
                             onClick={() => { setSelected('Controls'), setIsEditOn(false) }}

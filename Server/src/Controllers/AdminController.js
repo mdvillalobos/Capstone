@@ -99,8 +99,6 @@ export const getConfigurations = async (req, res) => {
             if (updated) await config.save();
         }
 
-        console.log(config)
-
         return res.json(config);
     } catch (error) {
         console.error(`Fetching Configuration Error ${ error.message }`);
@@ -200,6 +198,7 @@ export const createRank = async (req, res) => {
 export const getRanks = async (req, res) => {
     try {
         const rankData = await Ranks.find();
+        
         if(!rankData) {
             return res.json({ error: 'Ranks are currently empty.' });
         }  

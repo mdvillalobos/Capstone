@@ -162,7 +162,7 @@ export const submitApplicationReview = async (req, res) => {
                 <ul>
                     ${filterRemarks.map(r => `<li><strong>${r.requirementDes}</strong><br />- ${r.comment}</li>`).join('')}
                 </ul>`;
-        } else if (verdict === 'Approve') {
+        } else if (verdict === 'Approved') {
             message = `<p>Congratulations! Your application has been <strong>approved</strong>.</p>`;
         }
 

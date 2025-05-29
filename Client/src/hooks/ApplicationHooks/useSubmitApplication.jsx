@@ -1,11 +1,10 @@
 import axios from "axios";
 import useToast from "../Helpers/useToast";
-import { useNavigate } from "react-router-dom";
 
 const useSubmitApplication = () => {
     const { Toast, LoadingToast } = useToast();
 
-    const SubmitForm = async(name, college, department, currentRank, status, academicYear, ApplyingFor, userTrack, requirements, setIsSubmitted) => {
+    const SubmitForm = async(name, college, department, currentRank, status, academicYear, ApplyingFor, userTrack, requirements) => {
         LoadingToast.fire({ 
             title: 'Submitting your application.'
         })
@@ -15,11 +14,10 @@ const useSubmitApplication = () => {
             });
 
             if(data.error) {
-                Toast.fire({
+                return Toast.fire({
                     icon: "error",
                     title: data.error
                 });
-                return setIsSubmitted(false)
             }
             else {
                 Toast.fire({
@@ -32,7 +30,6 @@ const useSubmitApplication = () => {
         catch(error) {
             console.error(`Error response: ${error.message}`);
             LoadingToast.close();
-            setIsSubmitted(false)
         }
     } 
     return { SubmitForm }

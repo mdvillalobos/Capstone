@@ -71,7 +71,7 @@ const Requirements = () => {
         const name = user?.firstName + ' ' + user?.lastName;
         try {
             setIsSubmitted(true)
-            await SubmitForm(name, user?.college, user?.department, user?.rank, user?.status, config.academicYear, selected, user?.track, userRequirement, setIsSubmitted)
+            await SubmitForm(name, user?.college, user?.department, user?.rank, user?.status, config.academicYear, selected, user?.track, userRequirement)
         } finally  {
             setIsSubmitted(false)
         }

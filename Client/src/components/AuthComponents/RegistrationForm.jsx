@@ -48,7 +48,7 @@ const registrationForm = () => {
 
     const checkId = (id) => /^(?=.{5,})(\d+(-\d+)?)$/.test(id);
 
-    const checkEmail = (email) => /^[a-zA-Z]+@(students\.)?national-u\.edu\.ph$|^[a-zA-Z0-9]+@gmail\.com$/.test(email);
+    const checkEmail = (email) => /^[a-zA-Z]+@(students\.)?national-u\.edu\.ph$/.test(email);
 
     const checkPassword = (password) => /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[@\-_&$!]).{8,}$/.test(password);
 

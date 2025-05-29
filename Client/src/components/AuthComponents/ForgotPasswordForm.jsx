@@ -14,7 +14,7 @@ const ForgotPasswordForm = () => {
 
     const [ shake, setShake ] = useState(false);
 
-    const checkEmail = (email) => /^[a-zA-Z0-9]+@((students\.)?national-u\.edu\.ph|gmail\.com)$/.test(email);
+    const checkEmail = (email) => /^[a-zA-Z]+@(students\.)?national-u\.edu\.ph$/.test(email);
 
     console.log(isEmailValid)
 

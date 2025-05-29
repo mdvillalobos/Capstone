@@ -63,9 +63,11 @@ const ChoicesModal = ({ handleExit }) => {
         documentCategory: '',
         documentType: '',
         file: null,
-        value: null,
+        metrics: null,
         tags: []
     });
+
+    console.log(data)
 
     const handleAddCredential = async (e) => {
         e.preventDefault();

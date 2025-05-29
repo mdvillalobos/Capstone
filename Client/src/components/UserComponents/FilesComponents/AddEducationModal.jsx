@@ -83,7 +83,7 @@ const AddEducationModal = ({ data, setData }) => {
                                             const newTags = [...data.tags || []]
                                             newTags[1] = degreesOptions;
                                             if(!['Doctorate Degree', 'Master\'s Degree'].includes(newTags[1])) {
-                                                data.value = null
+                                                data.metrics = null
                                             }
                                             setData({ ...data, tags: newTags }), 
                                             setIsDegreeOpen(!isDegreeOpen)
@@ -131,7 +131,18 @@ const AddEducationModal = ({ data, setData }) => {
                         type="text" 
                         className="fileInput" 
                         placeholder='Completed Units' 
-                        onChange={(e) => setData({ ...data, value: e.target.value})} 
+                        onChange={(e) => {
+                              const value = e.target.value;
+                              console.log(e.target.value)
+
+                            if (value === "Graduate") {
+                                const newTags = [...(data.tags || [])];
+                                newTags[3] = value;
+                                setData({ ...data, metrics: null, tags: newTags, });
+                            } else {
+                                setData({ ...data, metrics: value });
+                            }
+                        }} 
                         disabled = {!['Doctorate Degree', 'Master\'s Degree'].includes(data.tags[1])}
                     />
                 </>

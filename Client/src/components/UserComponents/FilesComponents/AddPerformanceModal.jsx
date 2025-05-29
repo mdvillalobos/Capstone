@@ -9,9 +9,8 @@ const AddPerformanceModal = ({ data, setData }) => {
     const [ isStatusOpen, setIsStatusOpen ] = useState(false)
     const [ isRatingOpen, setIsRatingOpen ] = useState(false)
     const [ isSpesOpen, setIsSpesOpen ] = useState(false)
+    const [ statusData, setStatusData ] = useState(null)
 
-    console.log(data.tags)
-    
     const type = [
         'OTE (Overall Teaching Effectiveness)'
     ]
@@ -22,21 +21,22 @@ const AddPerformanceModal = ({ data, setData }) => {
     ]
 
     const newFacultyRating = [
-        'At least 80',
-		'At least 85',
-		'At least 90',
+        'New Faculty: At least 80',
+        'New Faculty: At least 85',
+        'New Faculty: At least 90',
     ]
 
     const oteRating = [
-        'At least 5',
-	    'At least 6'
+        'OTE: At least 5', 
+        'OTE: At least 6', 
     ]
 
     const spesRating = [
-        'At least 4',
-		'At least 5',
-		'At least 6',
+        'SPES: At least 4', 
+        'SPES: At least 5', 
+        'SPES: At least 6', 
     ]
+
 
     const rating = data.tags[1] === 'New faculty' ? newFacultyRating : oteRating
 
@@ -78,9 +78,9 @@ const AddPerformanceModal = ({ data, setData }) => {
                         <button 
                             type='button' 
                             onClick={() => { setIsStatusOpen(!isStatusOpen), setIsTypeOpen(false), setIsRatingOpen(false), setIsSpesOpen(false) }} 
-                            className={`w-full text-left fileInput ${data.tags[1] ? 'text-black' : 'text-gray-500'}`}
+                            className={`w-full text-left fileInput ${statusData ? 'text-black' : 'text-gray-500'}`}
                         >
-                            {data.tags[1] || 'Select status'}
+                            {statusData || 'Select status'}
                         </button>
 
                         {isStatusOpen && (
@@ -90,9 +90,10 @@ const AddPerformanceModal = ({ data, setData }) => {
                                         key={statusOptions}
                                         type='button'    
                                         onClick={() => { 
-                                            const newTags = [...data.tags || []]
+                                            /* const newTags = [...data.tags || []]
                                             newTags[1] = statusOptions;
-                                            setData({...data, tags: newTags }),
+                                            setData({...data, tags: newTags }), */
+                                            setStatusData(statusOptions)
                                             setIsStatusOpen(!isStatusOpen)
                                         }}
                                         className='fileOption'
@@ -104,14 +105,14 @@ const AddPerformanceModal = ({ data, setData }) => {
                         )}
                     </div>
 
-                    {data.tags[1] && (
+                    {statusData && (
                         <div className="relative">
                             <button 
                                 type='button' 
                                 onClick={() => { setIsRatingOpen(!isRatingOpen), setIsTypeOpen(false), setIsStatusOpen(false), setIsSpesOpen(false) }} 
-                                className={`w-full text-left fileInput ${data.tags[2] ? 'text-black' : 'text-gray-500'}`}
+                                className={`w-full text-left fileInput ${data.tags[1] ? 'text-black' : 'text-gray-500'}`}
                             >
-                                {data.tags[2] ? data.tags[2] : data.tags[1] === 'New faculty' ? 'Select Rating' : 'Select OTE Rating'}
+                                {data.tags[1] ? data.tags[1] : statusData === 'New faculty' ? 'Select Rating' : 'Select OTE Rating'}
                             </button>
 
                             {isRatingOpen && (
@@ -122,7 +123,7 @@ const AddPerformanceModal = ({ data, setData }) => {
                                             type='button'    
                                             onClick={() => { 
                                                 const newTags = [...data.tags || []]
-                                                newTags[2] = ratingOptions;
+                                                newTags[1] = ratingOptions;
                                                 setData({...data, tags: newTags }),
                                                 setIsRatingOpen(!isRatingOpen)
                                             }}
@@ -136,14 +137,14 @@ const AddPerformanceModal = ({ data, setData }) => {
                         </div>
                     )}
 
-                    {data.tags[1] === 'On-board faculty' && (
+                    {statusData === 'On-board faculty' && (
                         <div className="relative">
                             <button 
                                 type='button' 
                                 onClick={() => { setIsSpesOpen(!isSpesOpen), setIsTypeOpen(false), setIsStatusOpen(false), setIsRatingOpen(false) }} 
-                                className={`w-full text-left fileInput ${data.tags[3] ? 'text-black' : 'text-gray-500'}`}
+                                className={`w-full text-left fileInput ${data.tags[2] ? 'text-black' : 'text-gray-500'}`}
                             >
-                                {data.tags[3] || 'Select SPES Rating' }
+                                {data.tags[2] || 'Select SPES Rating' }
                             </button>
 
                             {isSpesOpen && (
@@ -154,7 +155,7 @@ const AddPerformanceModal = ({ data, setData }) => {
                                             type='button'    
                                             onClick={() => { 
                                                 const newTags = [...data.tags || []]
-                                                newTags[3] = spesRatingOptions;
+                                                newTags[2] = spesRatingOptions;
                                                 setData({...data, tags: newTags }),
                                                 setIsSpesOpen(!isSpesOpen)
                                             }}

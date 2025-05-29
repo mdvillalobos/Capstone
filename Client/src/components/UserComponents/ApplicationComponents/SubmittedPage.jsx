@@ -6,11 +6,19 @@ import useCancelApplication from '../../../hooks/ApplicationHooks/useCancelEntry
 import { IoClose } from "react-icons/io5";
 import { BsQuestionLg } from "react-icons/bs";
 import { UserContext } from '../../../../context/userContext';
+import { RankContext } from '../../../../context/rankContext';
 
 const DisabledPage = () => {
     const { applicationData } = useContext(UserContext);
+    const { config } = useContext(RankContext)
     const { cancelEntry } = useCancelApplication();
     const [ confirm, setConfirm ] = useState(false);
+
+    const endDate = config?.reRankingStatus?.endDate ? new Date(config?.reRankingStatus.endDate).toLocaleDateString('en-US', {
+        month: 'short',
+        day: 'numeric',
+        year: 'numeric'
+    }) : '';
 
     const cancelSubmission = async () => {
        await cancelEntry(applicationData._id)
@@ -58,16 +66,55 @@ const DisabledPage = () => {
             <div className='flex flex-col space-y-6'>
                 <img src={Done} alt="" className='w-64 h-48 mx-auto'/>
                 <div className="space-y-4 text-center">
-                    <h1 className='text-4xl font-medium'>Application Submitted Successfully!</h1>
-                    <div className="space-y-4 text-gray-500">
-                        <p>Thank you for applying for the position <b>{applicationData.applyingFor}</b>.Your application is currently <b>For Approval</b> <br/>Our team will review your submitted application and will contact once it done.</p>
-                        <p>We appreciate your submission. Thank you!</p>
-                    </div>
+                    {applicationData.applicationStatus === 'For verification' ? (
+                        <>
+                            <h1 className='text-4xl font-medium'>Application Submitted Successfully!</h1>
+                            <div className="space-y-4 text-gray-500">
+                                <p>Thank you for applying for the position <b>{applicationData.applyingFor}</b>.Your application is currently <b>{applicationData.applicationStatus}</b> <br/>Our team will review your submitted application and will contact once it done.</p>
+                                <p>We appreciate your submission. Thank you!</p>
+                            </div>
+                        </>
+                    ) : applicationData.applicationStatus === 'Approved' ? ( 
+                        <>
+                            <h1 className='text-4xl font-medium'>Congratulations!</h1>
+                            <div className="space-y-4 text-gray-500">
+                                <p>Your applicationg for <b>{applicationData.applyingFor}</b> has been <b>{applicationData.applicationStatus}</b>. <br/>You new rank now promoted to <b>{applicationData.applyingFor}</b></p>
+                            </div>
+                        </>
+                    ) : applicationData.applicationStatus === 'Decline' ? (
+                        <>
+                            <h1 className='text-4xl font-medium'>Better luck next time!</h1>
+                            <div className="space-y-4 text-gray-500">
+                                <p>We regret to inform you that your application for <b>{applicationData.applyingFor}</b> has been <b>{applicationData.applicationStatus}ed</b>.</p>
+                            </div>
+                        </>
+                    ) : (
+                        <>
+                            <h1 className='text-4xl font-medium'>HEads up!</h1>
+                            <div className="space-y-4 text-gray-500">
+                                <p>Your applicationg for <b>{applicationData.applyingFor}</b> has been <b>{applicationData.applicationStatus}ed</b>. <br/>Kindly review and resubmit your application until <b>{endDate}</b>. Thank you</p>
+                            </div>
+                        </>
+                    )}
                 </div>
                 <div className="flex justify-center">
                     <div className="flex space-x-2">
-                        <Link to='/application/myform' className='px-10 py-2 text-white duration-200 rounded-md cursor-pointer bg-NuBlue hover:bg-NuLightBlue' >View my application</Link>
-                        <button type='button' className='px-10 py-2 text-white duration-200 rounded-md cursor-pointer bg-NuRed hover:bg-red-600' onClick={() => setConfirm(true)}>Cancel Submission</button>
+                        <Link 
+                            to='/application/myform' 
+                            className='px-10 py-2 text-white duration-200 rounded-md cursor-pointer bg-NuBlue hover:bg-NuLightBlue' 
+                        >
+                            View my application
+                        </Link>
+
+                        {(applicationData.applicationStatus === 'For verification' || applicationData.applicationStatus === 'Return') && (
+                            <button 
+                                type='button' 
+                                className='px-10 py-2 text-white duration-200 rounded-md cursor-pointer bg-NuRed hover:bg-red-600' 
+                                onClick={() => setConfirm(true)}
+                            >
+                                Cancel Submission
+                            </button>
+                        )}
                     </div>
                 </div>
             </div>
