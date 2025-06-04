@@ -122,7 +122,7 @@ const ProfileBar = () => {
                         )
                     })
                 : (
-                    <>tae</>
+                    null
                 )}
             </div>
         </div>
