@@ -38,13 +38,13 @@ import useProtectRoutes from './hooks/Helpers/useProtectRoutes.jsx';
 import useInactivityLogout from './hooks/Helpers/useInactivityLogout.jsx'
 
 //images 
-import { Helmet } from 'react-helmet';
+/* import { Helmet } from 'react-helmet';
 import NotFound from './assets/images/NotFound.webp';
 import NoData from './assets/images/NoData.webp';
 import NuLogo from './assets/images/NU_shield.webp';
 import maleProfile from './assets/images/male.webp';
 import femaleProfile from './assets/images/female.webp';
-import Done from './assets/images/done.webp'
+import Done from './assets/images/done.webp' */
 
 /* axios.defaults.baseURL = 'http://localhost:3001';  */
 axios.defaults.baseURL = 'https://nufso.onrender.com';

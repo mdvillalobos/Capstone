@@ -8,11 +8,13 @@ import { BsQuestionLg } from "react-icons/bs";
 
 import ViewImage from './ViewImage';
 import useSubmitApplication from '../../../hooks/ApplicationHooks/useSubmitApplication';
+import useToast from '../../../hooks/Helpers/useToast';
 
 const Requirements = () => {
     const { SubmitForm } = useSubmitApplication();
     const { ranks, config } = useContext(RankContext);
     const { credentials, user } = useContext(UserContext);
+    const { Toast } = useToast();
 
     const [ isOpen, setIsOpen ] = useState(false);
     const [ isSubmitted, setIsSubmitted ] = useState(false);
@@ -41,7 +43,7 @@ const Requirements = () => {
                     return acc;
                 }
 
-                const matchedFiles = credentials.files.filter(document => document.tags.every(tag => data.tags.includes(tag)) && data.metrics <= document.metrics)
+                const matchedFiles = credentials.files.filter(document => document.tags.every(tag => data.tags.includes(tag)) && data.metrics <= document.metrics && document.isActive)
 
                 const files = matchedFiles.length >= data.minRequirement
                     ? matchedFiles.slice(0, data.minRequirement).map(file => ({
@@ -69,6 +71,21 @@ const Requirements = () => {
     const onSubmit = async (e) => {
         e.preventDefault();
         const name = user?.firstName + ' ' + user?.lastName;
+
+        const hasValidFiles = userRequirement.some(
+            (item) =>
+                Array.isArray(item.files) &&
+                item.files.some((file) => file.filePath !== null || file.fileName !== null)
+        );
+
+        if(!hasValidFiles) {
+            Toast.fire({
+                icon: 'error',
+                title: 'Kindly upload at least one document.'
+            })
+
+            return setConfirm(false)
+        }
         try {
             setIsSubmitted(true)
             await SubmitForm(name, user?.college, user?.department, user?.rank, user?.status, config.academicYear, selected, user?.track, userRequirement)
