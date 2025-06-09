@@ -200,11 +200,11 @@ const registrationForm = () => {
                     />
                     <label htmlFor="approved" className="my-auto text-[0.7rem]">
                         I agree to the
-                        <button type="button" onClick={() => setIsTermsOpen(true)} className="text-NuButton hover:underline mx-0.5">
+                        <button type="button" onClick={() => setIsTermsOpen(true)} className="text-NuBlue hover:underline mx-0.5">
                             Terms and Conditions
                         </button>
                         and
-                        <button type="button" onClick={() => setIsPrivacyOpen(true)} className="text-NuButton hover:underline mx-0.5">
+                        <button type="button" onClick={() => setIsPrivacyOpen(true)} className="text-NuBlue hover:underline mx-0.5">
                             Privacy Policy
                         </button>.
                     </label>
