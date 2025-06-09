@@ -95,7 +95,7 @@ const Requirements = () => {
     }
 
     return (
-        <div>
+        <div >
             {confirm && (
                 <>
                     <div className='modal'>
@@ -185,7 +185,7 @@ const Requirements = () => {
                 }
             </div>
 
-            <div className=" p-4 mt-4 rounded-md border-2 border-[#93adc2] max-sm:text-sm">
+            <div className="w-full p-4 mt-4 rounded-md border-2 border-[#93adc2] max-sm:text-sm">
                 {selectedRank && 
                     selectedRank.requirements.map(requirement => {
                         const requirementDescription = String(requirement.description).split('\n');

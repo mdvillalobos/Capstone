@@ -47,7 +47,7 @@ const ApplicationForReRanking = () => {
                                 applicationData ? (
                                     <SubmittedPage />
                                 ) : (
-                                    <div className='flex flex-col'>
+                                    <div className='flex flex-col w-full'>
                                         <Instruction/>
                                         <DropDown/>
                                     </div>
