@@ -104,8 +104,8 @@ const AdminDashboard = () => {
                                         totalRank={dashboardData.totalRank} 
                                         approvedFaculty={dashboardData.approvedApplications}
                                     />
-                                    <div className='flex space-x-4'>
-                                        <div className='flex flex-col flex-1 space-y-4'>        
+                                    <div className='flex space-x-4 h-full'>
+                                        <div className='flex flex-col flex-1 h-full space-y-4 border-2'>        
                                             <div className='flex space-x-4'>
                                                 <Datas 
                                                     facultyCount={dashboardData.facultyCount} 
@@ -120,7 +120,7 @@ const AdminDashboard = () => {
                                             <LineGraph totalApplicationPerYear={dashboardData.totalApplicationPerYear} loading={loading}/>
                                         </div>
 
-                                        <div className='h-full flex flex-col w-[25%] space-y-4'>
+                                        <div className='h-full flex flex-col w-[25%] space-y-4 border-2'>
                                             <ReRankingConfig adminAccounts={dashboardData.adminAccounts} loading={loading}/>
                                             {/* <RankTotal totalPerRank={dashboardData.totalRank}/> */}
                                         </div>
