@@ -87,8 +87,7 @@ export const getConfigurations = async (req, res) => {
                 updated = true;
             }
         
-            if (endDate === todayDate && config.reRankingStatus.isReRankingOpen) {
-                console.log('tae')
+            if (endDate >= todayDate && config.reRankingStatus.isReRankingOpen) {
                 config.reRankingStatus.isReRankingSet = false;
                 config.reRankingStatus.isReRankingOpen = false;
                 config.reRankingStatus.startDate = null;
